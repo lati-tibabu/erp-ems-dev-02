@@ -1,0 +1,2 @@
+# Creating school model by sequelize-cli
+    >> npx sequelize-cli model:generate --name School --attributes school_id:string,school_name:string,school_address:string,city:string,subcity:string,woreda:string,kebele:string,phone_number:string,email_address:string,estabilished_year:string,school_type:string,student_capacity:integer,current_enrollment:integer,description:string,logo:string
