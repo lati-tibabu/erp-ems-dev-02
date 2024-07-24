@@ -6,4 +6,4 @@ function ColumnWrapper(props) {
   )
 }
 
-export default ColumnWrapper
+export default ColumnWrapper;
