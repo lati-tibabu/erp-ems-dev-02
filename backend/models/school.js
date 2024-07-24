@@ -1,5 +1,6 @@
 const sequelize = require("../config/database");
 const { DataTypes, Model } = require("sequelize");
+const Users = require("./users");
 class School extends Model {
   /**
    * Helper method for defining associations.
@@ -7,6 +8,9 @@ class School extends Model {
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
+    // School.belongsTo(models.Users, {
+    //   foreignKey: "id",
+    // });
     // define association here
   }
 }

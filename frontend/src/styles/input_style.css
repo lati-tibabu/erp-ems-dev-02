@@ -1,0 +1,29 @@
+/* div {
+    font-size: 3rem;
+    font-weight: 300;
+} */
+
+.input_field {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 5px;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    color: rgb(33, 82, 105);
+    /* background: red; */
+}
+
+input {
+    font-size: 1rem;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+input:focus {
+    border: 1px solid #a3d5ff;
+    /* Light blue accent */
+    background: #e6f7ff;
+    /* Very light blue background */
+    outline: none;
+}
