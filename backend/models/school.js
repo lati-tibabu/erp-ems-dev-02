@@ -8,9 +8,7 @@ class School extends Model {
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
-    // School.belongsTo(models.Users, {
-    //   foreignKey: "id",
-    // });
+    School.hasOne(models.Users, { foreignKey: "school_id" });
     // define association here
   }
 }

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const schoolRoutes = require("./routes/schoolRoutes");
+const userRoutes = require("./routes/userRoute");
 const sequelize = require("./config/database");
 const Users = require("./models/users");
 const cors = require("cors");
@@ -8,7 +9,7 @@ const cors = require("cors");
 
 app.use(express.json());
 
-app.use(cors()); // Use this after the variable declaration
+app.use(cors());
 // const syncDB = async() => {
 //     await sequelize.sync({ force: true });
 // };
@@ -22,5 +23,6 @@ app.post("/syncDB", async (req, res) => {
   }
 });
 app.use("/api/school", schoolRoutes);
+app.use("/api/user", userRoutes);
 
 module.exports = app;

@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/center_containers.css'
 export const CenterColumn = (props) => {
   return (
-    <div className='center_column'>{props.children}</div>
+    <div className='center_column' style={props.style}>{props.children}</div>
   )
 }
 
