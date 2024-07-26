@@ -7,7 +7,7 @@ import './index.css'
 function App() {
   return (
     <div>
-      <LoginPage />
+      <SchoolCreate />
     </div>
   )
 }

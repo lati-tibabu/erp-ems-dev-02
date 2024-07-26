@@ -26,22 +26,93 @@ function SchoolCreate() {
         student_capacity: '',
         current_enrollment: '',
         description: '',
-        logo: '',
+        logo: ''
     });
+
+    const [userData, setUserData] = useState({
+        username: '',
+        password: '123456',
+        role: 'Principal',
+        school: '',
+    })
+    
     const handleChange = (event) => {
         const {name, value} = event.target;
-        setSchoolData({
-            ...schoolData,
-            [name]: value,
-        });
+
+        // setSchoolData({
+        //     ...schoolData,
+        //     [name]: value,
+        // });
+
+        setSchoolData(
+            prevSchoolData => {
+                const newSchoolData = {
+                    ...prevSchoolData,
+                    [name]: value,
+                };
+                
+                const user_name = schoolData.school_name
+                // let schoolId = schoolData.school_id
+            
+                let newUsername = [...user_name]
+            
+                let newUN = ''
+            
+                for (let i = 0; i < newUsername.length; i++){
+                    if (newUsername[i] != " "){
+                        newUN = newUN + newUsername[i].toLowerCase()
+                    }
+                }
+            
+                setUserData( prevUserData => ({
+                    ...prevUserData,
+                    username: newUN,
+                    school: newSchoolData.school_id,
+                }));
+
+                return newSchoolData
+                
+            }
+        )
+
+        // const user_name = schoolData.school_name
+        // // let schoolId = schoolData.school_id
+    
+        // let newUsername = [...user_name]
+    
+        // let newUN = ''
+    
+        // for (let i = 0; i < newUsername.length; i++){
+        //     if (newUsername[i] != " "){
+        //         newUN = newUN + newUsername[i].toLowerCase()
+        //     }
+        // }
+    
+        // setUserData({
+        //     ...userData,
+        //     username: newUN,
+        //     school: schoolData.school_id,
+        // });
+
     };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        // handleUserData();
+
         console.log(schoolData);
+        // handleUserData();
+        console.log("UserData", userData)
         try {
             const response = await axios.post('http://localhost:3050/api/school/create', schoolData);
+            try{
+            const response2 = await axios.post('http://localhost:3050/api/user/create', userData)
+            }catch(error){
+                console.error("Error: ", error)
+            }
             console.log("Success:", response);
+            // handleUserData();
         } catch (error) {
             console.error("Error: ",error)
         }
@@ -60,7 +131,7 @@ function SchoolCreate() {
             <InputField labelName="School Name" placeholder="Enter School Name" name="school_name" type="text"value={schoolData.school_name} onChange={handleChange} />
             <InputField labelName="School Address" placeholder="Enter School Address" name="school_address" type="text"value={schoolData.school_address} onChange={handleChange} />
             <InputField labelName="City" placeholder="Enter City" name="city" type="text"value={schoolData.city} onChange={handleChange} />
-            <InputField labelName="Subcity" placeholder="Enter Subcity" name="subcity" type="text"value={schoolData.subcitycity} onChange={handleChange} />
+            <InputField labelName="Subcity" placeholder="Enter Subcity" name="subcity" type="text"value={schoolData.subcity} onChange={handleChange} />
             <InputField labelName="Woreda" placeholder="Enter Woreda" name="woreda" type="text"value={schoolData.woreda} onChange={handleChange} />
             <InputField labelName="Kebele" placeholder="Enter Kebele" name="kebele" type="text"value={schoolData.kebele} onChange={handleChange} />
             <InputField labelName="Phone Number" placeholder="Enter Phone Number" name="phone_number" type="tel" value={schoolData.phone_number} onChange={handleChange}/>

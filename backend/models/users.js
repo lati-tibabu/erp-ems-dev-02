@@ -77,7 +77,7 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    school_id: {
+    school: {
       type: DataTypes.STRING,
       allowNull: false,
       references: {
