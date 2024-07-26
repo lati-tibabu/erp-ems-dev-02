@@ -1,0 +1,7 @@
+.horizontal_line {
+    /* width: 100px; */
+    height: 5px;
+    border-radius: 10px;
+    opacity: 20%;
+    /* background: red; */
+}

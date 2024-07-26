@@ -105,9 +105,9 @@ function SchoolCreate() {
         // handleUserData();
         console.log("UserData", userData)
         try {
-            const response = await axios.post('http://localhost:3050/api/school/create', schoolData);
+            const response = await axios.post('http://localhost:3060/api/school/create', schoolData);
             try{
-            const response2 = await axios.post('http://localhost:3050/api/user/create', userData)
+            const response2 = await axios.post('http://localhost:3060/api/user/create', userData)
             }catch(error){
                 console.error("Error: ", error)
             }

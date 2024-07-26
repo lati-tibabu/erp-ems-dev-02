@@ -1,14 +1,20 @@
 import React from 'react'
-import SchoolCreate from './pages/school_create'
-import LoginPage from './pages/login'
 
 import './index.css'
+import AdminCreate from './pages/admin_create'
+import AdminLogin from './pages/admin_login'
+import AdminDashboard from './pages/admin_dashboard'
+import StudentLogin from './pages/student_login'
+import SchoolCreate from './pages/school_create'
 
 function App() {
   return (
-    <div>
-      <SchoolCreate />
-    </div>
+    // <div>App</div>
+    // <AdminCreate />
+    // <AdminLogin />
+    // <AdminDashboard />
+    // <StudentLogin />
+    <SchoolCreate/>
   )
 }
 

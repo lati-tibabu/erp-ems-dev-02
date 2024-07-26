@@ -1,86 +1,90 @@
-    .primary {
-        background: #0075c3;
-        border-radius: 20px;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: white;
-        width: 100%;
-    }
+/* Base button styles */
 
-    .primary:hover {
-        background: #005fa3;
-    }
+button {
+    border-radius: 7px;
+    font-size: 0.9;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+}
 
-    .primary:active {
-        background: #0e6eb2;
-    }
 
-    .secondary {
-        background: #d3edff;
-        border: 1px solid 0075c3;
-        border-radius: 20px;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #0075c3;
-    }
+/* Primary button */
 
-    .secondary:hover {
-        background: #c1e1ff;
-    }
+.primary {
+    background: #0075c3;
+}
 
-    .secondary:active {
-        background: #a0d0ff;
-    }
+.primary:hover {
+    background: #005fa3;
+}
 
-    .tertiary {
-        background: none;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #0075c3;
-    }
+.primary:active {
+    background: #0e6eb2;
+}
 
-    .disabled {
-        background: #d3edff;
-        border: 1px solid 0075c3;
-        border-radius: 20px;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #0075c3;
-        opacity: 0.5;
-    }
 
-    .danger {
-        background: #ff0000;
-        border-radius: 20px;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: white;
-    }
+/* Secondary button */
 
-    .danger:hover {
-        background: #b30000;
-    }
+.secondary {
+    background: #d3edff;
+    border: 1px solid #0075c3;
+    color: #0075c3;
+    width: auto;
+    /* Reset width to auto for secondary buttons */
+}
 
-    .danger:active {
-        background: #990000;
-    }
+.secondary:hover {
+    background: #c1e1ff;
+}
 
-    .ok {
-        background: #008000;
-        border-radius: 20px;
-        border: none;
-        padding: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: white;
-    }
+.secondary:active {
+    background: #a0d0ff;
+}
+
+
+/* Tertiary button */
+
+.tertiary {
+    background: none;
+    color: #0075c3;
+    width: auto;
+    /* Reset width to auto for tertiary buttons */
+}
+
+
+/* Disabled button */
+
+.disabled {
+    background: #d3edff;
+    border: 1px solid #0075c3;
+    color: #0075c3;
+    opacity: 0.5;
+    width: auto;
+    /* Reset width to auto for disabled buttons */
+}
+
+
+/* Danger button */
+
+.danger {
+    background: #ff0000;
+}
+
+.danger:hover {
+    background: #b30000;
+}
+
+.danger:active {
+    background: #990000;
+}
+
+
+/* Ok button */
+
+.ok {
+    background: #008000;
+}
