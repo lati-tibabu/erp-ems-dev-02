@@ -1,7 +1,7 @@
 const sequelize = require("../config/database");
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes, ENUM, Model } = require("sequelize");
 
-class Student extends Model {
+class Principal extends Model {
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.
@@ -11,8 +11,7 @@ class Student extends Model {
     // define association here
   }
 }
-
-Student.init(
+Principal.init(
   {
     user_id: {
       type: DataTypes.STRING,
@@ -43,107 +42,67 @@ Student.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    city: {
+    phone_number: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    enrollment_date: {
+    hire_date: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    grade_level: {
+    salary: {
+      type: DataTypes.DECIMAL,
+      allowNull: true,
+    },
+    experience_years: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    qualification: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    class_id: {
-      type: DataTypes.INTEGER,
+    photo_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     emergency_contact: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    medical_conditions: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    profile_photo: {
+    office_number: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    admission_number: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    status: {
-      type: DataTypes.ENUM("Active", "Inactive", "Graduated", "Transferred"),
-      allowNull: true,
-    },
-    nationality: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    language_proficiency: {
+    bio: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    extracurricular_activities: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    health_insurance: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    previous_school: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    past_achievements: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    hobbies: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    date_of_leaving: {
+    start_date: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    transfer_reason: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    date_of_admission: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    guardian_contact: {
+    specialization: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    special_needs: {
-      type: DataTypes.TEXT,
+    social_media_links: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },
   {
     sequelize,
-    modelName: "Student",
+    modelName: "Principal",
   }
 );
 
-module.exports = Student;
+module.exports = Principal;

@@ -4,6 +4,8 @@ const schoolRoutes = require("./routes/schoolRoutes");
 const userRoutes = require("./routes/userRoute");
 const sequelize = require("./config/database");
 const Users = require("./models/users");
+const Principal = require("./models/principal");
+const Student = require("./models/student");
 const cors = require("cors");
 // const { json } = require("sequelize");
 

@@ -1,7 +1,7 @@
 const sequelize = require("../config/database");
 const { DataTypes, Model } = require("sequelize");
 
-class Student extends Model {
+class Teacher extends Model {
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.
@@ -12,7 +12,7 @@ class Student extends Model {
   }
 }
 
-Student.init(
+Teacher.init(
   {
     user_id: {
       type: DataTypes.STRING,
@@ -36,114 +36,94 @@ Student.init(
       allowNull: false,
     },
     gender: {
-      type: DataTypes.ENUM("Male", "Female"),
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    contact_number: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    enrollment_date: {
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    hire_date: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    grade_level: {
+    position: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    class_id: {
+    department_id: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    qualifications: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    specialization: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    employee_number: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    salary: {
+      type: DataTypes.DECIMAL,
+      allowNull: true,
+    },
+    contract_type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     emergency_contact: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    medical_conditions: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    profile_photo: {
+    photo_url: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    admission_number: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    status: {
-      type: DataTypes.ENUM("Active", "Inactive", "Graduated", "Transferred"),
-      allowNull: true,
-    },
-    nationality: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    language_proficiency: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    extracurricular_activities: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    health_insurance: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    previous_school: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    past_achievements: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    hobbies: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    date_of_leaving: {
+    joining_date: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    transfer_reason: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    date_of_admission: {
+    last_evaluation_date: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    guardian_contact: {
-      type: DataTypes.STRING,
+    professional_development: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
-    special_needs: {
+    teaching_schedule: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    additional_roles: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    access_level: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },
   {
     sequelize,
-    modelName: "Student",
+    modelName: "Teacher",
   }
 );
 
-module.exports = Student;
+module.exports = Teacher;
