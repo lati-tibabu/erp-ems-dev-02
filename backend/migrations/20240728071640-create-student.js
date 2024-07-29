@@ -2,69 +2,63 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Students', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        type: Sequelize.STRING
+      user_id: {
+        type: Sequelize.UUID
       },
-      password: {
-        type: Sequelize.STRING
-      },
-      role: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      first_name: {
-        type: Sequelize.STRING
-      },
-      last_name: {
-        type: Sequelize.STRING
-      },
-      phone_number: {
-        type: Sequelize.STRING
-      },
-      created_at: {
+      enrollment_date: {
         type: Sequelize.DATE
       },
-      updated_at: {
-        type: Sequelize.DATE
-      },
-      status: {
+      grade_level: {
         type: Sequelize.STRING
       },
-      last_login: {
-        type: Sequelize.DATE
+      class_id: {
+        type: Sequelize.UUID
       },
-      reset_password_token: {
+      medical_conditions: {
         type: Sequelize.STRING
       },
-      reset_password_expires: {
+      admission_number: {
+        type: Sequelize.STRING
+      },
+      language_proficiency: {
+        type: Sequelize.STRING
+      },
+      extracurricular_activities: {
+        type: Sequelize.STRING
+      },
+      health_insurance: {
+        type: Sequelize.STRING
+      },
+      previous_school: {
+        type: Sequelize.STRING
+      },
+      past_achievements: {
+        type: Sequelize.STRING
+      },
+      hobbies: {
+        type: Sequelize.STRING
+      },
+      date_of_leaving: {
         type: Sequelize.DATE
       },
-      profile_picture: {
+      transfer_reason: {
+        type: Sequelize.STRING
+      },
+      date_of_admission: {
+        type: Sequelize.DATE
+      },
+      special_needs: {
         type: Sequelize.STRING
       },
       school_id: {
-        type: Sequelize.INTEGER
-      },
-      address: {
-        type: Sequelize.STRING
-      },
-      gender: {
-        type: Sequelize.STRING
-      },
-      date_of_birth: {
-        type: Sequelize.DATE
-      },
-      role_specific_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       createdAt: {
         allowNull: false,
@@ -77,6 +71,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Students');
   }
 };

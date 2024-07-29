@@ -1,20 +1,22 @@
 const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
-class Principal extends Model {
+const User = require("./user");
+
+class Administrator extends Model {
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
-    Principal.belongsTo(Uses, { foreignKey: "user_id" });
+    Administrator.belongsTo(User, { foreignKey: "user_id" });
     // define association here
   }
 }
-Principal.init(
+Administrator.init(
   {
-    principal_id: {
+    admin_id: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
@@ -26,26 +28,18 @@ Principal.init(
         model: "Users",
         key: "user_id",
       },
-      onDelete: "CASCADE",
       onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
-    school_id: {
-      type: DataTypes.UUID,
+    hire_date: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
-    role: {
+    office_location: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    salary: {
-      type: DataTypes.DECIMAL,
-      allowNull: true,
-    },
-    experience_years: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    qualification: {
+    employment_status: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -53,23 +47,7 @@ Principal.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    office_location: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    bio: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    start_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
     specialization: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    social_media_links: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -77,11 +55,15 @@ Principal.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    years_of_experience: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,
-    modelName: "Principal",
+    modelName: "Administrator",
   }
 );
 
-module.exports = Principal;
+module.exports = Administrator;

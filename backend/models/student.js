@@ -1,5 +1,5 @@
 const sequelize = require("../config/database");
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes, ENUM, Model } = require("sequelize");
 
 class Student extends Model {
   /**
@@ -11,53 +11,23 @@ class Student extends Model {
     // define association here
   }
 }
-
 Student.init(
   {
-    user_id: {
-      type: DataTypes.STRING,
+    student_id: {
+      type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: UUIDV4,
     },
-    first_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    middle_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    date_of_birth: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.ENUM("Male", "Female"),
-      allowNull: false,
-    },
-    address: {
-      type: DataTypes.STRING,
+    user_id: {
+      type: DataTypes.UUID,
       allowNull: true,
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      references: {
+        model: "Users",
+        key: "user_id",
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     },
     enrollment_date: {
       type: DataTypes.DATE,
@@ -68,18 +38,10 @@ Student.init(
       allowNull: true,
     },
     class_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    emergency_contact: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     medical_conditions: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    profile_photo: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -87,20 +49,12 @@ Student.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    status: {
-      type: DataTypes.ENUM("Active", "Inactive", "Graduated", "Transferred"),
-      allowNull: true,
-    },
-    nationality: {
+    language_proficiency: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    language_proficiency: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
     extracurricular_activities: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     health_insurance: {
@@ -112,11 +66,11 @@ Student.init(
       allowNull: true,
     },
     past_achievements: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     hobbies: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     date_of_leaving: {
@@ -124,19 +78,19 @@ Student.init(
       allowNull: true,
     },
     transfer_reason: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     date_of_admission: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    guardian_contact: {
+    special_needs: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    special_needs: {
-      type: DataTypes.TEXT,
+    school_id: {
+      type: DataTypes.UUID,
       allowNull: true,
     },
   },

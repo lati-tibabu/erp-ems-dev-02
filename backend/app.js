@@ -3,9 +3,21 @@ const app = express();
 const schoolRoutes = require("./routes/schoolRoutes");
 const userRoutes = require("./routes/userRoute");
 const sequelize = require("./config/database");
-const Users = require("./models/users");
-const Principal = require("./models/principal");
-const Student = require("./models/student");
+
+const UserModel = require("./models/user");
+const TeacherModel = require("./models/teacher");
+const StudentModel = require("./models/student");
+const ParentModel = require("./models/parent");
+const SchoolModel = require("./models/school");
+const AddressModel = require("./models/address");
+const RoleModel = require("./models/role");
+const ParentStudentRelationshipModel = require("./models/parentstudentrelationship");
+const ContactModel = require("./models/contact");
+const DepartmentModel = require("./models/department");
+const ClassModel = require("./models/class");
+const UserRoleModel = require("./models/userrole");
+const ClassTeacherModel = require("./models/classteacher");
+
 const cors = require("cors");
 // const { json } = require("sequelize");
 

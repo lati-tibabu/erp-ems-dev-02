@@ -1,5 +1,5 @@
 const sequelize = require("../config/database");
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes, ENUM, Model } = require("sequelize");
 
 class Teacher extends Model {
   /**
@@ -11,45 +11,21 @@ class Teacher extends Model {
     // define association here
   }
 }
-
 Teacher.init(
   {
+    teacher_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true,
-    },
-    first_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    middle_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    date_of_birth: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    contact_number: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    address: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      references: {
+        model: "Users",
+        key: "user_id",
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     },
     hire_date: {
       type: DataTypes.DATE,
@@ -60,11 +36,11 @@ Teacher.init(
       allowNull: true,
     },
     department_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     qualifications: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     specialization: {
@@ -72,6 +48,10 @@ Teacher.init(
       allowNull: true,
     },
     employee_number: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    office_location: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -84,10 +64,6 @@ Teacher.init(
       allowNull: true,
     },
     status: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    emergency_contact: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -104,19 +80,35 @@ Teacher.init(
       allowNull: true,
     },
     professional_development: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     teaching_schedule: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     additional_roles: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    is_classroom_teacher: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
     access_level: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    education_level: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    years_of_experience: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    school_id: {
+      type: DataTypes.UUID,
       allowNull: true,
     },
   },

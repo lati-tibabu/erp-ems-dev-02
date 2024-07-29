@@ -1,8 +1,7 @@
 const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
-const User = require("./user");
-class Parent extends Model {
+class Class extends Model {
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.
@@ -10,25 +9,21 @@ class Parent extends Model {
    */
   static associate(models) {
     // define association here
-    Parent.belongsTo(User, { foreignKey: "user_id" });
   }
 }
-Parent.init(
+Class.init(
   {
-    parent_id: {
+    class_id: {
       type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
+      allowNull: true,
     },
-    user_id: {
+    class_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    teacher_id: {
       type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: "Users",
-        key: "user_id",
-      },
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      allowNull: true,
     },
     school_id: {
       type: DataTypes.UUID,
@@ -37,8 +32,8 @@ Parent.init(
   },
   {
     sequelize,
-    modelName: "Parent",
+    modelName: "Class",
   }
 );
 
-module.exports = Parent;
+module.exports = Class;
