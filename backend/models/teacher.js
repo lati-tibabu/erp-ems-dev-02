@@ -1,6 +1,10 @@
 const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
+const User = require("./user");
+const School = require("./school");
+const ClassModel = require("./class");
+
 class Teacher extends Model {
   /**
    * Helper method for defining associations.
@@ -9,6 +13,13 @@ class Teacher extends Model {
    */
   static associate(models) {
     // define association here
+    Teacher.belongsTo(User, { foreignKey: "user_id" });
+    Teacher.belongsTo(School, { foreignKey: "school_id" });
+    Teacher.belongsToMany(ClassModel, {
+      through: "TeacherClass",
+      foreignKey: "teacher_id",
+      otherKey: "class_id",
+    });
   }
 }
 Teacher.init(
@@ -16,6 +27,7 @@ Teacher.init(
     teacher_id: {
       type: DataTypes.UUID,
       allowNull: false,
+      primaryKey: true,
     },
     user_id: {
       type: DataTypes.UUID,
@@ -110,6 +122,12 @@ Teacher.init(
     school_id: {
       type: DataTypes.UUID,
       allowNull: true,
+      references: {
+        model: "Schools",
+        key: "school_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
   },
   {

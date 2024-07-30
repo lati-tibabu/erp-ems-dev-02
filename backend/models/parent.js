@@ -2,6 +2,11 @@ const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
 const User = require("./user");
+
+const SchoolParent = require("./schoolparent");
+const School = require("./school");
+const Student = require("./student");
+
 class Parent extends Model {
   /**
    * Helper method for defining associations.
@@ -11,6 +16,16 @@ class Parent extends Model {
   static associate(models) {
     // define association here
     Parent.belongsTo(User, { foreignKey: "user_id" });
+    Parent.belongsToMany(School, {
+      through: "SchoolParent",
+      foreignKey: "parent_id",
+      otherKey: "school_id",
+    });
+    Parent.belongsToMany(Student, {
+      through: "ParentStudent",
+      foreignKey: "parent_id",
+      otherKey: "student_id",
+    });
   }
 }
 Parent.init(

@@ -1,6 +1,11 @@
 const sequelize = require("../config/database");
-const { DataTypes, ENUM, Model } = require("sequelize");
+const { DataTypes, ENUM, Model, UUIDV4 } = require("sequelize");
 
+const School = require("./school");
+const User = require("./user");
+const ClassModel = require("./class");
+
+const Parent = require("./parent");
 class Student extends Model {
   /**
    * Helper method for defining associations.
@@ -9,6 +14,14 @@ class Student extends Model {
    */
   static associate(models) {
     // define association here
+    Student.belongsTo(School, { foreignKey: "school_id" });
+    Student.belongsTo(User, { foreignKey: "user_id" });
+    Student.belongsTo(ClassModel, { foreignKey: "class_id" });
+    Student.belongsToMany(Parent, {
+      through: "ParentStudent",
+      foreignKey: "student_id",
+      otherKey: "parent_id",
+    });
   }
 }
 Student.init(
@@ -29,6 +42,16 @@ Student.init(
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     },
+    school_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: "Schools",
+        key: "school_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
     enrollment_date: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -39,7 +62,13 @@ Student.init(
     },
     class_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      references: {
+        model: "Classes",
+        key: "class_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     medical_conditions: {
       type: DataTypes.STRING,
@@ -87,10 +116,6 @@ Student.init(
     },
     special_needs: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    school_id: {
-      type: DataTypes.UUID,
       allowNull: true,
     },
   },

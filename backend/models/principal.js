@@ -1,6 +1,9 @@
 const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
+const User = require("./user");
+const School = require("./school");
+
 class Principal extends Model {
   /**
    * Helper method for defining associations.
@@ -8,7 +11,8 @@ class Principal extends Model {
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
-    Principal.belongsTo(Uses, { foreignKey: "user_id" });
+    Principal.belongsTo(User, { foreignKey: "user_id" });
+    Principal.belongsTo(School, { foreignKey: "school_id" });
     // define association here
   }
 }
@@ -31,7 +35,13 @@ Principal.init(
     },
     school_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      references: {
+        model: "Schools",
+        key: "school_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     role: {
       type: DataTypes.STRING,

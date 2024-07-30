@@ -1,6 +1,10 @@
 const sequelize = require("../config/database");
 const { DataTypes, ENUM, Model } = require("sequelize");
 
+const Teacher = require("./teacher");
+
+const School = require("./school");
+
 class Department extends Model {
   /**
    * Helper method for defining associations.
@@ -9,17 +13,24 @@ class Department extends Model {
    */
   static associate(models) {
     // define association here
+    Department.hasMany(Teacher, { foreignKey: "department_id" });
+    Department.belongsToMany(School, {
+      through: "SchoolDepartment",
+      foreignKey: "department_id",
+      otherKey: "department_id",
+    });
   }
 }
 Department.init(
   {
     department_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     description: {
       type: DataTypes.STRING,

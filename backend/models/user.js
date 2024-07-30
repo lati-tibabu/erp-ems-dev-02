@@ -6,6 +6,7 @@ const Principal = require("./principal");
 const Teacher = require("./teacher");
 const Student = require("./student");
 const Parent = require("./parent");
+
 const Address = require("./address");
 const Contact = require("./contact");
 const Role = require("./role");
@@ -24,7 +25,7 @@ class User extends Model {
     User.hasOne(Parent, { foreignKey: "user_id" });
 
     User.belongsTo(Address, { foreignKey: "address_id" });
-    User.belongsTo(Contact, { foreignKey: "contact_id" });
+    User.hasMany(Contact, { foreignKey: "user_id" });
     User.belongsTo(Role, { foreignKey: "role_id" });
     // define association here
   }
@@ -38,11 +39,11 @@ User.init(
     },
     username: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     password_hash: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     first_name: {
       type: DataTypes.STRING,
@@ -80,17 +81,35 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    contact_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
-    },
+    // contact_id: {
+    //   type: DataTypes.UUID,
+    //   allowNull: true,
+    //   references: {
+    //     model: "Contacts",
+    //     key: "contact_id",
+    //   },
+    //   onUpdate: "CASCADE",
+    //   onDelete: "CASCADE",
+    // },
     address_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      references: {
+        model: "Addresses",
+        key: "address_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     role_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      references: {
+        model: "Roles",
+        key: "role_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
   },
   {

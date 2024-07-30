@@ -1,21 +1,23 @@
 const sequelize = require("../config/database");
-const { DataTypes, ENUM, Model } = require("sequelize");
+const { DataTypes, Model } = require("sequelize");
+
+const User = require("./user");
+const School = require("./school");
 
 class Contact extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
   static associate(models) {
-    // define association here
+    Contact.belongsTo(User, { foreignKey: "user_id" });
+    Contact.belongsTo(School, { foreignKey: "school_id" });
   }
 }
+
 Contact.init(
   {
     contact_id: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING,
@@ -32,11 +34,37 @@ Contact.init(
     user_id: {
       type: DataTypes.UUID,
       allowNull: true,
+      references: {
+        model: "Users",
+        key: "user_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+    school_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: "Schools",
+        key: "school_id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
   },
   {
     sequelize,
     modelName: "Contact",
+    validate: {
+      onltOneUser() {
+        if (
+          (this.user_id && this.school_id) ||
+          (!this.user_id && !this.school_id)
+        ) {
+          throw new Error("Contact can only belong to either school or user!");
+        }
+      },
+    },
   }
 );
 
