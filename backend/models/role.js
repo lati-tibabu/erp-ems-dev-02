@@ -20,6 +20,7 @@ Role.init(
     role_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     role_description: {
       type: DataTypes.STRING,

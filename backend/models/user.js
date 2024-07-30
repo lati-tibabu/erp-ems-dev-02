@@ -81,16 +81,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    // contact_id: {
-    //   type: DataTypes.UUID,
-    //   allowNull: true,
-    //   references: {
-    //     model: "Contacts",
-    //     key: "contact_id",
-    //   },
-    //   onUpdate: "CASCADE",
-    //   onDelete: "CASCADE",
-    // },
     address_id: {
       type: DataTypes.UUID,
       allowNull: false,

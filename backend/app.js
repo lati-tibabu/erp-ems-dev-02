@@ -2,30 +2,14 @@ const express = require("express");
 const app = express();
 const schoolRoutes = require("./routes/schoolRoutes");
 const userRoutes = require("./routes/userRoute");
+const roleRoutes = require("./routes/roleRoute");
 const sequelize = require("./config/database");
-
-// const UserModel = require("./models/user");
-// const TeacherModel = require("./models/teacher");
-// const StudentModel = require("./models/student");
-// const ParentModel = require("./models/parent");
-// const SchoolModel = require("./models/school");
-// const AddressModel = require("./models/address");
-// const RoleModel = require("./models/role");
-// const ParentStudentModel = require("./models/parentstudent");
-// const ContactModel = require("./models/contact");
-// const DepartmentModel = require("./models/department");
-// const ClassModel = require("./models/class");
-// const UserRoleModel = require("./models/userrole");
-// const TeacherClassModel = require("./models/teacherclass");
-// const SchoolParentModel = require("./models/schoolparent");
-// const SchoolDepartmentModel = require("./models/schooldepertment");
 
 const Address = require("./models/address");
 const Administrator = require("./models/administrator");
 const Class = require("./models/class");
 const Contact = require("./models/contact");
 const Department = require("./models/department");
-// const Index = require("./models/index");
 const Parent = require("./models/parent");
 const ParentStudent = require("./models/parentstudent");
 const Principal = require("./models/principal");
@@ -37,9 +21,9 @@ const Student = require("./models/student");
 const Teacher = require("./models/teacher");
 const TeacherClass = require("./models/teacherclass");
 const User = require("./models/user");
-// const UserRole = require("./models/userrole");
 
 const cors = require("cors");
+const { createRole } = require("./services/roleServices");
 // const { json } = require("sequelize");
 
 app.use(express.json());
@@ -59,5 +43,6 @@ app.post("/syncDB", async (req, res) => {
 });
 app.use("/api/school", schoolRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/role", roleRoutes);
 
 module.exports = app;
