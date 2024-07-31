@@ -11,16 +11,16 @@ const createSchool = async (req, res) => {
 
 const getAllSchools = async (req, res) => {
   try {
-    const school = await schoolServices.getAllSchools();
-    res.json(school);
+    const schools = await schoolServices.getAllSchools();
+    res.json(schools);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const getOneSchool = async (req, res) => {
+const getSchool = async (req, res) => {
   try {
-    const school = await schoolServices.getOneSchool(req.params.school_id);
+    const school = await schoolServices.getSchool(req.params.school_id);
     res.json(school);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -33,6 +33,7 @@ const updateSchool = async (req, res) => {
       req.params.school_id,
       req.body
     );
+
     if (school) {
       res.status(200).json(school);
       res.json({ message: "School updated" });
@@ -40,17 +41,18 @@ const updateSchool = async (req, res) => {
       res.json({ message: "School not found" });
     }
   } catch (error) {
-    res.json({ message: "to tes" + error.message });
+    res.status(500).json({ message: error.message });
   }
 };
+
 const deleteSchool = async (req, res) => {
   try {
     const school = await schoolServices.deleteSchool(req.params.school_id);
+
     if (!school) {
-      res.status(404).json({ message: "School not found" });
+      res.json({ message: "School not found" });
     } else {
-      //   school.destroy();
-      res.status(200).json({ message: "School deleted" });
+      res.json({ message: "School deleted" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -60,7 +62,7 @@ const deleteSchool = async (req, res) => {
 module.exports = {
   createSchool,
   getAllSchools,
-  getOneSchool,
+  getSchool,
   updateSchool,
   deleteSchool,
 };

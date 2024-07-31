@@ -13,8 +13,8 @@ class Teacher extends Model {
    */
   static associate(models) {
     // define association here
-    Teacher.belongsTo(User, { foreignKey: "user_id" });
-    Teacher.belongsTo(School, { foreignKey: "school_id" });
+    Teacher.belongsTo(User, { foreignKey: "user_id", unique: true });
+    Teacher.belongsTo(School, { foreignKey: "school_id", unique: true });
     Teacher.belongsToMany(ClassModel, {
       through: "TeacherClass",
       foreignKey: "teacher_id",
@@ -28,6 +28,7 @@ Teacher.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: true,
     },
     user_id: {
       type: DataTypes.UUID,
@@ -38,6 +39,7 @@ Teacher.init(
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
+      unique: true,
     },
     hire_date: {
       type: DataTypes.DATE,
@@ -128,6 +130,7 @@ Teacher.init(
       },
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
+      unique: true,
     },
   },
   {

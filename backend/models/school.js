@@ -46,7 +46,7 @@ School.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
-      // defaultValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING,
@@ -61,10 +61,6 @@ School.init(
       },
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
-    },
-    contact_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,

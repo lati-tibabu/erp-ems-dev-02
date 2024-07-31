@@ -15,7 +15,7 @@ class Parent extends Model {
    */
   static associate(models) {
     // define association here
-    Parent.belongsTo(User, { foreignKey: "user_id" });
+    Parent.belongsTo(User, { foreignKey: "user_id", unique: true });
     Parent.belongsToMany(School, {
       through: "SchoolParent",
       foreignKey: "parent_id",
@@ -34,6 +34,7 @@ Parent.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     user_id: {
       type: DataTypes.UUID,
@@ -44,6 +45,7 @@ Parent.init(
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
+      unique: true,
     },
     school_id: {
       type: DataTypes.UUID,

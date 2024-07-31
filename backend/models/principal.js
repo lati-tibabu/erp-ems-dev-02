@@ -11,8 +11,8 @@ class Principal extends Model {
    * The `models/index` file will call this method automatically.
    */
   static associate(models) {
-    Principal.belongsTo(User, { foreignKey: "user_id" });
-    Principal.belongsTo(School, { foreignKey: "school_id" });
+    Principal.belongsTo(User, { foreignKey: "user_id", unique: true });
+    Principal.belongsTo(School, { foreignKey: "school_id", unique: true });
     // define association here
   }
 }
@@ -22,6 +22,7 @@ Principal.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     user_id: {
       type: DataTypes.UUID,
@@ -32,6 +33,7 @@ Principal.init(
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
+      unique: true,
     },
     school_id: {
       type: DataTypes.UUID,
@@ -42,6 +44,7 @@ Principal.init(
       },
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
+      unique: true,
     },
     role: {
       type: DataTypes.STRING,

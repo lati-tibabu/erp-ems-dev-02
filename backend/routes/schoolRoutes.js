@@ -4,7 +4,7 @@ const schoolController = require("../controllers/schoolController");
 
 router.post("/create", schoolController.createSchool);
 router.get("/load", schoolController.getAllSchools);
-router.get("/load/:school_id", schoolController.getOneSchool);
+router.get("/load/:school_id", schoolController.getSchool);
 router.put("/update/:school_id", schoolController.updateSchool);
 router.delete("/delete/:school_id", schoolController.deleteSchool);
 

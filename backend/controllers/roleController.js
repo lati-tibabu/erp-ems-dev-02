@@ -37,7 +37,9 @@ const updateRole = async (req, res) => {
     } else {
       res.json({ message: "Role not found" });
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const deleteRole = async (req, res) => {

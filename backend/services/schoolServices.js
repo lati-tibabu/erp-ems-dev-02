@@ -1,34 +1,27 @@
-const { where } = require("sequelize");
 const School = require("../models/school");
 
-// Service code to create school
-const createSchool = async (school_info) => {
-  return await School.create(school_info);
+const createSchool = async (schoolInfo) => {
+  return await School.create(schoolInfo);
 };
 
-// Service code to get schools(all schools or one school(by school_id))
 const getAllSchools = async () => {
   return await School.findAll();
 };
 
-const getOneSchool = async (schoolId) => {
-  return await School.findByPk(schoolId);
+const getSchool = async (schoolID) => {
+  return await School.findByPk(schoolID);
 };
 
-// Service code to update one student
-
-const updateSchool = async (schoolId, school_info) => {
-  const school = await School.findByPk(schoolId);
+const updateSchool = async (schoolID, schoolInfo) => {
+  const school = await School.findByPk(schoolID);
   if (school) {
-    await school.update(school_info);
+    await school.update(schoolInfo);
   }
   return school;
 };
 
-// Sevice code to delete student
-
-const deleteSchool = async (schoolId) => {
-  const school = await School.findByPk(schoolId);
+const deleteSchool = async (schoolID) => {
+  const school = await School.findByPk(schoolID);
   if (school) {
     await school.destroy();
   }
@@ -38,7 +31,7 @@ const deleteSchool = async (schoolId) => {
 module.exports = {
   createSchool,
   getAllSchools,
-  getOneSchool,
+  getSchool,
   updateSchool,
   deleteSchool,
 };
