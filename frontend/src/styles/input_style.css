@@ -19,3 +19,7 @@ input:focus {
     background: #e6f7ff;
     outline: none;
 }
+
+.checkbox-name {
+    font-size: 0.8em;
+}

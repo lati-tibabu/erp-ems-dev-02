@@ -5,11 +5,11 @@ import { Label } from './Typography';
 export const InputField = (props) => {
   return (
     <div className="input_field">
-        <label htmlFor={props.id}><Label text={props.labelName}/></label>
+        <label htmlFor={props.id} style={{display:'flex',flexDirection:'row', fontSize:'0.9rem', fontWeight:'normal', color:'red'}}><Label text={props.labelName}/> {props.required ?"*":""}</label>
         <input 
          className="input"
          id= {props.id}
-         type= {props.type} // "text"
+         type= {props.type} 
          name= {props.name}
          value= {props.value}
          placeholder= {props.placeholder}
@@ -45,8 +45,10 @@ export const RadioButton = (props) => {
 export const Checkbox = (props) => {
   return (
     <div className="input_field">
-        <label htmlFor={props.id}>{props.labelName}</label>
-        <input type="checkbox" id={props.id} name={props.name} value={props.value} />
+        <label htmlFor={props.id} className='checkbox-name'>
+          <input type="checkbox" id={props.id} name={props.name} value={props.value} />
+          {props.itemName}
+        </label>
     </div>
   );
 }   
@@ -60,3 +62,14 @@ export const TextArea = (props) => {
   );    
 }
 
+
+export const DropDown = (props) => {
+  return (
+    <div className="input_field">
+        <label htmlFor={props.id}>{props.labelName}</label>
+        <select id={props.id} name={props.name} value={props.value}>
+          {/* <option value="">{props.placeholder}</option> */}
+          {props.children}
+       </select>       
+    </div>
+    )}

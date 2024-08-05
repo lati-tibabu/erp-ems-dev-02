@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './index.css'
-import AdminCreate from './pages/admin_create'
+import CreateUser from './pages/create_user'
 import AdminLogin from './pages/admin_login'
 import AdminDashboard from './pages/admin/admin_dashboard'
 import StudentLogin from './pages/student_login'
@@ -11,9 +11,9 @@ import AdminLogin2 from './pages/admin/login'
 function App() {
   return (
     // <div>App</div>
-    // <AdminCreate />
+    <CreateUser />
     // <AdminLogin2 />
-    <AdminDashboard />
+    // <AdminDashboard />
     // <StudentLogin />
     // <SchoolCreate/>
   )

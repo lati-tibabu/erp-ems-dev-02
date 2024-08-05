@@ -141,7 +141,9 @@ const [mainContent,setMainContent] = useState(<Home />);
             borderRadius: '5px',
             boxShadow: '3px 3px 5px 0px #0088ff23',
             border:'none'
-          }}>
+          }}
+          onClick={() => setMainContent(<Users />)}
+          >
             <FontAwesomeIcon icon="fa-solid fa-users" color='#383861' />
             <Label text={visibleNav==0?'Users':''} style={{ color: '#383861', fontWeight: '700' }} />
           </RowWrapper>
@@ -242,7 +244,7 @@ const [mainContent,setMainContent] = useState(<Home />);
            height: '76.6vh',
            overflowY: 'scroll'
         }}>
-          {/* Additional content for the dashboard can go here */}
+          {/* Additional content for the dashboard will go here */}
          {/* <div>Hey</div> */}
          {mainContent}
         </ColumnWrapper>

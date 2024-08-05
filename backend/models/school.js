@@ -50,7 +50,8 @@ School.init(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+      unique: true,
     },
     address_id: {
       type: DataTypes.UUID,
@@ -65,6 +66,7 @@ School.init(
     email: {
       type: DataTypes.STRING,
       allowNull: true,
+      unique: true,
     },
     website: {
       type: DataTypes.STRING,
@@ -72,11 +74,11 @@ School.init(
     },
     established_year: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     is_deleted: {
       type: DataTypes.BOOLEAN,
@@ -84,7 +86,7 @@ School.init(
     },
     school_code: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     affiliation: {
       type: DataTypes.STRING,
@@ -96,7 +98,7 @@ School.init(
     },
     school_level: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     total_students: {
       type: DataTypes.INTEGER,
