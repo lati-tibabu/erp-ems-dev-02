@@ -121,6 +121,7 @@ function AddSchool() {
       console.error('Error submitting form:', error);
       if (error.response) {
         console.error('Error details:', error.response.data);
+        alert(error.response.data.message); // Assuming the response contains a 'message' property
       }
       if (error.response && error.response.status === 500) {
         alert("An internal server error occurred. Please try again later.");

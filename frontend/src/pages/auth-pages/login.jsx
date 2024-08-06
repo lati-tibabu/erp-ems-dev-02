@@ -1,10 +1,10 @@
 import React from 'react'
-import { CenterColumn, CenterRow } from '../components/center'
-import ColumnWrapper from '../components/column_wrapper'
-import { Heading2, Paragraph, Label } from '../components/Typography'
-import { InputField } from '../components/input_field'
-import { PrimaryButton } from '../components/buttons'
-import FullScreen from '../components/full_screen'
+import { CenterColumn, CenterRow } from '../../components/center'
+import ColumnWrapper from '../../components/column_wrapper'
+import { Heading2, Paragraph, Label } from '../../components/Typography'
+import { InputField } from '../../components/input_field'
+import { PrimaryButton } from '../../components/buttons'
+import FullScreen from '../../components/full_screen'
 
 export default function LoginPage() {
   return (

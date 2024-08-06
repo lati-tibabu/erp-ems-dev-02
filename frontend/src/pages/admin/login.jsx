@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'; 
 import { PrimaryButton } from "../../components/buttons";
 import { CenterColumn } from "../../components/center";
 import ColumnWrapper from "../../components/column_wrapper";
@@ -6,36 +9,127 @@ import FullScreen from "../../components/full_screen";
 import { InputField } from "../../components/input_field";
 import RowWrapper from "../../components/row_wrapper";
 import { Heading1, Label, Heading2 } from "../../components/Typography";
+import axios from 'axios';
 
 function Login() {
+
+  const [userData, setUserData] = useState({
+    username: '',
+    password: ''
+  })
+
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]:value
+    }))
+  }
+
+  
+  const handleSubmit = async (event) => {
+    // alert('Login button')  
+    event.preventDefault();
+
+    try{
+      // console.log('Login try');
+      console.log(userData);
+      const response = await axios.post('http://localhost:3060/api/user/login', userData)
+
+      if (response.status === 200){
+        alert('Login Succesful')
+        navigate('/admin')
+      } else {
+        alert('Login Failed')
+        console.log(response.message);
+      }
+    } catch (error){
+      console.error('Error: ', error);
+      if (error.response) {
+        console.error('Error details: ', error.response.data);
+        alert(error.response.data.message) 
+      }
+      if (error.response && error.response.status === 500) {
+        // alert("An internal server error occurred. Please try again later.");
+        console.log("An internal server error occurred. Please try again later.");
+      } else {
+        // alert("An error occurred while submitting the form. Please check your input and try again.");
+        console.log("An error occurred while submitting the form. Please check your input and try again.");
+      }
+    }
+  }
+  
   return (
     <div>
-      <FullScreen style={{ width: '30vw' }}>
-        <RowWrapper 
-          style={{ 
-            height: '100vh', 
-            gap: '20px', 
-            justifyContent: 'center' 
-          }}
-        >
-          <ColumnWrapper style={{ width: '40%', border: 'none' }}>
-            <CenterColumn style={{ width: '70%', padding: '30px', borderRadius: '20px' }}>
+        <RowWrapper style={styles.outside_wrapper}>
+          <ColumnWrapper style={styles.column_with_shadow}>
+            <CenterColumn style={{ width: '70%', padding: '30px', justifyContent:'center',alignItems:'center' }}>
               <Heading1 
                 text="EMS" 
-                style={{ fontSize: '3rem', fontWeight: '800' }} 
-              />
+                style={styles.heading1_style} />
               <Heading2 text="Login" />
               <Label text="Admin Login Portal" />
-              <InputField placeholder="Enter Username" labelName="Username" />
-              <InputField placeholder="Enter Password" labelName="Password" />
-              <PrimaryButton style={{ width: '50%', marginTop: '20px' }}>Login</PrimaryButton>
-              <Label text="Forgot Password?" />
+              <form onSubmit={handleSubmit}>
+                <InputField 
+                  placeholder="Enter Username" 
+                  labelName="Username" 
+                  type="text"
+                  name='username'
+                  value = {userData.username}
+                  onChange = {handleChange}
+                  />
+                <InputField 
+                  placeholder="Enter Password" 
+                  labelName="Password" 
+                  type="password"
+                  name='password'
+                  value={userData.password}
+                  onChange={handleChange}
+                  />
+                <PrimaryButton style={{ width: '50%', marginTop: '20px' }}>Login</PrimaryButton>
+              </form>
+              {/* <Label text="Forgot Password?" /> */}
+              
+              <Link style={styles.link_style} to={'/create_user'}>Create New User</Link>
             </CenterColumn>
           </ColumnWrapper>
         </RowWrapper>
-      </FullScreen>
     </div>
   );
+}
+
+const styles = {
+  column_with_shadow: {
+    width: '30%', 
+    height:'70%',
+    borderRadius: '30px',
+    boxShadow: '0 0 5px rgba(0, 100, 130, 0.21)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none'
+  },
+  outside_wrapper: { 
+    height: '95vh',
+    gap: '20px', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+    background: 'rgba(0,190,212,0.02)',
+  },
+  heading1_style: {
+    fontSize: '3rem', 
+    fontWeight: '800'
+  },
+  link_style: {
+    color: 'blue',
+    textDecoration: 'none',
+    fontSize: '0.8rem',
+    // background: 'red'
+  }
+
 }
 
 export default Login;

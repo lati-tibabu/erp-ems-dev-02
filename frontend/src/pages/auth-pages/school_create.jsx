@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Heading2 } from '../components/Typography'
-import {InputField} from '../components/input_field'
-import { PrimaryButton, SecondaryButton, TertiaryButton, DangerButton, OKButton } from '../components/buttons'
-import { CenterColumn } from '../components/center'
+import { Heading2 } from '../../components/Typography'
+import {InputField} from '../../components/input_field'
+import { PrimaryButton, SecondaryButton, TertiaryButton, DangerButton, OKButton } from '../../components/buttons'
+import { CenterColumn } from '../../components/center'
 import axios from 'axios'
-import ColumnWrapper from '../components/column_wrapper'
-import RowWrapper from '../components/row_wrapper'
+import ColumnWrapper from '../../components/column_wrapper'
+import RowWrapper from '../../components/row_wrapper'
 
 
 

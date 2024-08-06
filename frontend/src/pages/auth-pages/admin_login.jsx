@@ -1,13 +1,13 @@
 // import React from "react";
-import FullScreen from '../components/full_screen';
-import { Heading1,Heading2,Label } from '../components/Typography';
-import ColumnWrapper from '../components/column_wrapper';
-import RowWrapper from '../components/row_wrapper';
-import { HorizontalLine } from '../components/line_separator';
-import { InputField } from '../components/input_field';
-import { PrimaryButton } from '../components/buttons';
-import { CenterColumn } from '../components/center';
-import { AiLogo } from '../components/ems_logo';
+import FullScreen from '../../components/full_screen';
+import { Heading1,Heading2,Label } from '../../components/Typography';
+import ColumnWrapper from '../../components/column_wrapper';
+import RowWrapper from '../../components/row_wrapper';
+import { HorizontalLine } from '../../components/line_separator';
+import { InputField } from '../../components/input_field';
+import { PrimaryButton } from '../../components/buttons';
+import { CenterColumn } from '../../components/center';
+import { AiLogo } from '../../components/ems_logo';
 
 function AdminLogin (props){
     return (

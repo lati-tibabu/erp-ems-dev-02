@@ -130,7 +130,7 @@ function School() {
             </ColumnWrapper>
           </ColumnWrapper>
           <ColumnWrapper style={{ width: '100%' }}>
-            {schoolWindow==='listing'?<SchoolListing/>:<AddSchool/>}
+            {/* {schoolWindow==='listing'?<SchoolListing/>:<AddSchool/>} */}
           </ColumnWrapper>
         </RowWrapper>
       </ColumnWrapper>
