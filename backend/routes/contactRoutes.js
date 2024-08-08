@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const classController = require("../controllers/classController");
+const authToken = require("../middlewares/auth-token");
 
 router.post("/create", classController.createClass);
 router.get("/load", classController.getAllClasses);

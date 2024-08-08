@@ -10,27 +10,40 @@ import AddSchool from '../pages/admin/dashboard-contents/school-pages/add-school
 import SchoolListing from '../pages/admin/dashboard-contents/school-pages/school-listing';
 import Settings from '../pages/admin/dashboard-contents/setting';
 import Users from '../pages/admin/dashboard-contents/users';
-import { elements } from 'chart.js';
+
+import ViewSchool from '../pages/admin/dashboard-contents/school-pages/view-school';
+// import { elements } from 'chart.js';
+import ProtectedRoute from '../components/protectred_routes';
 
 const adminRoutes = {
   path: '/admin',
   element: <AdminDashboard />,
+  // element: { path: 'home', element: <ProtectedRoute component={Home} />},
   children: [
-    { path: 'home', element: <Home /> },
-    { path: 'help', element: <Help /> },
-    { path: 'logout', element: <Logout /> },
-    { path: 'profile', element: <Profile /> },
-    { path: 'report', element: <Report /> },
-    { path: 'school', element: <School />,
+    // { path: 'home', element: <Home /> },
+    { path: 'home', element: <ProtectedRoute component={Home} />},
+    // { path: 'help', element: <Help /> },
+    { path: 'help', element: <ProtectedRoute component={Help} />},
+    // { path: 'logout', element: <Logout /> },
+    { path: 'logout', element: <ProtectedRoute component={Logout} /> },
+    // { path: 'profile', element: <Profile /> },
+    { path: 'profile', element: <ProtectedRoute component={Profile} /> },
+    // { path: 'report', element: <Report /> },
+    { path: 'report', element: <ProtectedRoute component={Report} /> },
+    // { path: 'school', element: <School />,
+    { path: 'school', element: <ProtectedRoute component={School} />,
       children : [
         {path: 'add', element: <AddSchool />},
         {path: 'listing', element: <SchoolListing />},
+        {path: 'view/:schoolId', element: <ViewSchool />}
       ]
     },
     // { path: 'school/add', element: <AddSchool /> },
     // { path: 'school/listing', element: <SchoolListing /> },
-    { path: 'settings', element: <Settings /> },
-    { path: 'users', element: <Users /> },
+    // { path: 'settings', element: <Settings /> },
+    { path: 'settings', element: <ProtectedRoute component={Settings} /> },
+    // { path: 'users', element: <Users /> },
+    { path: 'users', element: < ProtectedRoute component={Users} /> },
   ],
 };
 

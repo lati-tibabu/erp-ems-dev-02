@@ -136,6 +136,7 @@ function Home() {
             <Heading6 text="Recent Activities"/>
             <Label text="Recent Activities"/>
             <Label text="Recent Activities"/>
+            <Label text={"JWT"} />
             </ColumnWrapper>
           </RowWrapper>
         </div> 

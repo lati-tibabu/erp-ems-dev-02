@@ -11,10 +11,15 @@ import AddSchool from './school-pages/add-school';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+
 
 library.add(fas);
 
 function School() {
+
+  const navigate = useNavigate();
+
   // const [schoolWindow, setSchoolWindow] = useState(<SchoolListing />);
   const [schoolWindow, setSchoolWindow] = useState('listing');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +28,10 @@ function School() {
     setIsLoading(true);
     setTimeout(() => {
       // schoolWindow === <SchoolListing /> ? setSchoolWindow(<AddSchool />) : setSchoolWindow(<AddSchool />);
+      // schoolWindow === 'listing' ? setSchoolWindow('add') : setSchoolWindow('listing');
+      // schoolWindow === 'listing' ? setSchoolWindow('add') && navigate('/admin/school/add') : setSchoolWindow('listing') && navigate('/admin/school/listing');
       schoolWindow === 'listing' ? setSchoolWindow('add') : setSchoolWindow('listing');
+      schoolWindow === 'listing' ? navigate('/admin/school/add') : navigate('/admin/school/listing');
       setIsLoading(false);
     }, 500); 
   };
@@ -131,6 +139,7 @@ function School() {
           </ColumnWrapper>
           <ColumnWrapper style={{ width: '100%' }}>
             {/* {schoolWindow==='listing'?<SchoolListing/>:<AddSchool/>} */}
+            <Outlet />
           </ColumnWrapper>
         </RowWrapper>
       </ColumnWrapper>

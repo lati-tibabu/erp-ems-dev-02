@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import RowWrapper from '../../components/row_wrapper';
 import ColumnWrapper from '../../components/column_wrapper';
 import { AiLogo } from '../../components/ems_logo';
@@ -12,6 +12,12 @@ library.add(fas);
 
 function AdminDashboard() {
 const [visibleNav,setVisibleNav] = useState(0);
+const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    navigate('/auth/login');
+  }
 
   return (
     <div style={{
@@ -63,7 +69,7 @@ const [visibleNav,setVisibleNav] = useState(0);
             </RowWrapper>
           </Link>
 
-          <Link to={'/admin/school'} style={{textDecoration: 'none'}}>
+          <Link to={'/admin/school/listing'} style={{textDecoration: 'none'}}>
             <RowWrapper style={styles.home_nav_button_style}>          
               <FontAwesomeIcon icon="fa-solid fa-school" color='#383861' />
               <Label text={visibleNav==0?'Schools':''} style={{ color: '#383861', fontWeight: '700' }} />
@@ -105,12 +111,18 @@ const [visibleNav,setVisibleNav] = useState(0);
             </RowWrapper>
           </Link>
 
-          <Link to={'/auth/login'} style={{textDecoration: 'none'}}>
+          {/* <Link to={'/auth/login'} style={{textDecoration: 'none'}}>
             <RowWrapper style={styles.home_nav_button_style}>
               <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" color='#383861' />
               <Label text={visibleNav==0?'Logout':''} style={{ color: '#383861', fontWeight: '700' }} />
             </RowWrapper>
-          </Link>
+          </Link> */}
+
+          <RowWrapper style={styles.home_nav_button_style}
+            onClick={handleLogout}>
+            <FontAwesomeIcon icon="fa-solid fa-sign-out-alt" color='#383861' />
+            <Label text={visibleNav==0?'Logout':''} style={{ color: '#383861', fontWeight: '700' }} />
+          </RowWrapper>
 
         </ColumnWrapper>
 

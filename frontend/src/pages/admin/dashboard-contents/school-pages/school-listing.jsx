@@ -5,27 +5,31 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import '../../../../styles/admin-school.css'
 import '../../../../styles/admin-school.css'
+import { Link, Outlet } from 'react-router-dom';
+import ViewSchool from './view-school';
 // import SchoolListing from './school-pages/school-listing';
+import { useNavigate } from 'react-router-dom';
 
 library.add(fas)
 
 function SchoolListing() {
 
 
-  const [schools, setSchools] = useState([])
-const getSchools = async () => {
-  try {
-    const response = await fetch('http://localhost:3060/api/school/load');
-    const data = await response.json();
-    setSchools(data);
-  } catch (error) {
-    console.error('Error fetching schools:', error);
-  }
-};
 
-useEffect(() => {
-  getSchools()
-}, []);
+  const [schools, setSchools] = useState([])
+  const getSchools = async () => {
+    try {
+      const response = await fetch('http://localhost:3060/api/school/load');
+      const data = await response.json();
+      setSchools(data);
+    } catch (error) {
+      console.error('Error fetching schools:', error);
+    }
+  };
+
+  useEffect(() => {
+    getSchools()
+  }, []);
 
   const schoolHeadings = ['School Code', 'School Name', 'Type', 'Action']
 
@@ -41,14 +45,19 @@ useEffect(() => {
 //   { 'School Code': 'ISS-009', 'School Name': 'Inspire Secondary School', 'Type': 'Public' },
 //   { 'School Code': 'JPS-010', 'School Name': 'Joyful Primary School', 'Type': 'Private' },
 // ];
-const handleEdit = (schoolCode) => {
-  console.log('Editing school with code:', schoolCode);
-};
+  const handleEdit = (schoolID) => {
+    console.log('Editing school with ID:', schoolID);
+  };
 
-const handleView = (schoolCode) => {
-  console.log('Viewing school with code:', schoolCode);
-};
+// const handleView = (schoolCode) => {
+//   console.log('Viewing school with code:', schoolCode);
+// };
+  const navigate = useNavigate();
 
+  const handleView = (schoolID) => {
+    // alert('ViewSchool')
+    navigate(`/admin/school/view/${schoolID}`)
+  }
 
 // try{
 //   console.log(schools);
@@ -81,12 +90,16 @@ const handleView = (schoolCode) => {
                     <td>{school.name}</td>
                     <td>{school.type}</td>
                     <td className='actions'>
-                      <button onClick={() => handleEdit(data['schoo_id'])}>
+                      <button onClick={() => handleEdit(school.school_id)}>
                         <FontAwesomeIcon icon='fa-solid fa-pencil' />
                         Edit
                       </button>
 
-                      <button onClick={() => handleView(data['school_id'])}>
+                      {/* <button onClick={() => handleView(data['school_id'])}>
+                        <FontAwesomeIcon icon='fa-solid fa-eye' />
+                        View
+                      </button> */}
+                      <button onClick={() => handleView(school.school_id)}>
                         <FontAwesomeIcon icon='fa-solid fa-eye' />
                         View
                       </button>
@@ -99,4 +112,4 @@ const handleView = (schoolCode) => {
   )
 }
 
-export default SchoolListing
+export default SchoolListing;

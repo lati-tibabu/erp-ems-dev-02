@@ -38,10 +38,14 @@ function Login() {
       // console.log('Login try');
       console.log(userData);
       const response = await axios.post('http://localhost:3060/api/user/login', userData)
+      const { token } = response.data;
 
       if (response.status === 200){
-        alert('Login Succesful')
-        navigate('/admin')
+        // alert('Login Succesful')
+
+        localStorage.setItem('jwt', token)
+
+        navigate('/admin/home')
       } else {
         alert('Login Failed')
         console.log(response.message);
@@ -92,8 +96,7 @@ function Login() {
                 <PrimaryButton style={{ width: '50%', marginTop: '20px' }}>Login</PrimaryButton>
               </form>
               {/* <Label text="Forgot Password?" /> */}
-              
-              <Link style={styles.link_style} to={'/create_user'}>Create New User</Link>
+              <Link style={styles.link_style} to={'/auth/create_user'}>Create New User</Link>
             </CenterColumn>
           </ColumnWrapper>
         </RowWrapper>
