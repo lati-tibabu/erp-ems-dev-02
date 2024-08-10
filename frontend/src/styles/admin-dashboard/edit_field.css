@@ -1,0 +1,15 @@
+.edit_field {
+    /* background: red; */
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid black;
+    background: transparent;
+    max-width: 400px;
+    /* background-color: rebeccapurple; */
+}
+
+.edit_field:focus {
+    border: none;
+    border-bottom: 1px solid black;
+    background: rgba(255, 255, 255, 0.451);
+}

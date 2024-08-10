@@ -12,8 +12,10 @@ import Settings from '../pages/admin/dashboard-contents/setting';
 import Users from '../pages/admin/dashboard-contents/users';
 
 import ViewSchool from '../pages/admin/dashboard-contents/school-pages/view-school';
+import EditSchool from '../pages/admin/dashboard-contents/school-pages/edit-school';
 // import { elements } from 'chart.js';
 import ProtectedRoute from '../components/protectred_routes';
+import { elements } from 'chart.js';
 
 const adminRoutes = {
   path: '/admin',
@@ -35,7 +37,8 @@ const adminRoutes = {
       children : [
         {path: 'add', element: <AddSchool />},
         {path: 'listing', element: <SchoolListing />},
-        {path: 'view/:schoolId', element: <ViewSchool />}
+        {path: 'view/:schoolId', element: <ViewSchool />},
+        {path: 'edit/:schoolId', element: <EditSchool />},
       ]
     },
     // { path: 'school/add', element: <AddSchool /> },

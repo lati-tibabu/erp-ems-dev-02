@@ -35,7 +35,7 @@ const updateSchool = async (req, res) => {
     );
 
     if (school) {
-      res.status(200).json(school);
+      // res.status(200).json(school);
       res.json({ message: "School updated" });
     } else {
       res.json({ message: "School not found" });

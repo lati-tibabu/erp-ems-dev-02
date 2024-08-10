@@ -4,10 +4,10 @@ import { Label } from './Typography';
 
 export const InputField = (props) => {
   return (
-    <div className="input_field">
+    <div className={"input_field"}>
         <label htmlFor={props.id} style={{display:'flex',flexDirection:'row', fontSize:'0.9rem', fontWeight:'normal', color:'red'}}><Label text={props.labelName}/> {props.required ?"*":""}</label>
         <input 
-         className="input"
+         className={"input"+" "+props.className}
          id= {props.id}
          type= {props.type} 
          name= {props.name}
@@ -28,7 +28,9 @@ export const InputField = (props) => {
          size= {props.size}
          onChange= {props.onChange}
          onBlur= {props.onBlur}
-         onFocus= {props.onFocus} />
+         onFocus= {props.onFocus} 
+         style={props.style}
+         />
     </div>
   );
 }

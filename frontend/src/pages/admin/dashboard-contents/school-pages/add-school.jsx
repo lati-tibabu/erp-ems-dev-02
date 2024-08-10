@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heading2, Heading4 } from '../../../../components/Typography';
+import { Heading2, Heading4, Label } from '../../../../components/Typography';
 import { InputField } from '../../../../components/input_field';
 import { PrimaryButton, TertiaryButton } from '../../../../components/buttons';
 import { CenterColumn } from '../../../../components/center';
@@ -14,10 +14,10 @@ function AddSchool() {
   const [schoolData, setSchoolData] = useState({
     name: '',
     established_year: '',
-    type: '',
+    // type: '',
     website: '',
     affiliation: '',
-    school_level: '',
+    // school_level: '',
     is_deleted: false,
     school_code: '',
     medium_of_instruction: '',
@@ -44,7 +44,8 @@ function AddSchool() {
     special_programs: '',
     accessibility_features: '',
   });
-
+  const [type, setSchoolType] = useState('');
+  const [school_level, setSchoolLevel] = useState('');
   const [address_id, setAddressId] = useState('');
   const [contactData, setContactData] = useState({
     email: '',
@@ -106,6 +107,8 @@ function AddSchool() {
       const combinedData = {
         ...schoolData,
         address_id,
+        type,
+        school_level,
         ...contactData
       };
 
@@ -206,7 +209,7 @@ function AddSchool() {
                     value={schoolData.established_year}
                     onChange={handleSchoolChange}
                     />
-                    <InputField
+                    {/* <InputField
                     labelName="Type"
                     required
                     placeholder="Enter School Type"
@@ -214,7 +217,19 @@ function AddSchool() {
                     type="text"
                     value={schoolData.type}
                     onChange={handleSchoolChange}
-                    />
+                    /> */}
+
+                    <ColumnWrapper style={{border:'none'}}>
+                      <Label text='School Type' required/>
+                      <Select
+                      placeholder="Select School Type"
+                      options={schoolTypeOptions}
+
+                      onChange={(option) => setSchoolType(option.value)}
+
+                      ></Select>
+                    </ColumnWrapper>
+
                     <InputField
                     labelName="School Code"
                     required
@@ -245,7 +260,7 @@ function AddSchool() {
                     value={schoolData.medium_of_instruction}
                     onChange={handleSchoolChange}
                     />
-                    <InputField
+                    {/* <InputField
                     labelName="School Level"
                     required
                     placeholder="Enter School Level"
@@ -253,7 +268,17 @@ function AddSchool() {
                     type="text"
                     value={schoolData.school_level}
                     onChange={handleSchoolChange}
-                    />
+                    /> */}
+
+                    <ColumnWrapper style={{border: 'none'}}>
+                      <Label text="School Level" required/>
+
+                      <Select
+                        placeholder="Select School Level"
+                        options={schoolLevelOptions}
+                        onChange={(option) => setSchoolLevel(option.value)}
+                      ></Select>
+                    </ColumnWrapper>
                     <InputField
                     labelName="Total Students"
                     placeholder="Enter Total Students"
@@ -287,7 +312,7 @@ function AddSchool() {
                     gap: '30px',
                     justifyContent: 'space-between'
                 }}>
-                <Heading4 text="Address Information*" />
+                <Heading4 text="Address Information" />
                 <FontAwesomeIcon 
                     color='gray'
                     icon={showAddressField === 'show' ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'}
@@ -301,15 +326,17 @@ function AddSchool() {
                     display: (showAddressField === 'show')?'flex':'none',
                     border: 'none'
                 }}>
-                    
-                    <Select
-                    placeholder='Select the School Address'
-                    options={address.map((addr) => ({
-                        value: addr.address_id,
-                        label: addr.city+","+addr.subcity+","+addr.woreda+","+addr.kebele
-                    }))}
-                    onChange={(option) => setAddressId(option.value)}
-                    ></Select>
+                    <ColumnWrapper style={{border: 'none'}}>
+                        <Label text='School Address' required />
+                        <Select
+                        placeholder='Select the School Address'
+                        options={address.map((addr) => ({
+                            value: addr.address_id,
+                            label: addr.city+","+addr.subcity+","+addr.woreda+","+addr.kebele
+                        }))}
+                        onChange={(option) => setAddressId(option.value)}
+                        ></Select>
+                    </ColumnWrapper>
                 </RowWrapper>
 
             </ColumnWrapper>
@@ -354,6 +381,7 @@ function AddSchool() {
                         value={schoolData.accreditation_status}
                         onChange={handleSchoolChange}
                         />
+
                         <InputField
                         labelName="Campus Area"
                         placeholder="Enter Campus Area"
@@ -584,5 +612,31 @@ function AddSchool() {
     </div>
   );
 }
+
+const schoolTypeOptions = [
+  { value: 'public_government_school', label: 'Public: Government School' },
+  { value: 'public_community_school', label: 'Public: Community School' },
+  { value: 'private_general_school', label: 'Private: General Private School' },
+  { value: 'private_mission_school', label: 'Private: Mission School' },
+  { value: 'international_school', label: 'International: International School' },
+  { value: 'religious_islamic_school', label: 'Religious: Islamic School (Madrasa)' },
+  { value: 'religious_christian_school', label: 'Religious: Christian School' },
+  { value: 'alternative_adult_education_center', label: 'Alternative: Adult Education Center' },
+  { value: 'alternative_nfe_center', label: 'Alternative: Non-Formal Education (NFE) Center' },
+  { value: 'vocational_technical_school', label: 'Vocational and Technical: Vocational and Technical School' },
+  { value: 'special_needs_school', label: 'Special Needs: Special Needs School' },
+  { value: 'charity_school', label: 'Charity: Charity School' }
+];
+
+const schoolLevelOptions = [
+  { value: 'primary_elementary', label: 'Primary: Elementary' },
+  { value: 'junior_secondary', label: 'Secondary: Junior Secondary' },
+  { value: 'senior_secondary', label: 'Secondary: Senior Secondary' },
+  { value: 'vocational_tvet', label: 'Vocational: TVET Level III Diploma' },
+  { value: 'tertiary_bachelor_education', label: 'Tertiary: Bachelor of Education' },
+  { value: 'tertiary_bachelor_arts_science', label: 'Tertiary: Bachelor of Arts/Science' },
+  { value: 'tertiary_masters', label: 'Tertiary: Master\'s Degree' },
+  { value: 'tertiary_doctorate', label: 'Tertiary: Doctorate (PhD)' }
+];
 
 export default AddSchool;

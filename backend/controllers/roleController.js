@@ -32,7 +32,7 @@ const updateRole = async (req, res) => {
     const role = await roleServices.updateRole(req.params.role_id, req.body);
 
     if (role) {
-      res.status(200).json(role);
+      // res.status(200).json(role);
       res.json({ message: "Role updated" });
     } else {
       res.json({ message: "Role not found" });

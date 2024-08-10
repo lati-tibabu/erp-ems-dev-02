@@ -45,14 +45,16 @@ function SchoolListing() {
 //   { 'School Code': 'ISS-009', 'School Name': 'Inspire Secondary School', 'Type': 'Public' },
 //   { 'School Code': 'JPS-010', 'School Name': 'Joyful Primary School', 'Type': 'Private' },
 // ];
+const navigate = useNavigate();
+
   const handleEdit = (schoolID) => {
-    console.log('Editing school with ID:', schoolID);
+    // console.log('Editing school with ID:', schoolID);
+    navigate(`/admin/school/edit/${schoolID}`)
   };
 
 // const handleView = (schoolCode) => {
 //   console.log('Viewing school with code:', schoolCode);
 // };
-  const navigate = useNavigate();
 
   const handleView = (schoolID) => {
     // alert('ViewSchool')
