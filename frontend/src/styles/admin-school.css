@@ -1,16 +1,21 @@
 .school-data-table {
-    padding: 5px;
+    padding: 15px;
+    margin: 5px;
     font-size: 0.8rem;
     font-weight: normal;
     border-radius: 10px;
-    /* border: 1px solid rgb(0, 149, 255); */
-    border-collapse: separate;
-    box-shadow: 0 0 5px rgba(0, 149, 255, 0.433);
+    border: 1px solid rgb(0, 149, 255);
+    border-collapse: collapse;
+    /* box-shadow: 0 0 5px rgba(0, 149, 255, 0.433); */
 }
 
 .school-data-table thead {
     background: rgba(6, 82, 148, 0.743);
+    height: 40px;
     color: white;
+    /* border: 1px solid rgb(0, 149, 255); */
+    /* border-collapse: separate; */
+    /* box-shadow: 0 0 5px rgba(0, 149, 255, 0.433); */
 }
 
 .school-data-table thead th {
@@ -27,10 +32,29 @@
     /* display: flex; */
 }
 
+.school-data-table thead tr th {
+    /* background: #00a2ff21; */
+    border: 1px solid rgba(0, 149, 255, 0.186);
+    /* background-color: rebeccapurple; */
+}
+
 .school-data-table tbody tr {
     /* background: #00a2ff21; */
     /* width: 20px; */
-    border: 1px solid rgb(0, 149, 255);
+    border: 1px solid rgba(0, 149, 255, 0.186);
+    /* background-color: rebeccapurple; */
+}
+
+.school-data-table tbody tr td {
+    /* background: #00a2ff21; */
+    /* border: 1px solid rgba(0, 149, 255, 0.186); */
+    /* background-color: rebeccapurple; */
+    /* text-align: center; */
+    padding-left: 15px;
+}
+
+.school-data-table tbody tr:nth-child(even) {
+    background-color: #00a2ff21;
 }
 
 
