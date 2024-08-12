@@ -48,11 +48,30 @@ app.use(cors());
 app.post("/syncDB", async (req, res) => {
   try {
     await sequelize.sync({ force: true });
+    // await sequelize.sync({ alter: true });
     res.json({ message: "Database Synced" });
   } catch (error) {
     res.status(500).send("Error syncing database: " + error.message);
   }
 });
+
+app.post("/syncSchool", async (req, res) => {
+  try {
+    await sequelize.models.School.sync({ alter: true }); // or { force: true } if you want to drop and recreate the table
+    res.json({ message: "School Model Synced" });
+  } catch (error) {
+    res.status(500).send("Error syncing School model: " + error.message);
+  }
+});
+
+// app.post("/syncUser", async (req, res) => {
+//   try {
+//     await sequelize.models.user.sync({ alter: true }); // or { force: true } if you want to drop and recreate the table
+//     res.json({ message: "User Model Synced" });
+//   } catch (error) {
+//     res.status(500).send("Error syncing User model: " + error.message);
+//   }
+// });
 
 // Route middleware
 app.use("/api/school", schoolRoutes);

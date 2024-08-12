@@ -68,6 +68,11 @@ School.init(
       allowNull: true,
       unique: true,
     },
+    status: {
+      type: DataTypes.ENUM("active", "pending", "deleted", "archived"),
+      allowNull: false,
+      defaultValue: "active",
+    },
     website: {
       type: DataTypes.STRING,
       allowNull: true,

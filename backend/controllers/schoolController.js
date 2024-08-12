@@ -1,9 +1,25 @@
 const schoolServices = require("../services/schoolServices");
 
+// const createSchool = async (req, res) => {
+//   try {
+//     const school = await schoolServices.createSchool(req.body);
+//     res.status(201).json(school);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const createSchool = async (req, res) => {
   try {
-    const school = await schoolServices.createSchool(req.body);
-    res.status(201).json(school);
+    data = req.body;
+
+    if (Array.isArray(data)) {
+      const schools = await schoolServices.createSchools(data);
+      res.status(201).json(schools);
+    } else {
+      const school = await schoolServices.createSchool(data);
+      res.status(201).json(school);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -13,6 +29,42 @@ const getAllSchools = async (req, res) => {
   try {
     const schools = await schoolServices.getAllSchools();
     res.json(schools);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getActiveSchool = async (req, res) => {
+  try {
+    const school = await schoolServices.getActiveSchool();
+    res.json(school);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getPendingSchool = async (req, res) => {
+  try {
+    const school = await schoolServices.getPendingSchool();
+    res.json(school);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getDeletedSchool = async (req, res) => {
+  try {
+    const school = await schoolServices.getDeletedSchool();
+    res.json(school);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getArchivedSchool = async (req, res) => {
+  try {
+    const school = await schoolServices.getArchivedSchool();
+    res.json(school);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -62,6 +114,10 @@ const deleteSchool = async (req, res) => {
 module.exports = {
   createSchool,
   getAllSchools,
+  getActiveSchool,
+  getPendingSchool,
+  getDeletedSchool,
+  getArchivedSchool,
   getSchool,
   updateSchool,
   deleteSchool,
