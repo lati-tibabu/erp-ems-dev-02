@@ -21,7 +21,7 @@ library.add(fas);
 
 // console.log(visibleNav)
 function AdminDashboard() {
-const [visibleNav,setVisibleNav] = useState(0);
+const [visibleNav, setVisibleNav] = useState(0);
 const [mainContent,setMainContent] = useState(<Home />);
 
   return (

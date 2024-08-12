@@ -21,7 +21,8 @@ const navigate = useNavigate();
 
   return (
     <div style={{
-      background:'#09f4',
+      minHeight: '100vh',
+      background:'#09f1',
       padding: '5px'
       }}>
       {/* Header */}
@@ -69,7 +70,7 @@ const navigate = useNavigate();
             </RowWrapper>
           </Link>
 
-          <Link to={'/admin/school/listing'} style={{textDecoration: 'none'}}>
+          <Link to={'/admin/school/listing/all'} style={{textDecoration: 'none'}}>
             <RowWrapper style={styles.home_nav_button_style}>          
               <FontAwesomeIcon icon="fa-solid fa-school" color='#383861' />
               <Label text={visibleNav==0?'Schools':''} style={{ color: '#383861', fontWeight: '700' }} />
@@ -156,9 +157,10 @@ const styles =
     boxShadow: '3px 3px 5px 0px #0088ff23'
   },
   header_styles: {
-    background:'#F0FBFF',
+    // background:'#F0FBFF',
+    background: 'white',
     border:'none',
-    boxShadow:'0 4px 8px 0 rgba(0, 170, 230, 0.2)',
+    boxShadow:'0 4px 8px 0 rgba(0, 170, 230, 0.012)',
     borderRadius: '7px '
   },
 

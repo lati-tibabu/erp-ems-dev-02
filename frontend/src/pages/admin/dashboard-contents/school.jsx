@@ -5,31 +5,85 @@ import RowWrapper from '../../../components/row_wrapper';
 import { Checkbox } from '../../../components/input_field';
 import { CheckboxWrapper } from '../../../components/wrapper';
 import { PrimaryButton } from '../../../components/buttons';
-import SchoolListing from './school-pages/school-listing';
-import AddSchool from './school-pages/add-school';
+// import SchoolListing from './school-pages/school-listing';
+// import AddSchool from './school-pages/add-school';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-
+import { Outlet, useNavigate } from 'react-router-dom';
 
 library.add(fas);
 
-function School() {
+const styles = {
+  columnWrapper: {
+    borderRadius: '5px',
+    overflow: 'scroll',
+    padding: '10px',
+    border: 'none',
+    boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
+  },
+  rowWrapperTop: {
+    width: '100%',
+    justifyContent: 'space-between',
+    border: 'none',
+  },
+  searchWrapper: {
+    width: '300px',
+    borderRadius: '5px',
+    justifyContent: 'end',
+    alignItems: 'center',
+    padding: '0',
+    border: 'none',
+    boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
+  },
+  searchInput: {
+    borderRadius: '0',
+    width: '100%',
+    height: '60%',
+    border: 'none',
+  },
+  searchIcon: {
+    padding: '10px',
+    borderRadius: '0 5px 5px 0',
+    background: '#0088ff',
+    cursor: 'pointer',
+  },
+  button: {
+    borderRadius: '5px',
+    border: 'none',
+    boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
+    width: '200px',
+  },
+  rowWrapperBottom: {
+    gap: '5px',
+    height: '100%',
+    border: 'none',
+  },
+  filterColumnWrapper: {
+    width: '200px',
+    height: '100%',
+    border: 'none',
+  },
+  filterColumnInnerWrapper: {
+    gap: '5px',
+    border: 'none',
+  },
+  mainContentColumnWrapper: {
+    width: '100%',
+    border: 'none',
+  },
+};
 
+function School() {
   const navigate = useNavigate();
 
-  // const [schoolWindow, setSchoolWindow] = useState(<SchoolListing />);
   const [schoolWindow, setSchoolWindow] = useState('listing');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddSchoolClick = () => {
     setIsLoading(true);
     setTimeout(() => {
-      // schoolWindow === <SchoolListing /> ? setSchoolWindow(<AddSchool />) : setSchoolWindow(<AddSchool />);
-      // schoolWindow === 'listing' ? setSchoolWindow('add') : setSchoolWindow('listing');
-      // schoolWindow === 'listing' ? setSchoolWindow('add') && navigate('/admin/school/add') : setSchoolWindow('listing') && navigate('/admin/school/listing');
       schoolWindow === 'listing' ? setSchoolWindow('add') : setSchoolWindow('listing');
       schoolWindow === 'listing' ? navigate('/admin/school/add') : navigate('/admin/school/listing');
       setIsLoading(false);
@@ -39,37 +93,14 @@ function School() {
   return (
     <div>
       <Heading3 text="School Management" />
-      <ColumnWrapper
-        style={{
-          borderRadius: '5px',
-          // height: '100vh',
-          overflow: 'scroll',
-          padding: '10px',
-          border: 'none',
-          boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
-          // background: 'red'
-        }}>
+      <ColumnWrapper style={styles.columnWrapper}>
         <RowWrapper style={{ border: 'none' }}>
-          <RowWrapper
-            style={{
-              width: '100%',
-              justifyContent: 'space-between',
-              border: 'none',
-            }}>
-            <RowWrapper
-              style={{
-                width: '300px',
-                borderRadius: '5px',
-                justifyContent: 'end',
-                alignItems: 'center',
-                padding: '0',
-                border: 'none',
-                boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
-              }}>
+          <RowWrapper style={styles.rowWrapperTop}>
+            <RowWrapper style={styles.searchWrapper}>
               <input
                 type="text"
                 placeholder="Search school"
-                style={{ borderRadius: '0', width: '100%', height: '60%', border: 'none' }}
+                style={styles.searchInput}
               />
               <FontAwesomeIcon
                 icon="fa-solid fa-search"
@@ -77,46 +108,21 @@ function School() {
                 onClick={() => {
                   alert('hi');
                 }}
-                style={{
-                  padding: '10px',
-                  borderRadius: '0 5px 5px 0',
-                  background: '#0088ff',
-                  cursor: 'pointer',
-                }}
+                style={styles.searchIcon}
               />
             </RowWrapper>
             <PrimaryButton
-              style={{
-                borderRadius: '5px',
-                border: 'none',
-                boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
-                width: '200px',
-              }}
+              style={styles.button}
               onClick={handleAddSchoolClick}
               disabled={isLoading}>
-              {/* {isLoading ? 'Loading...' : schoolWindow === <AddSchool /> ? 'School Listing' : 'Add New School'} */}
-              { isLoading?'loading...':schoolWindow === 'listing' ? 'Add School' : 'School Listing'}
+              { isLoading ? 'Loading...' : schoolWindow === 'listing' ? 'Add School' : 'School Listing'}
             </PrimaryButton>
           </RowWrapper>
         </RowWrapper>
-        <RowWrapper
-          style={{
-            gap: '5px',
-            height: '100%',
-            border: 'none',
-          }}>
-          <ColumnWrapper
-            style={{
-              width: '200px',
-              height: '100%',
-              border: 'none',
-            }}>
+        <RowWrapper style={styles.rowWrapperBottom}>
+          <ColumnWrapper style={styles.filterColumnWrapper}>
             <Label text="Filter school search" />
-            <ColumnWrapper
-              style={{
-                gap: '5px',
-                border: 'none',
-              }}>
+            <ColumnWrapper style={styles.filterColumnInnerWrapper}>
               <CheckboxWrapper wrapperName="School Type" style={{ border: 'none' }}>
                 <Checkbox itemName="Public" name="public" value />
                 <Checkbox itemName="Private" name="private" value />
@@ -137,8 +143,7 @@ function School() {
               </CheckboxWrapper>
             </ColumnWrapper>
           </ColumnWrapper>
-          <ColumnWrapper style={{ width: '100%' }}>
-            {/* {schoolWindow==='listing'?<SchoolListing/>:<AddSchool/>} */}
+          <ColumnWrapper style={styles.mainContentColumnWrapper}>
             <Outlet />
           </ColumnWrapper>
         </RowWrapper>

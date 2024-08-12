@@ -4,53 +4,36 @@ import RowWrapper from '../../../../components/row_wrapper'
 import { CenterColumn, CenterRow } from '../../../../components/center'
 import { PrimaryButton, SecondaryButton, DangerButton } from '../../../../components/buttons'
 import { Heading2, Heading3, Heading4, Label, Paragraph } from '../../../../components/Typography'
-import { useParams } from 'react-router-dom'
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { Outlet } from 'react-router-dom'
 
 function ViewSchool() {
-
-    const [schoolInfo, setSchoolInfo] = useState({})
-    const [address, setAddress] = useState({});
-
     const { schoolId } = useParams();
-
-    const getSchoolInfo = async (schoolId) => {
-        try {
-            const response = await fetch(`http://localhost:3060/api/school/load/${schoolId}`,)
-            const data = await response.json()
-            setSchoolInfo(data)
-        } catch (error) {
-            console.error("Error fetching school information: ", error);
-        }
-    }
+    const [schoolInfo, setSchoolInfo] = useState({});
+    const location = useLocation();
     
+    const onDetailsPage = location.pathname.endsWith('/details')
+    const onStudentsPage = (location.pathname.endsWith('/students'))
+    const onTeachersPage = (location.pathname.endsWith('/teachers'))
+    const onDepartmentsPage = (location.pathname.endsWith('/departments'))
+    const onClubsPage = (location.pathname.endsWith('/clubs'))
+    const onEventsPage = (location.pathname.endsWith('/events'))
+    const onExtraPage = (location.pathname.endsWith('/extras'))
+
     useEffect(() => {
-        getSchoolInfo(schoolId);
+        const fetchSchoolInfo = async () => {
+            try {
+                const response = await fetch(`http://localhost:3060/api/school/load/${schoolId}`);
+                const data = await response.json();
+                setSchoolInfo(data);
+            } catch (error) {
+                console.error("Error fetching school information: ", error);
+            }
+        };
+
+        fetchSchoolInfo();
     }, [schoolId]);
-
-    // const address_id = schoolInfo.address_id;
-    const getAddress = async (addressId) => {
-        try{
-            const response = await fetch(`http://localhost:3060/api/address/load/${addressId}`)
-            const data = await response.json()
-            setAddress(data)
-        } catch(err){
-            console.error("Error fetching address: ", err);
-        }
-    };
-
-    // useEffect(() =>{
-    //     getAddress(schoolInfo.address_id)
-    // },[schoolInfo.address_id]);
-
-    useEffect(() => {
-        if (schoolInfo.address_id) {
-            console.log("Fetching address with ID:", schoolInfo.address_id);
-            getAddress(schoolInfo.address_id);
-        } else {
-            console.error("Invalid address_id:", schoolInfo.address_id);
-        }
-    }, [schoolInfo.address_id]);
 
     const backHandle = () => {history.back()};
     return (
@@ -67,189 +50,57 @@ function ViewSchool() {
                         <Heading4 text={schoolInfo.name || 'School Name'}/>
                         <Paragraph text={schoolInfo.school_motto || 'Education For All'} />
                     </ColumnWrapper>
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Basic Information' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Name: ' />
-                                <Paragraph text={schoolInfo.name || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Code: ' />
-                                <Paragraph text={schoolInfo.school_code || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Type: ' />
-                                <Paragraph text={schoolInfo.type || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Affiliation: ' />
-                                <Paragraph text={schoolInfo.affiliation || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Level: ' />
-                                <Paragraph text={schoolInfo.school_level || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Established Year: ' />
-                                <Paragraph text={schoolInfo.established_year || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Accreditation Status: ' />
-                                <Paragraph text={schoolInfo.accreditation_status || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Motto: ' />
-                                <Paragraph text={schoolInfo.school_motto || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Logo: ' />
-                                <img src={schoolInfo.school_logo || 'https://via.placeholder.com/150'} alt='School Logo' style={styles.school_logo_info_styles}/>
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Website: ' />
-                                <Paragraph text={schoolInfo.website || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Email: ' />
-                                <Paragraph text={schoolInfo.email || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
+                    
+                    <RowWrapper style={{ marginTop: '20px', gap: '15px', height: '50px',border: 'none',}}>
 
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Contact Information' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Address: ' />
-                                {/* <Paragraph text={schoolInfo.address_id || 'N/A'} /> */}
-                                {/* <Paragraph text={address.city+","+address.subcity+","+address.woreda+","+address.kebele || 'N/A'} /> */}
-                                <Paragraph text={`${address.city || ''}, ${address.subcity || ''}, ${address.woreda || ''}, ${address.kebele || ''}` || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Contact Details: ' />
-                                <Paragraph text={schoolInfo.contact_details || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
+                        <Link to={`/admin/school/view/${schoolId}/details`}> 
+                            <button 
+                            className={'schoolButtonStyle details-button '+(onDetailsPage && 'selected-button')}>
+                                School Details
+                            </button>
+                        </Link>
+                       
+                        <Link to={`/admin/school/view/${schoolId}/students`}> 
+                            <button 
+                                className={'schoolButtonStyle students-button ' +(onStudentsPage && 'selected-button')}>
+                                    Students
+                            </button>
+                        </Link>
+                        
+                        <Link to={`/admin/school/view/${schoolId}/teachers`}> 
+                            <button className={'schoolButtonStyle teachers-button ' +(onTeachersPage && 'selected-button')} >
+                                Teachers
+                            </button>
+                        </Link>
+                        
+                        <Link to={`/admin/school/view/${schoolId}/departments`}> 
+                            <button className={'schoolButtonStyle departments-button ' +(onDepartmentsPage && 'selected-button')}>
+                                Departments
+                            </button>
+                        </Link>
+                        
+                        <Link to={`/admin/school/view/${schoolId}/clubs`}> 
+                            <button className={'schoolButtonStyle clubs-button ' +(onClubsPage && 'selected-button')}>
+                                Clubs
+                            </button>
+                        </Link>
 
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Facilities and Resources' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Campus Area: ' />
-                                <Paragraph text={schoolInfo.campus_area || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Number of Classrooms: ' />
-                                <Paragraph text={schoolInfo.facilities_number_of_classrooms || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Number of Labs: ' />
-                                <Paragraph text={schoolInfo.number_of_labs || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Transport Facility: ' />
-                                <Paragraph text={schoolInfo.transport_facility ? 'Yes' : 'No'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Hostel Facility: ' />
-                                <Paragraph text={schoolInfo.hostel_facility ? 'Yes' : 'No'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Health Services: ' />
-                                <Paragraph text={schoolInfo.health_services ? 'Yes' : 'No'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Accessibility Features: ' />
-                                <Paragraph text={schoolInfo.accessibility_features || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
+                        <Link to={`/admin/school/view/${schoolId}/events`}> 
+                            <button className={'schoolButtonStyle events-button ' +(onEventsPage && 'selected-button')}>
+                                Events
+                            </button>
+                        </Link>
 
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Management and Staff' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='School Manager: ' />
-                                <Paragraph text={schoolInfo.school_manager || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Principal: ' />
-                                <Paragraph text={schoolInfo.principal || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Total Teachers: ' />
-                                <Paragraph text={schoolInfo.total_teachers || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Teacher-Student Ratio: ' />
-                                <Paragraph text={schoolInfo.teacher_student_ratio || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
+                        <Link to={`/admin/school/view/${schoolId}/extras`}>
+                            <button className={'schoolButtonStyle extra-activities-button ' +(onExtraPage && 'selected-button')}>
+                                Extra Activities
+                            </button>
+                        </Link>
 
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Student Information' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Total Students: ' />
-                                <Paragraph text={schoolInfo.total_students || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Student Gender Ratio: ' />
-                                <Paragraph text={schoolInfo.student_gender_ratio || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Special Programs: ' />
-                                <Paragraph text={schoolInfo.special_programs || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Language Offerings: ' />
-                                <Paragraph text={schoolInfo.language_offerings || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
-
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Financial Information' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Annual Budget: ' />
-                                <Paragraph text={schoolInfo.annual_budget || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Annual Tuition Fee: ' />
-                                <Paragraph text={schoolInfo.annual_tuition_fee || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Sponsorship Details: ' />
-                                <Paragraph text={schoolInfo.sponsorship_details || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
-
-                    <ColumnWrapper style={styles.card_section_style}>
-                        <Heading4 text='Additional Details' />
-                        <ColumnWrapper style={styles.info_section_style}>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Medium of Instruction: ' />
-                                <Paragraph text={schoolInfo.medium_of_instruction || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Accreditation Number: ' />
-                                <Paragraph text={schoolInfo.accreditation_number || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Special Programs: ' />
-                                <Paragraph text={schoolInfo.special_programs || 'N/A'} />
-                            </RowWrapper>
-                            <RowWrapper style={styles.information_row}>
-                                <Label text='Accessibility Features: ' />
-                                <Paragraph text={schoolInfo.accessibility_features || 'N/A'} />
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </ColumnWrapper>
+                    </RowWrapper>
+                    <div className="school-info-containe">
+                        <Outlet />
+                    </div>
                 
                 </ColumnWrapper>
             </ColumnWrapper>

@@ -5,18 +5,29 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import '../../../../styles/admin-school.css'
 import '../../../../styles/admin-school.css'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import ViewSchool from './view-school';
 // import SchoolListing from './school-pages/school-listing';
 import { useNavigate } from 'react-router-dom';
+import RowWrapper from '../../../../components/row_wrapper';
+import { PrimaryButton, SecondaryButton } from '../../../../components/buttons';
+import './button-styles.css'
+import { HorizontalLine } from '../../../../components/line_separator';
+
 
 library.add(fas)
 
 function SchoolListing() {
 
-
-
   const [schools, setSchools] = useState([])
+  const location = useLocation();
+
+  const onAllPage = (location.pathname === ('/admin/school/listing/all'))
+  const onActivePage = (location.pathname === ('/admin/school/listing/active'))
+  const onPendingPage = (location.pathname === ('/admin/school/listing/pending'))
+  const onDeletedPage = (location.pathname === ('/admin/school/listing/deleted'))
+  const onArchivedPage = (location.pathname === ('/admin/school/listing/archived'))
+
   const getSchools = async () => {
     try {
       const response = await fetch('http://localhost:3060/api/school/load');
@@ -32,19 +43,7 @@ function SchoolListing() {
   }, []);
 
   const schoolHeadings = ['School Code', 'School Name', 'Type', 'Action']
-
-// const schoolData = [
-//   { 'School Code': 'ADS-001', 'School Name': 'Adama Primary School', 'Type': 'Public' },
-//   { 'School Code': 'BHS-002', 'School Name': 'Bright Horizons School', 'Type': 'Private' },
-//   { 'School Code': 'CPS-003', 'School Name': 'Cedar Park School', 'Type': 'Public' },
-//   { 'School Code': 'DLS-004', 'School Name': 'Dawn Learning School', 'Type': 'Private' },
-//   { 'School Code': 'EPS-005', 'School Name': 'Eagle Primary School', 'Type': 'Public' },
-//   { 'School Code': 'FCS-006', 'School Name': 'Future Creators School', 'Type': 'Private' },
-//   { 'School Code': 'GSS-007', 'School Name': 'Greenfield Secondary School', 'Type': 'Public' },
-//   { 'School Code': 'HIS-008', 'School Name': 'Hope International School', 'Type': 'Private' },
-//   { 'School Code': 'ISS-009', 'School Name': 'Inspire Secondary School', 'Type': 'Public' },
-//   { 'School Code': 'JPS-010', 'School Name': 'Joyful Primary School', 'Type': 'Private' },
-// ];
+  
 const navigate = useNavigate();
 
   const handleEdit = (schoolID) => {
@@ -61,57 +60,107 @@ const navigate = useNavigate();
     navigate(`/admin/school/view/${schoolID}`)
   }
 
-// try{
-//   console.log(schools);
-// }catch(err){
-//   console.log('Error' ,err);
-// }
-
-  // console.log('Hello')
   return (
     <div>
-            <Heading4 text='School Listing' />
+      <Heading4 text='School Listing' />
 
-            <table className='school-data-table' style={{width:'100%'}}>
-              <thead>
-                <tr>
-                  {schoolHeadings.map((heading, index) => (
-                    <th key={index}>{heading}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {schools.map((school, index) => (
-                  <tr key={index}>
-                    {/* {
-                      Object.values(data).map((value, idx) => (
-                        <td key={idx}>{value}</td>
-                      ))
-                    } */}
-                    <td>{school.school_code}</td>
-                    <td>{school.name}</td>
-                    <td>{school.type}</td>
-                    <td className='actions'>
-                      <button onClick={() => handleEdit(school.school_id)}>
-                        <FontAwesomeIcon icon='fa-solid fa-pencil' />
-                        Edit
-                      </button>
+      {/* {location.pathname === '/admin/school/listing/all' && <h1>All Listing</h1>} */}
+      {/* {onAllPage && <h1>All Listing</h1>}
+      {onActivePage && <h1>Active Listing</h1>}
+      {onPendingPage && <h1>Pending Listing</h1>}
+      {onDeletedPage && <h1>Deleted Listing</h1>}
+      {onArchivedPage && <h1>Archived Listing</h1>} */}
 
-                      {/* <button onClick={() => handleView(data['school_id'])}>
-                        <FontAwesomeIcon icon='fa-solid fa-eye' />
-                        View
-                      </button> */}
-                      <button onClick={() => handleView(school.school_id)}>
-                        <FontAwesomeIcon icon='fa-solid fa-eye' />
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
+      <HorizontalLine
+        style={{
+          background: 'rgba(0,150,255,0.82)',
+          marginTop: '5px',
+        }} 
+      />
+      
+      <RowWrapper style={{ 
+        marginTop: '20px', 
+        gap: '15px', 
+        height: '50px',
+        border: 'none',
+        }}>
+        {/* <SecondaryButton>All Schools </SecondaryButton> */}
+
+        <Link to='/admin/school/listing/all'> 
+          <button className={'schoolButtonStyle all-schools '+ (onAllPage && 'selected-button')}>
+            All Schools
+          </button>
+        </Link>
+        <Link to='/admin/school/listing/active'> 
+          <button className={'schoolButtonStyle active-schools '+ (onActivePage && 'selected-button')}>
+            Active Schools
+          </button>
+        </Link>
+        <Link to='/admin/school/listing/pending'> 
+          <button className={'schoolButtonStyle pending-schools '+ (onPendingPage && 'selected-button')}>
+            Pending Schools
+          </button>
+        </Link>
+        <Link to='/admin/school/listing/deleted'> 
+          <button className={'schoolButtonStyle deleted-schools '+ (onDeletedPage && 'selected-button')}>
+            Deleted Schools
+          </button>
+        </Link>
+        <Link to='/admin/school/listing/archived'> 
+          <button className={'schoolButtonStyle archived-schools '+ (onArchivedPage && 'selected-button')}>
+            Archived Schools
+          </button>
+        </Link>
+
+      </RowWrapper>
+      {/* <div className='school-listing-container'>
+        <table className='school-data-table' style={{width:'100%'}}>
+          <thead>
+            <tr>
+              {schoolHeadings.map((heading, index) => (
+                <th key={index}>{heading}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {schools.map((school, index) => (
+              <tr key={index}>
+                <td>{school.school_code}</td>
+                <td>{school.name}</td>
+                <td>{school.type}</td>
+                <td className='actions'>
+                  <button onClick={() => handleEdit(school.school_id)}>
+                    <FontAwesomeIcon icon='fa-solid fa-pencil' />
+                    Edit
+                  </button>
+
+                  <button onClick={() => handleView(school.school_id)}>
+                    <FontAwesomeIcon icon='fa-solid fa-eye' />
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div> */}
+      <div className="school-listing-container">
+        <Outlet />
+      </div>
+    </div>
   )
+}
+
+const styles = {
+  school_listing_button_style:{
+    width: '150px',
+    borderRadius: '5px',
+    background: 'rgba(0,140,200,0.11)',
+    border: '1px solid rgb(0,140,200)',
+    fontWeight: 'normal',
+    color: 'rgb(0,140,200)',
+    // border: '2px solid black'
+  }
 }
 
 export default SchoolListing;

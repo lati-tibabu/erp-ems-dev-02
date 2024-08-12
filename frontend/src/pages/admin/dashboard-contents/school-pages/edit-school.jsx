@@ -10,6 +10,7 @@ import "../../../../styles/admin-dashboard/edit_field.css"
 import { color } from 'chart.js/helpers';
 import api from '../../../../api';
 import axios from 'axios';
+import Select from 'react-select'
 
 function EditSchool() {
     
@@ -47,6 +48,7 @@ function EditSchool() {
         accessibility_features: '',
     });
     const [address, setAddress] = useState({});
+    const [schoolStatus, setSchoolStatus] = useState(''); // [schoolStatus]
     // const [schoolMotto, setSchoolMotto] = useState('');
     const [editedInfo, setEditedInfo] = useState()
 
@@ -132,8 +134,9 @@ function EditSchool() {
             transport_facility: schoolInfo.transport_facility,
             type: schoolInfo.type,
             website: schoolInfo.website,
+            status: schoolStatus,
         })
-    }, [schoolInfo])
+    }, [schoolInfo,schoolStatus])
 
 
     // const handleMottoChange = (e) => {
@@ -163,11 +166,12 @@ function EditSchool() {
         event.preventDefault();
         alert('Submit Button Clicked');
         console.log(schoolInfo);
-      
+
         try {
           // Ensure editedInfo includes all required fields
           const updatedData = {
             ...editedInfo,
+            // schoolStatus,
             // Add any additional fields needed for update
           };
 
@@ -196,7 +200,21 @@ function EditSchool() {
             <ColumnWrapper>
                 <Heading3 text='School Information' />
 
-                <RowWrapper style={{border:'none',marginBottom: '20px',cursor:'pointer', background: 'rgba(0,200,0,1)', color:'white', borderRadius: '20px', alignItems: 'center', justifyContent: 'center', gap: '5px'}}>
+                <RowWrapper style={{
+
+                    border:'none',
+                    marginBottom: '20px',
+                    cursor:'pointer',
+                    background: 'rgba(0,200,0,1)',
+                    color:'white', 
+                    borderRadius: '20px',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '5px',
+                    // background: 'red',
+                     
+                    }}>
+
                     <FontAwesomeIcon icon='fa-solid fa-pencil' />
                     <Label text='Editing mode' style={{color:'white', fontWeight: 'bolder'}} />
                 </RowWrapper>
@@ -391,7 +409,7 @@ function EditSchool() {
                             </ColumnWrapper>
                         </ColumnWrapper>
 
-                        <ColumnWrapper style={styles.card_section_style}>
+                        {/* <ColumnWrapper style={styles.card_section_style}>
                             <Heading4 text='Student Information' />
                             <ColumnWrapper style={styles.info_section_style}>
                                 <RowWrapper style={styles.information_row}>
@@ -432,6 +450,27 @@ function EditSchool() {
                                     />
                                 </RowWrapper>
                             </ColumnWrapper>
+                        </ColumnWrapper> */}
+
+                        <ColumnWrapper style={styles.card_section_style}>
+                            <Heading4 text='School Status' />
+                            <RowWrapper style={styles.information_row}>
+                                <Label text='Current School Status: ' />
+                                {/* <Paragraph text={schoolInfo.status || 'N/A'} /> */}
+                                <Paragraph text={schoolStatus || schoolInfo.status || 'N/A'} />
+                            </RowWrapper>
+
+                            <RowWrapper style={styles.information_row}>
+                                <Label text='Change School Status: ' />
+                                <Select
+                                    placeholder='Change School Status'
+                                    options= {schoolStatusOption}
+                                    // value={schoolInfo.status}
+                                    onChange={(option) => setSchoolStatus(option.value)}
+                                >
+
+                                </Select>
+                            </RowWrapper>
                         </ColumnWrapper>
 
                         <RowWrapper style={styles.update_button_container_style}>
@@ -448,6 +487,13 @@ function EditSchool() {
 
 export default EditSchool;
 
+const schoolStatusOption = [
+    {value: 'active', label: 'Active'},
+    {value: 'pending', label: 'Pending'},
+    // {value: 'inactive', label: 'Inactive'},
+    {value: 'deleted', label: 'Deleted'},
+    {value: 'archived', label: 'Archived'}
+]
 const styles = {
     container_section_style: {
         background: 'rgba(19, 160, 233, 0.076)',
