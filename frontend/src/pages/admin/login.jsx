@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'; 
 import { PrimaryButton } from "../../components/buttons";
 import { CenterColumn } from "../../components/center";
 import ColumnWrapper from "../../components/column_wrapper";
-import FullScreen from "../../components/full_screen";
 import { InputField } from "../../components/input_field";
 import RowWrapper from "../../components/row_wrapper";
 import { Heading1, Label, Heading2 } from "../../components/Typography";
 import axios from 'axios';
+import { login } from '../../store';
+
+import { useDispatch } from 'react-redux';
+
 
 function Login() {
 
+  // defining dispatch from redux
+
+  const dispatch = useDispatch();
+  
   const [userData, setUserData] = useState({
     username: '',
     password: ''
@@ -31,23 +37,27 @@ function Login() {
 
   
   const handleSubmit = async (event) => {
-    // alert('Login button')  
     event.preventDefault();
 
     try{
-      // console.log('Login try');
       console.log(userData);
       const response = await axios.post('http://localhost:3060/api/user/login', userData)
       const { token } = response.data;
 
       if (response.status === 200){
-        // alert('Login Succesful')
-
         localStorage.setItem('jwt', token)
 
-        navigate('/admin/home')
+        // console.log(token);
+        // console.log(response.data);
+        // console.log(response.data.user.role);
+        
+        dispatch(login({username: response.data.user.username, role: response.data.user.role, token:token}))
+
+        // navigate('/admin/home', {state: {username: userData.username}})
+        navigate('/admin/home');  
+
       } else {
-        alert('Login Failed')
+        alert('Login Failed, read console message')
         console.log(response.message);
       }
     } catch (error){

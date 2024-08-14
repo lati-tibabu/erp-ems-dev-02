@@ -4,8 +4,18 @@ import RowWrapper from '../../../../../components/row_wrapper';
 import { Heading4, Label, Paragraph } from '../../../../../components/Typography';
 import { Link, useParams } from 'react-router-dom';
 import { SecondaryButton } from '../../../../../components/buttons';
+// import jwtDecode from "jwt-decode"
 
 function SchoolDetails() {
+
+    // const token = localStorage.getItem('token');
+    // // const navigate = useNavigate();
+    // const tokendata = token && jwtDecode(token);
+
+    
+    // // const tokendata = token.toString;
+    // const uname = tokendata.username;
+    
     const [schoolInfo, setSchoolInfo] = useState({});
     const [address, setAddress] = useState({});
     const { schoolId } = useParams();
@@ -44,6 +54,7 @@ function SchoolDetails() {
         <>
             <ColumnWrapper style={styles.card_section_style}>
                 <Heading4 text='Basic Information' />
+                {/* <h2>{uname || 'Username'}</h2> */}
                 <ColumnWrapper style={styles.info_section_style}>
                     {[
                         { label: 'School Name', value: schoolInfo.name },

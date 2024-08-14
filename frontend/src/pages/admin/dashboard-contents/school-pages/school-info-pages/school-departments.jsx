@@ -2,7 +2,10 @@ import React from 'react'
 
 function SchoolDepartments() {
   return (
-    <div>SchoolDepartments</div>
+    <>
+      <div>SchoolDepartments</div>
+      <h1>Departments</h1>
+    </>
   )
 }
 

@@ -2,7 +2,10 @@ import React from 'react'
 
 function SchoolEvents() {
   return (
-    <div>SchoolEvents</div>
+    <>
+      <div>SchoolEvents</div>
+      <h1>Events</h1>
+    </>
   )
 }
 

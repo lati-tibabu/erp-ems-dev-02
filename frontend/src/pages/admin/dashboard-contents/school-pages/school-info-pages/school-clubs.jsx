@@ -2,7 +2,10 @@ import React from 'react'
 
 function SchoolClubs() {
   return (
-    <div>SchoolClubs</div>
+    <>
+      <div>SchoolClubs</div>
+      <h1>Clubs</h1>
+    </>
   )
 }
 

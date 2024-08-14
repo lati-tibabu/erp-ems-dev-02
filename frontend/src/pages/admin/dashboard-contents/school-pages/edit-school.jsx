@@ -134,7 +134,7 @@ function EditSchool() {
             transport_facility: schoolInfo.transport_facility,
             type: schoolInfo.type,
             website: schoolInfo.website,
-            status: schoolStatus,
+            status: schoolStatus || schoolInfo.status,
         })
     }, [schoolInfo,schoolStatus])
 
@@ -465,11 +465,10 @@ function EditSchool() {
                                 <Select
                                     placeholder='Change School Status'
                                     options= {schoolStatusOption}
-                                    // value={schoolInfo.status}
+                                    // value={schoolStatus || schoolInfo.status || 'N/A'}
                                     onChange={(option) => setSchoolStatus(option.value)}
-                                >
-
-                                </Select>
+                                
+                                ></Select>
                             </RowWrapper>
                         </ColumnWrapper>
 
