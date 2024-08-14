@@ -46,7 +46,7 @@ export const Paragraph = (props)=> {
 export const Label = (props)=> {  
   return (
     // <div style={props.style} required = {props.required} className='label'>{props.text} {props.required && '*'}</div>
-    <div style={props.style} required = {props.required} className='label'>
+    <div style={props.style} required = {props.required} className={`label ${props.className2}`}>
       {props.text} <element style={{fontSize:'0.9rem', fontWeight:'normal', color:'red'}}>{props.required && '*'}</element></div>
   )
 }

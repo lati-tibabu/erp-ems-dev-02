@@ -13,7 +13,7 @@ export const WrapperWithTitle = (props) => {
 
 export const CheckboxWrapper = (props) => {
     return (
-        <div className='checkbox-wrapper'>
+        <div className='checkbox-wrapper' style={props.style}>
             <Label text={props.wrapperName} />
             <div className="wrapper-child">
                 {props.children}
