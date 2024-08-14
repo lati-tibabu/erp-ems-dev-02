@@ -22,4 +22,6 @@ input:focus {
 
 .checkbox-name {
     font-size: 0.8em;
+    display: flex;
+    gap: 5px;
 }
