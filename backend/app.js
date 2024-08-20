@@ -57,10 +57,19 @@ app.post("/syncDB", async (req, res) => {
 
 app.post("/syncSchool", async (req, res) => {
   try {
-    await sequelize.models.School.sync({ alter: true }); // or { force: true } if you want to drop and recreate the table
+    await sequelize.models.School.sync({ alter: true }); //  { force: true }
     res.json({ message: "School Model Synced" });
   } catch (error) {
     res.status(500).send("Error syncing School model: " + error.message);
+  }
+});
+
+app.post("/syncPrincipal", async (req, res) => {
+  try {
+    await sequelize.models.Principal.sync({ alter: true }); // or { force: true }
+    res.json({ message: "Principal Model Synced" });
+  } catch (error) {
+    res.status(500).send("Error syncing Principal model: " + error.message);
   }
 });
 

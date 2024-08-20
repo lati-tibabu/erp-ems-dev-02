@@ -19,6 +19,8 @@ library.add(fas)
 
 function SchoolListing() {
 
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [schools, setSchools] = useState([])
   const location = useLocation();
 
@@ -30,7 +32,7 @@ function SchoolListing() {
 
   const getSchools = async () => {
     try {
-      const response = await fetch('http://localhost:3060/api/school/load');
+      const response = await fetch(`${apiURL}/api/school/load`);
       const data = await response.json();
       setSchools(data);
     } catch (error) {

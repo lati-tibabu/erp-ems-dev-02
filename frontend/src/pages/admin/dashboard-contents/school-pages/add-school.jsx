@@ -10,6 +10,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function AddSchool() {
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [address, setAddress] = useState([]);
   const [schoolData, setSchoolData] = useState({
     name: '',
@@ -60,7 +62,7 @@ function AddSchool() {
 
   const getAddress = async () => {
     try {
-      const response = await fetch('http://localhost:3060/api/address/load'); 
+      const response = await fetch(`${apiURL}/api/address/load`); 
       const data = await response.json();
       setAddress(data);
     } catch (error) {
@@ -112,7 +114,7 @@ function AddSchool() {
         ...contactData
       };
 
-      const response = await axios.post('http://localhost:3060/api/school/create', combinedData);
+      const response = await axios.post(`${apiURL}/api/school/create`, combinedData);
 
       if (response.status === 201) {
         alert("School added successfully!");

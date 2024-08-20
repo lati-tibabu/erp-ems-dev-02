@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Heading5, } from '../../../../../components/Typography'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../../../../../styles/admin-school.css'
 import { useNavigate } from 'react-router-dom';
-import RowWrapper from '../../../../../components/row_wrapper';
+
+import SchoolListing from '../../../../../components/school-components/school_listings';
+import '../../../../../styles/admin-school.css'
 import '../button-styles.css'
 
-library.add(fas)
+// library.add(fas)
 
 function PendingSchoolListing() {
+
+  const apiURL = import.meta.env.VITE_API_URL;
 
   const [schools, setSchools] = useState([])
   const getSchools = async () => {
     try {
-      const response = await fetch('http://localhost:3060/api/school/load/pending');
+      const response = await fetch(`${apiURL}/api/school/load/pending`);
       const data = await response.json();
       setSchools(data);
     } catch (error) {
@@ -58,50 +57,12 @@ const navigate = useNavigate();
   }
 
   return (
-    <div>
-      <Heading5 text='Pending School Listing' />
-
-      <div className='school-listing-container'>
-        <table className='school-data-table' style={{width:'100%'}}>
-          <thead>
-            <tr>
-              {schoolHeadings.map((heading, index) => (
-                <th key={index}>{heading}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {schools.map((school, index) => (
-              <tr key={index}>
-                {/* {
-                  Object.values(data).map((value, idx) => (
-                    <td key={idx}>{value}</td>
-                  ))
-                } */}
-                <td>{school.school_code}</td>
-                <td>{school.name}</td>
-                <td>{school.type}</td>
-                <td className='actions'>
-                  <button onClick={() => handleEdit(school.school_id)}>
-                    <FontAwesomeIcon icon='fa-solid fa-pencil' />
-                    Edit
-                  </button>
-
-                  {/* <button onClick={() => handleView(data['school_id'])}>
-                    <FontAwesomeIcon icon='fa-solid fa-eye' />
-                    View
-                  </button> */}
-                  <button onClick={() => handleView(school.school_id)}>
-                    <FontAwesomeIcon icon='fa-solid fa-eye' />
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <SchoolListing 
+    title='Pending Schools Listing'
+    schools={schools}
+    handleEdit={handleEdit}
+    handleView={handleView}
+    />
   )
 }
 

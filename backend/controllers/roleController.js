@@ -27,6 +27,14 @@ const getRole = async (req, res) => {
   }
 };
 
+const getRoleByName = async (req, res) => {
+  try {
+    const role = await roleServices.getRoleByName(req.params.role_name);
+    res.json(role);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 const updateRole = async (req, res) => {
   try {
     const role = await roleServices.updateRole(req.params.role_id, req.body);
@@ -61,6 +69,7 @@ module.exports = {
   createRole,
   getAllRole,
   getRole,
+  getRoleByName,
   updateRole,
   deleteRole,
 };

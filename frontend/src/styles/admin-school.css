@@ -1,3 +1,7 @@
+table {
+    border-radius: 30px,
+}
+
 .school-data-table {
     padding: 15px;
     margin: 5px;
@@ -10,7 +14,8 @@
 }
 
 .school-data-table thead {
-    background: rgba(6, 82, 148, 0.743);
+    /* background: rgba(6, 82, 148, 0.743); */
+    background: rgba(0, 162, 255, 0.839);
     height: 40px;
     color: white;
     /* border: 1px solid rgb(0, 149, 255); */
@@ -104,4 +109,10 @@
 .actions button:hover {
     opacity: 0.8;
     /* Slight transparency on hover */
+}
+
+
+/* Slight transparency on hover */
+
+
 }

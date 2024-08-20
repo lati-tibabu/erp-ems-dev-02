@@ -12,20 +12,23 @@ library.add(fas)
 
 function ActiveSchoolListing() {
 
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [schools, setSchools] = useState([])
   const getSchools = async () => {
     try {
-      const response = await fetch('http://localhost:3060/api/school/load/active');
+      const response = await fetch(`${apiURL}/api/school/load/active`);
       const data = await response.json();
       setSchools(data);
     } catch (error) {
       console.error('Error fetching schools:', error);
     }
   };
-
   useEffect(() => {
     getSchools()
   }, []);
+
+  // console.log('Vite App', )
 
   const schoolHeadings = ['School Code', 'School Name', 'Type', 'Action']
 

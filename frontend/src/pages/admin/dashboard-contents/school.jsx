@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Heading3, Label } from '../../../components/Typography';
 import ColumnWrapper from '../../../components/column_wrapper';
 import RowWrapper from '../../../components/row_wrapper';
 import { Checkbox } from '../../../components/input_field';
 import { CheckboxWrapper } from '../../../components/wrapper';
-import { PrimaryButton, SecondaryButton } from '../../../components/buttons';
+import { SecondaryButton } from '../../../components/buttons';
+
 // import SchoolListing from './school-pages/school-listing';
 // import AddSchool from './school-pages/add-school';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDisplay, fas } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { color } from 'chart.js/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFilter } from '../../../store';
+
 
 library.add(fas);
 
@@ -20,10 +23,45 @@ library.add(fas);
 function School() {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const [schoolWindow, setSchoolWindow] = useState('listing');
   const [isLoading, setIsLoading] = useState(false);
   
   const [filterVisible, setFilterVisible] = useState(false)
+
+  const [filters, setFilters] = useState([])
+
+  const filterArray = []
+
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    if (e.target.checked) {
+      setFilters((prevState) => [...prevState, value]);  // Add the new filter
+    } else {
+      setFilters((prevState) => prevState.filter((filter) => filter !== value)); // This line of code filters out the unchecked filter from the `filters` state array. It does this by iterating over each element in the `prevState` array using the `filter` method. The `filter` method creates a new array with all elements that pass the test implemented by the provided function. In this case, the test is `(filter) => filter !== value`, which means that the element will be included in the new array if it is not equal to the `value` of the current event target. 
+      // So, if the event target's value is 'active', this line of code will create a new array that only contains the elements from `prevState` that are not equal to 'active'. If `prevState` initially contains ['active', 'deleted'], the new state array will be `['deleted']`.
+    }
+  };
+
+  
+  let newFilters = []
+  useEffect(() => {
+    filters.length && dispatch(addFilter({ filters: filters }));
+    
+  }, [filters])
+
+  const filtersState = useSelector((state) => state.filter.filters)
+
+  // console.log("FilterStates", filtersState);
+  
+
+  const handleFilterPrint = () => {
+    // filterArray.push(filters)
+    // console.log(filterArray);
+    console.log(filters);
+    
+  }
+
   
   const handleAddSchoolClick = () => {
     setIsLoading(true);
@@ -57,7 +95,7 @@ function School() {
       justifyContent: 'end',
       alignItems: 'center',
       padding: '0',
-      border: 'none',
+      // border: 'none',
       // boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
       border: '1px solid #e8e8e8',
     },
@@ -138,6 +176,7 @@ function School() {
     filter_items: {
       // background'red',
       border: 'none',
+      gap: '5px',
     },
     filter_item: {
       // border: 'none',
@@ -199,13 +238,21 @@ function School() {
                 </RowWrapper>
               </RowWrapper>
               <RowWrapper style={styles.filter_items}>
-                <RowWrapper style={styles.filter_item}>
-                  <Label text="Public" style={styles.filter_item_label}/>
-                  <FontAwesomeIcon icon='fa-solid fa-xmark' style={styles.filter_item_xmark}/>
-                </RowWrapper>
+
+                  { filtersState.map((filter) => (
+                      <RowWrapper style={styles.filter_item} key={filter}>
+
+                          <Label text={filter} style={styles.filter_item_label}/>
+                          {/* <FontAwesomeIcon icon='fa-solid fa-xmark' style={styles.filter_item_xmark}/> */}
+                          {/* <Label text='Public' style={styles.filter_item_label}/>
+                          <FontAwesomeIcon icon='fa-solid fa-xmark' style={styles.filter_item_xmark}/> */}
+                      </RowWrapper>
+              ))}
+
               </RowWrapper>
             </ColumnWrapper>
             
+            {/* Add School and List School Buttons */}
             <SecondaryButton
               style={styles.add_listing_button}
               onClick={handleAddSchoolClick}
@@ -213,32 +260,39 @@ function School() {
                 {schoolWindow === 'listing' ? <FontAwesomeIcon icon="fa-solid fa-plus" /> : <FontAwesomeIcon icon="fa-solid fa-list" />}
                 { isLoading ? 'Loading...' : schoolWindow === 'listing' ? 'Add School' : 'School Listing'}
             </SecondaryButton>
+
           </RowWrapper>
+
         </RowWrapper>
+
         <RowWrapper style={styles.rowWrapperBottom}>
-          <ColumnWrapper style={styles.filterColumnWrapper}>
+          
+          {/* Filtering Options */}
+          <ColumnWrapper style={styles.filterColumnWrapper} >
             <Label text="Filter school search" />
             <ColumnWrapper style={styles.filterColumnInnerWrapper}>
               <CheckboxWrapper wrapperName="School Type" style={{ border: 'none', }}>
-                <Checkbox itemName="Public" name="public" value />
-                <Checkbox itemName="Private" name="private" value />
+                <Checkbox itemName="Public" name="public"  value="Public" title="Public" onChange={handleFilterChange} />
+                <Checkbox itemName="Private" name="private" value="Private" title="Private" onChange={handleFilterChange}/>
               </CheckboxWrapper>
               <CheckboxWrapper wrapperName="Location" style={{ border: 'none' }}>
-                <Checkbox itemName="Urban" name="urban" value />
-                <Checkbox itemName="Rural" name="rural" value />
+                <Checkbox itemName="Urban" name="urban" value="Urban" title="Urban" onChange={handleFilterChange} />
+                <Checkbox itemName="Rural" name="rural" value="Rural" title="Rural" onChange={handleFilterChange} />
               </CheckboxWrapper>
               <CheckboxWrapper wrapperName="School Level" style={{ border: 'none' }}>
-                <Checkbox itemName="Primary" name="primary" value />
-                <Checkbox itemName="Secondary" name="secondary" value />
-                <Checkbox itemName="Higher" name="higher" value />
+                <Checkbox itemName="Primary" name="primary" value="Primary" title="Primary" onChange={handleFilterChange} />
+                <Checkbox itemName="Secondary" name="secondary" value="Secondary" title="Secondary" onChange={handleFilterChange} />
+                <Checkbox itemName="Higher" name="higher" value="Higher" title="Higher" onChange={handleFilterChange} />
               </CheckboxWrapper>
               <CheckboxWrapper wrapperName="Language Medium" style={{ border: 'none' }}>
-                <Checkbox itemName="English" name="english" value />
-                <Checkbox itemName="Afaan Oromoo" name="afaan_oromoo" value />
-                <Checkbox itemName="Amharic" name="amharic" value />
+                <Checkbox itemName="English" name="english" value="English" title="English" onChange={handleFilterChange} />
+                <Checkbox itemName="Afaan Oromoo" name="afaan_oromoo" value="Afaan Oromoo" title="Afaan Oromoo" onChange={handleFilterChange} />
+                <Checkbox itemName="Amharic" name="amharic" value="Amharic" title="Amharic" onChange={handleFilterChange} />
               </CheckboxWrapper>
+              {/* <button onClick={handleFilterPrint}>Filter</button> */}
             </ColumnWrapper>
           </ColumnWrapper>
+
           <ColumnWrapper style={styles.mainContentColumnWrapper}>
             <Outlet />
           </ColumnWrapper>

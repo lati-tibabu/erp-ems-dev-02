@@ -28,6 +28,21 @@ import SchoolClubs from '../pages/admin/dashboard-contents/school-pages/school-i
 import SchoolEvents from '../pages/admin/dashboard-contents/school-pages/school-info-pages/school-events';
 import SchoolExtras from '../pages/admin/dashboard-contents/school-pages/school-info-pages/school-extras';
 
+import OverviewPages from '../pages/admin/dashboard-contents/user-pages/overview-page';
+import Principal from '../pages/admin/dashboard-contents/user-pages/principal';
+import Supervisor from '../pages/admin/dashboard-contents/user-pages/supervisor';
+import Teacher from '../pages/admin/dashboard-contents/user-pages/teacher';
+import Student from '../pages/admin/dashboard-contents/user-pages/student';
+import Parent from '../pages/admin/dashboard-contents/user-pages/parent';
+
+import CreatePrincipal from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal';
+  import CreatePrincipalUser from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-principals-user-info';
+  import CreatePrincipalSpecific from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-principal-specific-info';
+  import TestPrincipal from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/test-principal';
+// import PrincipalList from '../pages/admin/dashoard-contents/user-pages/user-principal/principal-list/principal-lists';
+import PrincipalList from '../pages/admin/dashboard-contents/user-pages/user-principal/principal-list/principal-lists.jsx';
+  import ViewPrincipal from '../pages/admin/dashboard-contents/user-pages/user-principal/principal-list/view-principal.jsx';
+
 // import { elements } from 'chart.js';
 import ProtectedRoute from '../components/protectred_routes';
 
@@ -79,7 +94,40 @@ const adminRoutes = {
     // { path: 'settings', element: <Settings /> },
     { path: 'settings', element: <ProtectedRoute component={Settings} /> },
     // { path: 'users', element: <Users /> },
-    { path: 'users', element: < ProtectedRoute component={Users} /> },
+    { 
+      path: 'users', 
+      element: < ProtectedRoute component={Users} /> ,
+      // errorElement: <div>404</div>, // Place errorElement here
+      children: [
+        {path: 'overview', element: <OverviewPages />,
+          children: [
+            {path: 'principal', element: <Principal />,
+              children: [
+                {path: 'create', element: <CreatePrincipal />,
+                  children : [
+                    {path: 'user', element: <CreatePrincipalUser />},
+                    {path: 'specific/:user_id', element: <CreatePrincipalSpecific />},
+                    {path: 'test', element: <TestPrincipal />},
+                    // {path: 'specific', element: <CreatePrincipalSpecific />},
+                  ]
+                },
+                {path: 'list', element: <PrincipalList />,
+                  children: [
+                    {path: 'view/:principalId', element: <ViewPrincipal />},
+                  ]
+                }
+              ]
+            },
+            {path: 'supervisor', element: <Supervisor />},
+            {path: 'teacher', element: <Teacher />},
+            {path: 'student', element: <Student />},
+            {path: 'parent', element: <Parent />},
+          ]
+        },
+      ],
+
+    // },
+  },
   ],
 };
 

@@ -9,11 +9,14 @@ import RowWrapper from "../../components/row_wrapper";
 import { Heading1, Label, Heading2 } from "../../components/Typography";
 import axios from 'axios';
 import { login } from '../../store';
+import '../../styles/login.css'
 
 import { useDispatch } from 'react-redux';
 
 
 function Login() {
+
+  const apiURL = import.meta.env.VITE_API_URL;
 
   // defining dispatch from redux
 
@@ -41,7 +44,7 @@ function Login() {
 
     try{
       console.log(userData);
-      const response = await axios.post('http://localhost:3060/api/user/login', userData)
+      const response = await axios.post(`${apiURL}/api/user/login`, userData)
       const { token } = response.data;
 
       if (response.status === 200){
@@ -79,7 +82,7 @@ function Login() {
   return (
     <div>
         <RowWrapper style={styles.outside_wrapper}>
-          <ColumnWrapper style={styles.column_with_shadow}>
+          <ColumnWrapper style={styles.column_with_shadow} className="column_with_shadow">
             <CenterColumn style={{ width: '70%', padding: '30px', justifyContent:'center',alignItems:'center' }}>
               <Heading1 
                 text="EMS" 

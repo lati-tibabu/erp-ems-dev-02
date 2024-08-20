@@ -43,6 +43,8 @@ export const SecondaryButton = (props) => {
             formTarget={props.formTarget}
             id={props.id}
             onClick={props.onClick}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
             aria-label={props.ariaLabel}
             aria-hidden={props.ariaHidden}
             aria-expanded={props.ariaExpanded}
@@ -72,6 +74,7 @@ export const TertiaryButton = (props) => {
             aria-label={props.ariaLabel}
             aria-hidden={props.ariaHidden}
             aria-expanded={props.ariaExpanded}
+            style={props.style}
         >
             {props.children}
         </button>

@@ -46,12 +46,12 @@ Principal.init(
       onDelete: "CASCADE",
       unique: true,
     },
-    role: {
-      type: DataTypes.STRING,
+    principal_type: {
+      type: DataTypes.ENUM("main", "vice"),
       allowNull: true,
     },
-    salary: {
-      type: DataTypes.DECIMAL,
+    salary_range: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     experience_years: {

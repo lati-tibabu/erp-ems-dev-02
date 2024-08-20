@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { Outlet } from 'react-router-dom'
 
 function ViewSchool() {
+
+    const apiURL = import.meta.env.VITE_API_URL;
+    
     const { schoolId } = useParams();
     const [schoolInfo, setSchoolInfo] = useState({});
     const location = useLocation();
@@ -24,7 +27,7 @@ function ViewSchool() {
     useEffect(() => {
         const fetchSchoolInfo = async () => {
             try {
-                const response = await fetch(`http://localhost:3060/api/school/load/${schoolId}`);
+                const response = await fetch(`${apiURL}/api/school/load/${schoolId}`);
                 const data = await response.json();
                 setSchoolInfo(data);
             } catch (error) {

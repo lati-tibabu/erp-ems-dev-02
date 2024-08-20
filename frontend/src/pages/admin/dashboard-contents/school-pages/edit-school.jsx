@@ -13,6 +13,7 @@ import axios from 'axios';
 import Select from 'react-select'
 
 function EditSchool() {
+    const apiURL = import.meta.env.VITE_API_URL;
     
     const [schoolInfo, setSchoolInfo] = useState({
         name: '',
@@ -56,7 +57,7 @@ function EditSchool() {
 
     const getSchoolInfo = async (schoolId) => {
         try {
-            const response = await fetch(`http://localhost:3060/api/school/load/${schoolId}`);
+            const response = await fetch(`${apiURL}/api/school/load/${schoolId}`);
             const data = await response.json();
             setSchoolInfo(data);
             // setSchoolMotto(data.school_motto || '');
@@ -71,7 +72,7 @@ function EditSchool() {
 
     const getAddress = async (addressId) => {
         try {
-            const response = await fetch(`http://localhost:3060/api/address/load/${addressId}`);
+            const response = await fetch(`${apiURL}/api/address/load/${addressId}`);
             const data = await response.json();
             setAddress(data);
         } catch (err) {
@@ -148,7 +149,7 @@ function EditSchool() {
     //     alert('Submit Button Clicked')
     //     console.log(schoolInfo)
     //     try{
-    //         const response = await axios.put(`http://localhost:3060/api/school/update/${schoolId}`, editedInfo)
+    //         const response = await axios.put(`${apiURL}/api/school/update/${schoolId}`, editedInfo)
     //         if (response.status === 201){
     //             console.log("School Created Successfully")
     //             alert("School Created Successfully")
@@ -178,7 +179,7 @@ function EditSchool() {
           console.log('Logging from inside');
           console.log(updatedData);
 
-          const response = await axios.put(`http://localhost:3060/api/school/update/${schoolId}`, updatedData);
+          const response = await axios.put(`${apiURL}/api/school/update/${schoolId}`, updatedData);
           if (response.status === 200) { // Assuming successful update returns status 200
             console.log("School Information Updated Successfully");
             navigate(`/admin/school/view/${schoolId}`)

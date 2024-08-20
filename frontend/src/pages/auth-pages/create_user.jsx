@@ -20,6 +20,7 @@ function CreateUser (props){
         username: '',
         password: '',
     });
+    
     const [addressData, setAddressData] = useState([]);
     const [roleData, setRoleData] = useState([]);
     const [address_id, setAddressId] = useState('')
@@ -79,7 +80,7 @@ function CreateUser (props){
                 alert('Error Adding User');
                 console.log('Error Adding User');
             }
-            console.log(combinedData);
+            console.log(combinedData);  
 
         } catch (error) {
             console.error('Error: ', error);

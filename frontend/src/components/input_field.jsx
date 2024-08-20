@@ -48,7 +48,32 @@ export const Checkbox = (props) => {
   return (
     <div className="input_field">
         <label htmlFor={props.id} className='checkbox-name'>
-          <input type="checkbox" id={props.id} name={props.name} value={props.value} />
+        <input
+            type="checkbox"
+            id={props.id}                      // The unique identifier for the checkbox
+            name={props.name}                  // The name attribute, often used to group checkboxes
+            value={props.value}                // The value associated with the checkbox
+            checked={props.checked}            // Controls the checked state of the checkbox (for controlled components)
+            defaultChecked={props.defaultChecked} // Sets the initial checked state (for uncontrolled components)
+            onChange={props.onChange}          // Event handler for when the checkbox state changes
+            disabled={props.disabled}          // Disables the checkbox if true
+            className={props.className}        // CSS class names for styling the checkbox
+            style={props.style}                // Inline styles for the checkbox
+            required={props.required}          // If true, the checkbox must be checked before submitting the form
+            aria-label={props.ariaLabel}       // Accessibility label for screen readers
+            aria-labelledby={props.ariaLabelledby} // ID of the element that labels the checkbox
+            aria-describedby={props.ariaDescribedby} // ID of the element that provides additional description
+            title={props.title}                // Tooltip text when hovering over the checkbox
+            autoFocus={props.autoFocus}        // Automatically focuses the checkbox when the page loads
+            form={props.form}                  // Associates the checkbox with a specific form
+            tabIndex={props.tabIndex}          // Controls the tab order when navigating with the keyboard
+            readOnly={props.readOnly}          // Makes the checkbox read-only, it can be checked but not edited
+            onFocus={props.onFocus}            // Event handler for when the checkbox gains focus
+            onBlur={props.onBlur}              // Event handler for when the checkbox loses focus
+            onClick={props.onClick}            // Event handler for when the checkbox is clicked
+            ref={props.innerRef}               // Reference to the input element, useful for accessing the DOM node directly
+        />
+
           {props.itemName}
         </label>
     </div>

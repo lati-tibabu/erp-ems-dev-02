@@ -1,0 +1,93 @@
+.schoolButtonStyle {
+    max-width: 250px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: normal;
+    height: 40px;
+    transition: border-width 0.3s ease;
+}
+
+.schoolButtonStyle:hover {
+    /* border-width: 1px; */
+    border-color: rgb(0, 149, 255);
+}
+
+.all-schools {
+    background: rgba(0, 140, 200, 0.11);
+    border-color: rgb(0, 140, 200);
+    color: rgb(0, 140, 200);
+}
+
+.deleted-schools {
+    background: rgba(200, 0, 0, 0.11);
+    border-color: rgb(200, 0, 0);
+    color: rgb(200, 0, 0);
+}
+
+.active-schools {
+    background: rgba(0, 200, 0, 0.11);
+    border-color: rgb(0, 200, 0);
+    color: rgb(0, 200, 0);
+}
+
+.pending-schools {
+    background: rgba(200, 140, 0, 0.11);
+    border-color: rgb(200, 140, 0);
+    color: rgb(200, 140, 0);
+}
+
+.archived-schools {
+    background: rgba(140, 140, 140, 0.11);
+    border-color: rgb(140, 140, 140);
+    color: rgb(140, 140, 140);
+}
+
+.students-button {
+    background: rgba(34, 193, 195, 0.11);
+    border-color: rgb(34, 193, 195);
+    color: rgb(34, 193, 195);
+}
+
+.teachers-button {
+    background: rgba(255, 193, 7, 0.11);
+    border-color: rgb(255, 193, 7);
+    color: rgb(255, 193, 7);
+}
+
+.departments-button {
+    background: rgba(76, 175, 80, 0.11);
+    border-color: rgb(76, 175, 80);
+    color: rgb(76, 175, 80);
+}
+
+.clubs-button {
+    background: rgba(156, 39, 176, 0.11);
+    border-color: rgb(156, 39, 176);
+    color: rgb(156, 39, 176);
+}
+
+.events-button {
+    background: rgba(244, 67, 54, 0.11);
+    border-color: rgb(244, 67, 54);
+    color: rgb(244, 67, 54);
+}
+
+.extra-activities-button {
+    background: rgba(33, 150, 243, 0.11);
+    border-color: rgb(33, 150, 243);
+    color: rgb(33, 150, 243);
+}
+
+.details-button {
+    background: rgba(255, 87, 34, 0.11);
+    border-color: rgb(255, 87, 34);
+    color: rgb(255, 87, 34);
+}
+
+.selected-button {
+    border-bottom: 5px solid rgba(0, 0, 0, 0.439);
+    scale: 1.02;
+    position: relative;
+    top: 5px;
+}

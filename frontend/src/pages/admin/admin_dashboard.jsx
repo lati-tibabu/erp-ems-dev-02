@@ -1,19 +1,21 @@
 // admin_dashboard.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import RowWrapper from '../../components/row_wrapper';
 import ColumnWrapper from '../../components/column_wrapper';
 import { AiLogo, AiLogo2, AiLogo3 } from '../../components/ems_logo';
 import circle8175 from '../../assets/circle8175.png';
-import { Heading3, Label } from '../../components/Typography';
+import { Heading3, Heading4, Heading5, Label } from '../../components/Typography';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 import '../../styles/admin_dashboard.css'
+import LogoAndName from '../../components/LogoAndName';
 
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '../../store';
+import { color } from 'chart.js/helpers';
 
 library.add(fas);
 
@@ -21,7 +23,9 @@ function AdminDashboard() {
 
   const homePage = '/admin/home';
   const schoolPage = '/admin/school/listing/all';
-  const usersPage = '/admin/users';
+  const schoolPageCheck = '/admin/school';
+  const usersPage = '/admin/users/overview';
+  const usersPageCheck = '/admin/users';
   const reportPage = '/admin/report';
   const profilePage = '/admin/profile';
   const settingsPage = '/admin/settings';
@@ -31,13 +35,18 @@ function AdminDashboard() {
 
   const currentLocation = location.pathname;
 
-  const onHomePage  = (currentLocation === homePage);
-  const onSchoolPage = (currentLocation === schoolPage);
-  const onUsersPage = (currentLocation === usersPage);
-  const onReportPage = (currentLocation === reportPage);
-  const onProfilePage = (currentLocation === profilePage);
-  const onSettingsPage = (currentLocation === settingsPage);
-  const onHelpPage = (currentLocation === helpPage);
+  const onHomePage  = (currentLocation.startsWith(homePage));
+  const onSchoolPage = (currentLocation.startsWith(schoolPageCheck));
+  const onUsersPage = (currentLocation.startsWith(usersPageCheck));
+  const onReportPage = (currentLocation.startsWith(reportPage));
+  const onProfilePage = (currentLocation.startsWith(profilePage));
+  const onSettingsPage = (currentLocation.startsWith(settingsPage));
+  const onHelpPage = (currentLocation.startsWith(helpPage));
+
+
+  // Theme setter
+
+  const [theme, setTheme] = useState('light');
 
   const dispatch = useDispatch();
   
@@ -57,7 +66,10 @@ function AdminDashboard() {
     dispatch(logout())
     localStorage.removeItem('jwt');
     navigate('/auth/login');
-    
+  }
+
+  const themeToggleHandler = () => {
+    theme === 'light'?setTheme('dark'):setTheme('light')
   }
 
   const styles = {
@@ -166,7 +178,7 @@ function AdminDashboard() {
       width: '100%',
       border:'none',
       // background: 'white',
-      background: 'rgba(0,170,255,0.1)',
+      backgroundImage: 'linear-gradient(45deg,rgba(0,170,255,0.1),rgba(0,170,255,0.07))',
       borderRadius: '30px',
       padding: '20px',
       gap: '10px',
@@ -212,22 +224,133 @@ function AdminDashboard() {
       // background: 'red',
       // background: 'rgba(0,0,0,0.1)',
       background: 'white',
-    }}
+    },
+    logo_wrapper: {
+      width: '100px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      border: 'none',
+    },
+    searchWrapper: {
+      width: '280px',
+      borderRadius: '40px',
+      justifyContent: 'end',
+      alignItems: 'center',
+      // paddincg: '0',
+      height: '40px',
+      padding: '2px'
+      // border: 'none',
 
+      // boxShadow: '0px 0px 20px 0px rgba(0,136,255,0.2)',
+      // border: '1px solid #e8e8e8',
+    },
+    searchInput: {
+      borderRadius: '20px',
+      fontSize: '0.8rem',
+      // width: '100%',
+      width: '300px',
+      height: '60%',
+      border: 'none',
+      background: 'white',
+      // padding: '2px'
+    },
+    searchIcon: {
+      padding: '10px',
+      borderRadius: '20px',
+      // background: '#0088ff',
+      // background: '#e8e8e8',
+      background: 'rgba(0,141,218,0.08)',
+      // background: 'rgba(255,255,255,1)',
+      color: 'rgba(0,141,218,1)',
+      cursor: 'pointer',
+      width: '20px',
+      height: '20px',
+      position: 'relative',
+      // left: '-20px',
+    },
+    search_wrapper_container_style:{ 
+      width: '100%', 
+      height: '100%', 
+      border:'none',
+      alignItems: 'center'
+    },
+    light_dark_toggle: {
+      // background: 'red',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      border: 'none',
+    },
+    dark_light_toggle_button_style: {
+      // border: 'none',
+      padding: '0px',
+      alignItems: 'center',
+      justifyContent: theme ==='light'?'end':'start',
+      borderRadius: '20px',
+      height: '18px',
+      width: '40px',
+      background: 'white',
+      cursor: 'pointer'
+    },
+    moon_sun_button_styles: {
+      width: '20px',
+      height: '20px',
+      background: 'black',
+      borderRadius: '20px',
+      padding: '2px',
+      display: 'flex',
+      fontSize: '0.1rem',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: theme === 'light'?'rgba(250,250,220,1)':'rgba(220,250,255,1)'
+    }
+
+  }
+
+  // const location = useLocation();
+
+  useEffect(()=> {
+    (location.pathname === '/admin' || location.pathname === '/admin/')&&navigate('/admin/home');
+  },[])
   return (
     <div style={styles.main_container}>
       {/* Header */}
       <RowWrapper style={styles.header_styles}>
+        <RowWrapper style={styles.logo_wrapper}>
+            {username === '@lati' ? <AiLogo2 style={{ width: '50px', height: '50px' }} /> :<AiLogo3 style={{ width: '50px', height: '50px' }} />}
+            {/* <LogoAndName /> */}
+        </RowWrapper>
 
-        {username === '@lati' ? <AiLogo2 style={{ width: '80px' }} /> :<AiLogo3 style={{ width: '80px' }} />}
-
-        <RowWrapper style={{  alignItems: 'center', width: '100%', border:'none'}}>
+        <RowWrapper style={{ alignItems: 'center', width: '100%', border:'none'}}>
           <RowWrapper style={{ width: '100%',border:'none' }}>
-            <Heading3 text="Admin Dashboard" style={{ fontSize: '1.82rem', fontWeight: '700' }} />
+            <Heading5 text="Admin Dashboard" style={{ fontWeight: '600' }} />
+            {/* <Heading3 text="Admin Dashboard" style={{ fontSize: '1.82rem', fontWeight: '700' }} /> */}
           </RowWrapper>
           <RowWrapper style={{ width: '100%',border:'none'}}>
-            <Label text="Welcome to the Admin Dashboard. Here you can manage all the activities related to the EMS." />
+            {/* <Label text="Welcome to the Admin Dashboard." /> */}
           </RowWrapper>
+
+          <RowWrapper style={styles.search_wrapper_container_style}>
+              <RowWrapper style={styles.searchWrapper}>
+                  <input type="text" placeholder="Search from here..." style={styles.searchInput}/>
+                  <FontAwesomeIcon
+                      icon="fa-solid fa-search"
+                      color="#fff"
+                      onClick={() => {
+                        alert('hi');
+                      }}
+                      style={styles.searchIcon}
+                    />
+                </RowWrapper>
+          </RowWrapper>
+
+          <RowWrapper style={styles.light_dark_toggle}>
+              <RowWrapper style={styles.dark_light_toggle_button_style} onClick={themeToggleHandler}>
+                {/* <FontAwesomeIcon icon="fa-solid fa-moon" /> */}
+                { theme === 'light' ? <FontAwesomeIcon icon="fa-solid fa-sun" style={styles.moon_sun_button_styles}/>:<FontAwesomeIcon icon="fa-solid fa-moon" style={styles.moon_sun_button_styles}/>}
+              </RowWrapper>
+          </RowWrapper>
+
           <RowWrapper style={styles.header_user_notification}>
             <FontAwesomeIcon icon="fa-solid fa-message" color='#0088ff' />
             <FontAwesomeIcon icon="fa-solid fa-bell" />
@@ -244,6 +367,7 @@ function AdminDashboard() {
      
       {/* Main Content Part */}
       <RowWrapper style={styles.main_content_container}>
+        {/* Navigation Bar (Vertical Bar) */}
         <ColumnWrapper style={styles.nav_bar_container}>
           <RowWrapper
             style={{
@@ -293,21 +417,11 @@ function AdminDashboard() {
         </ColumnWrapper>
 
         <ColumnWrapper style={styles.main_content_area}>
-          {/* <h1>Current Location: {currentLocation} </h1> */}
+          {/* Admin Content View */}
           <Outlet />
         </ColumnWrapper>
-      </RowWrapper>
 
-      {/* <style>
-        {`
-        body{
-          background: #f0fbff;
-        }
-          RowWrapper {
-           background: red;
-          }
-        `}
-      </style> */}
+      </RowWrapper>
     </div>
   );
 }
