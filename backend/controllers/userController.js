@@ -44,7 +44,7 @@ const updateUser = async(req, res) => {
 
         if (user) {
             res.status(200).json(user);
-            res.json({ message: "User updated" });
+            // res.json({ message: "User updated" });
         } else {
             res.json({ message: "User not found" });
         }
