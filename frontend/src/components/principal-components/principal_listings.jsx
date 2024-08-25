@@ -1,24 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Heading5 } from '../Typography';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+// import '../../jefrwo.css'
 // import '../../styles/admin-school.css'
 // import '../button-styles.css'
 
 library.add(fas)
 
-function PrincipalListing({title, principals, handleEdit, handleView, width}) {
+// function PrincipalListing({title, principals, handleEdit, handleView, width}) {
+  function PrincipalListing({title, principals, handleEdit, width}) {
+
+  const [selectedRow, setSelectedRow] =  useState(false);
+
+  const navigate = useNavigate();
+
+  const handleView = (principal) => {
+    setSelectedRow(!selectedRow);
+    navigate(`/admin/users/overview/principal/list/view`, {state: {principal}})
+  }
     // const schoolHeadings = ['School Code', 'School Name', 'Type', 'Action']
     // const principalHeadings = ['','','Name', 'School', 'Type', 'Action'];
-    const principalHeadings = ['','','Name', 'School', 'Type'];
+    // const principalHeadings = ['','','Name', 'School', 'Type','Contact'];
+    const principalHeadings = ['','','Name', 'School','Gender', 'Type'];
 
   return (
     <div>
       <Heading5 text={title} />
+
+      {/* <div className='flex-col back-color-red80 w-100p h-100px p-5 br-32px bw-8px bc-blueGreen100 bs-solid '>
+
+      </div> */}
 
       <div className='school-listing-container'>
         <table className='school-data-table' style={{width: {width}, borderRadius: '10px'}}>
@@ -32,7 +47,7 @@ function PrincipalListing({title, principals, handleEdit, handleView, width}) {
           <tbody>
             {principals.map((principal, index) => (
               // <Link to='/principal/${principal.principal_id'>
-                <tr key={index}>
+                <tr key={index} onClick={() => handleView(principal)} className='table-row'>
                   <td>{index+1}</td>
                   <td>
                     <img 
@@ -43,9 +58,12 @@ function PrincipalListing({title, principals, handleEdit, handleView, width}) {
                     style={{borderRadius: '50%', width: '40px', height: '40px'}}
                     />
                     </td>
-                  <td> <Link style={{textDecoration: 'none', color: 'rgb(0,0,0)'}} to={`/admin/users/overview/principal/list/view/${principal.user.user_id}`}> {principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </Link> </td>
+                  {/* <td> <Link style={{textDecoration: 'none', color: 'rgb(0,0,0)'}} to={`/admin/users/overview/principal/list/view/${principal.principal_id}`}> {principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </Link> </td> */}
+                  <td>{principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </td>
                   <td>{principal.school.name}</td>
+                  <td>{principal.user.gender}</td>
                   <td>{principal.principal_type}</td>
+                  {/* <td>{principal.contact.map((contact, index) => (<p key={index}>{contact.name+": "+contact.phone}</p>))}</td> */}
                   {/* <td className='actions'>
                     <button onClick={() => handleEdit(principal.principal_id)}>
                       <FontAwesomeIcon icon='fa-solid fa-pencil' />

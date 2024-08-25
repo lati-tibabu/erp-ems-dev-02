@@ -29,7 +29,7 @@ export const PrimaryButton = (props) => {
 
 export const SecondaryButton = (props) => {
     return(
-        <button className="secondary"
+        <button className={"secondary "+props.className}
             type={props.type}
             disabled={props.disabled}
             name={props.name}
@@ -57,7 +57,7 @@ export const SecondaryButton = (props) => {
 
 export const TertiaryButton = (props) => {
     return(
-        <button className="tertiary"
+        <button className={"tertiary "+props.className}
             type={props.type}
             disabled={props.disabled}
             name={props.name}
