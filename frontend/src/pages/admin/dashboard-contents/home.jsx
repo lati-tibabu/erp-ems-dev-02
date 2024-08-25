@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ColumnWrapper from '../../../components/column_wrapper';
 import { Heading3,Heading6, Label } from '../../../components/Typography';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PrimaryButton, SecondaryButton } from '../../../components/buttons';
+import { SecondaryButton } from '../../../components/buttons';
 import RowWrapper from '../../../components/row_wrapper';
 import {useNavigate} from 'react-router-dom';
 import '../../../styles/admin-dashboard/admin-dashboard-home.css';
@@ -56,7 +56,7 @@ function Home() {
       gap: '10px',
       justifyContent: 'space-around',
       alignItems: 'center',
-      padding: '10px',
+      // padding: '10px',
       borderRadius: '5px',
       background: 'white',
       padding: '40px 20px',

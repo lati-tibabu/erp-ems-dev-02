@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ColumnWrapper from '../../../../components/column_wrapper';
 import RowWrapper from '../../../../components/row_wrapper';
 import { Heading3, Label } from '../../../../components/Typography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { SecondaryButton } from '../../../../components/buttons';
+// import { SecondaryButton } from '../../../../components/buttons';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+// import { Col } from 'sequelize/lib/utils';
 
 library.add(fas);
 
@@ -135,14 +136,16 @@ function OverviewPages() {
       </ColumnWrapper>
 
       <RowWrapper
-          style={styles.user_management_container}>
+          style={styles.user_management_container}
+          className='bw-none'
+          >
 
           <ColumnWrapper
             style={styles.users_type_list_container}>
             <Heading3 text="Users" />
             <ColumnWrapper style={styles.users_management_section_container}>
 
-                <RowWrapper style={styles.users_navigation_bar_container}>
+                <RowWrapper className='bw-none' style={styles.users_navigation_bar_container}>
 
                   <Link to='/admin/users/overview/principal'> 
                     <button className={'schoolButtonStyle all-schools '+ (onPrincipalPage && 'selected-button')}>
@@ -171,16 +174,9 @@ function OverviewPages() {
                   </Link>
                 </RowWrapper>
 
-                <ColumnWrapper>
-                  {/* This is wherr the list of users will be */}
-                  {/* {onPrincipalPage && <h1>Principals</h1>}
-                  {onSupervisorPage && <h1>Supervisor</h1>}
-                  {onTeacherPage && <h1>Teacher</h1>}
-                  {onStudentPage && <h1>Student</h1>}
-                  {onParentPage && <h1>Parent</h1>} */}
+                <ColumnWrapper className='bw-none'>
                   <Outlet />
                 </ColumnWrapper>
-
             </ColumnWrapper>
 
           </ColumnWrapper>
