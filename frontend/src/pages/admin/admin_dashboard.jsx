@@ -313,7 +313,9 @@ function AdminDashboard() {
     (location.pathname === '/admin' || location.pathname === '/admin/')&&navigate('/admin/home');
   },[])
   return (
-    <div style={styles.main_container}>
+    <div 
+    style={styles.main_container}
+    >
       {/* Header */}
       <RowWrapper style={styles.header_styles}>
         <RowWrapper style={styles.logo_wrapper}>

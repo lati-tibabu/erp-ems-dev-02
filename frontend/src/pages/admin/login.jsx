@@ -49,6 +49,7 @@ function Login() {
 
       if (response.status === 200){
         localStorage.setItem('jwt', token)
+        localStorage.setItem('jwt_expiration', Date.now() + 1000 * 60 * 60 )
 
         // console.log(token);
         // console.log(response.data);

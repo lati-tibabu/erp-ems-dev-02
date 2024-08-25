@@ -40,6 +40,7 @@ const Teacher = require("./models/teacher");
 const TeacherClass = require("./models/teacherclass");
 const User = require("./models/user");
 
+const authToken = require("./middlewares/auth-token");
 // middle-wares
 app.use(express.json());
 app.use(cors());
@@ -117,5 +118,20 @@ app.use("/api/school-parent", schoolParentRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/teacher-class", teacherClassRoutes);
+
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
+
+
+// route for a protected endpoint
+app.get('/protected-route', authToken, (req, res) => {
+    // Access the user details provided by the authToken middleware
+    // const user = req.user;
+
+    // Respond with data or perform actions for the authorized user
+    // res.json({ message: `Welcome, ${user.username}!` });
+    res.json({ message: `Welcome, user!` });
+});
 
 module.exports = app;

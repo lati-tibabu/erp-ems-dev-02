@@ -107,9 +107,7 @@ const adminRoutes = {
     // { path: 'settings', element: <Settings /> },
     { path: 'settings', element: <ProtectedRoute component={Settings} /> },
     // { path: 'users', element: <Users /> },
-    { 
-      path: 'users', 
-      element: < ProtectedRoute component={Users} /> ,
+    { path: 'users', element: < ProtectedRoute component={Users} /> ,
       // errorElement: <div>404</div>, // Place errorElement here
       children: [
         {path: 'overview', element: <OverviewPages />,

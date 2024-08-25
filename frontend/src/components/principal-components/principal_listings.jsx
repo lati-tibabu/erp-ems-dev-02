@@ -4,11 +4,7 @@ import { Heading5 } from '../Typography';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate } from 'react-router-dom';
-// import '../../jefrwo.css'
-// import '../../styles/admin-school.css'
-// import '../button-styles.css'
-
+import { useNavigate } from 'react-router-dom';
 library.add(fas)
 
 // function PrincipalListing({title, principals, handleEdit, handleView, width}) {
@@ -36,7 +32,12 @@ library.add(fas)
       </div> */}
 
       <div className='school-listing-container'>
-        <table className='school-data-table' style={{width: {width}, borderRadius: '10px'}}>
+        <table 
+          // className='' 
+          className='font-xs font-w-400 p-20 m-5 bw-2px bs-solid bc-blueGreen80-40 w-100p br-30px' 
+          // style={{width: {width}, borderRadius: '10px'}}
+          
+          >
           <thead>
             <tr>
               {principalHeadings.map((heading, index) => (

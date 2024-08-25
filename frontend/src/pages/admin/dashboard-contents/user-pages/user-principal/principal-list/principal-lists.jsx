@@ -18,6 +18,10 @@ import { CenterColumn } from '../../../../../../components/center';
 library.add(fas);
 
 function PrincipalList() {
+  
+  const token = localStorage.getItem('jwt');
+  const header = {'authorization' : `Bearer ${token}`};
+    
 
   const apiURL = import.meta.env.VITE_API_URL;
 
@@ -40,15 +44,24 @@ function PrincipalList() {
   const getPrincipalData = async (principalsArray) => {
     const dataWithRelations = await Promise.all(
         principalsArray.map(async (principal) => {
-            const userResponse = await fetch(`${apiURL}/api/user/load/${principal.user_id}`);
+            const userResponse = await fetch(`${apiURL}/api/user/load/${principal.user_id}`, {
+              method: 'GET',
+              headers: header
+            });
             const userData = await userResponse.json();
 
-            const schoolResponse = await fetch(`${apiURL}/api/school/load/${principal.school_id}`);
+            const schoolResponse = await fetch(`${apiURL}/api/school/load/${principal.school_id}`,{
+              method: 'GET',
+              headers: header
+            });
             const schoolData = await schoolResponse.json();
 
             // const contactResponse = await fetch(`${apiURL}/api/contact/load/${principal.contact_id}`);
             // const contactData = await contactResponse.json();
-            const contactResponse = await fetch(`${apiURL}/api/contact/loadu/${principal.user_id}`);
+            const contactResponse = await fetch(`${apiURL}/api/contact/loadu/${principal.user_id}`, {
+              method: 'GET',
+              headers: header
+            });
             const contactData = await contactResponse.json();
 
 

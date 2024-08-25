@@ -387,6 +387,7 @@ function ViewTeacherProfile() {
                 </ColumnWrapper>
 
             </ColumnWrapper>
+            
             {editMode
             ?<SecondaryButton className='font-sm font-w-600 max-w-300px' onClick={handleEditSave} >Save Changes </SecondaryButton>
             :<RowWrapper className='bw-none mt-5p justify-around gap-30'>

@@ -13,6 +13,9 @@
   library.add(fas);
 
   function TeacherList() {
+    
+    const token = localStorage.getItem('jwt');
+    const header = {'authorization': `Bearer ${token}`}
 
     const apiURL = import.meta.env.VITE_API_URL;
 
@@ -30,22 +33,25 @@
       }
     };
 
-    // if(teachers.message === 'no teachers'){
-    //   console.log("no teachers found");
-    //   setNoTeacher('No teachers found');
-    // }
-    
-
     const getTeachersData = async (teachersArray) => {
       const dataWithRelations = await Promise.all(
           teachersArray.map(async (teacher) => {
-              const userResponse = await fetch(`${apiURL}/api/user/load/${teacher.user_id}`);
+              const userResponse = await fetch(`${apiURL}/api/user/load/${teacher.user_id}`, {
+                method: 'GET',
+                headers: header
+              });
               const userData = await userResponse.json();
 
-              const schoolResponse = await fetch(`${apiURL}/api/school/load/${teacher.school_id}`);
+              const schoolResponse = await fetch(`${apiURL}/api/school/load/${teacher.school_id}`, {
+                method: 'GET',
+                headers: header
+              });
               const schoolData = await schoolResponse.json();
 
-              const contactResponse = await fetch(`${apiURL}/api/contact/loadu/${teacher.user_id}`);
+              const contactResponse = await fetch(`${apiURL}/api/contact/loadu/${teacher.user_id}`, {
+                method: 'GET',
+                headers: header
+              });
               const contactData = await contactResponse.json();
 
               return { ...teacher, user: userData, school: schoolData, contact: contactData };

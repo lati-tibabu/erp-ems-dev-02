@@ -25,7 +25,10 @@ const teacherHeadings = ['','','Name','School','Gender', 'Type'];
       <Heading5 text={title} />
 
       <div className='school-listing-container'>
-        <table className='school-data-table' style={{width: {width}, borderRadius: '10px'}}>
+        <table 
+        // className='school-data-table' style={{width: {width}, borderRadius: '10px'}}
+        className='font-xs font-w-400 p-20 m-5 bw-2px bs-solid bc-blueGreen80-40 w-100p br-30px' 
+        >
           <thead>
             <tr>
               {teacherHeadings.map((heading, index) => (

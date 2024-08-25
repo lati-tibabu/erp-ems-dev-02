@@ -117,7 +117,7 @@ const loginUser = async(req, res) => {
                         username: user.username,
                         role: user.role_id,
                     },
-                    JWT_SECRET, { expiresIn: "10s" } // Expiration time in seconds
+                    JWT_SECRET, { expiresIn: "1h" }
                 );
 
                 res.json({
@@ -127,7 +127,7 @@ const loginUser = async(req, res) => {
                         username: user.username,
                         role: user.role_id,
                     },
-                }); // Single response with token
+                });
             } else {
                 res.status(401).json({ message: "Invalid password" });
             }
@@ -138,6 +138,15 @@ const loginUser = async(req, res) => {
     }
 };
 
+const verifyUser = async(req, res) => {
+    try {
+        const grant = true;
+        res.json({ grant });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createUser,
     getAllUsers,
@@ -145,4 +154,5 @@ module.exports = {
     updateUser,
     deleteUser,
     loginUser,
+    verifyUser,
 };
