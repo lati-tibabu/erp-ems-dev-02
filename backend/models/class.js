@@ -28,6 +28,7 @@ Class.init(
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     class_name: {
       type: DataTypes.STRING,
@@ -35,7 +36,7 @@ Class.init(
     },
     class_grade: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     teacher_id: {
       type: DataTypes.UUID,

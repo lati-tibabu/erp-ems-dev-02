@@ -54,6 +54,10 @@ Principal.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    CPD_result: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
     experience_years: {
       type: DataTypes.INTEGER,
       allowNull: true,
