@@ -15,9 +15,9 @@ table {
 
 .school-data-table thead {
     /* background: rgba(6, 82, 148, 0.743); */
-    background: rgba(0, 162, 255, 0.839);
+    /* background: rgba(0, 162, 255, 0.839); */
     height: 40px;
-    color: white;
+    color: rgb(0, 0, 0);
     /* border: 1px solid rgb(0, 149, 255); */
     /* border-collapse: separate; */
     /* box-shadow: 0 0 5px rgba(0, 149, 255, 0.433); */
@@ -35,6 +35,10 @@ table {
     /* background: red; */
     padding: 100px;
     /* display: flex; */
+}
+
+.school-data-table thead td {
+    border-radius: 10px;
 }
 
 .school-data-table thead tr th {
@@ -59,7 +63,15 @@ table {
 }
 
 .school-data-table tbody tr:nth-child(even) {
-    background-color: #00a2ff21;
+    /* background-color: #00a2ff21; */
+    /* padding: 10px; */
+}
+
+.school-data-table tbody td {
+    /* background: red; */
+    padding: 10px;
+    overflow: hidden;
+    text-wrap: nowrap;
 }
 
 
@@ -113,6 +125,3 @@ table {
 
 
 /* Slight transparency on hover */
-
-
-}

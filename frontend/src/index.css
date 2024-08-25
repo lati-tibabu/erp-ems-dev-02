@@ -1,26 +1,377 @@
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
     :root {
-      font-family: "Open Sans", sans-serif;
-      margin: 0;
-      padding: 0;
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
 
-      /* background-color: rebeccapurple; */
-      ::selection {
-        color: white;
-        background: rgb(0, 133, 200);
-      }
+        /* background-color: rebeccapurple; */
+        ::selection {
+            color: white;
+            background: rgb(0, 133, 200);
+        }
 
-      .no-select {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+        .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-      ::-webkit-scrollbar {
-        display: none;
-      }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        --blue100: rgba(0,
+            0,
+            255,
+            1);
+        --blue90: rgba(0,
+            0,
+            128,
+            1);
+        --blue80: rgba(65,
+            105,
+            225,
+            1);
+        --blue70: rgba(100,
+            149,
+            237,
+            1);
+        --blue60: rgba(135,
+            206,
+            235,
+            1);
+        --blue50: rgba(173,
+            216,
+            230,
+            1);
+        --blue40: rgba(176,
+            224,
+            230,
+            1);
+        --blue30: rgba(152,
+            208,
+            212,
+            1);
+        --blue20: rgba(119,
+            136,
+            153,
+            1);
+        --blue10: rgba(220,
+            220,
+            220,
+            1);
+        /* Blue Green */
+        --blueGreen100: rgba(0,
+            128,
+            128,
+            1);
+        --blueGreen90: rgba(64,
+            224,
+            208,
+            1);
+        --blueGreen80: rgba(165,
+            199,
+            223,
+            1);
+        --blueGreen70: rgba(127,
+            255,
+            212,
+            1);
+        --blueGreen60: rgba(0,
+            255,
+            127,
+            1);
+        --blueGreen50: rgba(46,
+            139,
+            87,
+            1);
+        --blueGreen40: rgba(60,
+            179,
+            113,
+            1);
+        --blueGreen30: rgba(32,
+            178,
+            170,
+            1);
+        --blueGreen20: rgba(152,
+            251,
+            152,
+            1);
+        --blueGreen10: rgba(245,
+            255,
+            250,
+            1);
+        /* Red */
+        --red100: rgba(255,
+            0,
+            0,
+            1);
+        --red90: rgba(178,
+            34,
+            34,
+            1);
+        --red80: rgba(220,
+            20,
+            60,
+            1);
+        --red70: rgba(255,
+            69,
+            0,
+            1);
+        --red60: rgba(255,
+            99,
+            71,
+            1);
+        --red50: rgba(255,
+            127,
+            80,
+            1);
+        --red40: rgba(250,
+            128,
+            114,
+            1);
+        --red30: rgba(233,
+            150,
+            122,
+            1);
+        --red20: rgba(205,
+            92,
+            92,
+            1);
+        --red10: rgba(240,
+            128,
+            128,
+            1);
+        /* Orange */
+        --orange100: rgba(255,
+            165,
+            0,
+            1);
+        --orange90: rgba(255,
+            140,
+            0,
+            1);
+        --orange80: rgba(255,
+            99,
+            71,
+            1);
+        --orange70: rgba(255,
+            69,
+            0,
+            1);
+        --orange60: rgba(255,
+            165,
+            79,
+            1);
+        --orange50: rgba(255,
+            160,
+            122,
+            1);
+        --orange40: rgba(255,
+            140,
+            105,
+            1);
+        --orange30: rgba(255,
+            117,
+            74,
+            1);
+        --orange20: rgba(255,
+            218,
+            185,
+            1);
+        --orange10: rgba(255,
+            228,
+            181,
+            1);
+        /* Green */
+        --green100: rgba(0,
+            128,
+            0,
+            1);
+        --green90: rgba(34,
+            139,
+            34,
+            1);
+        --green80: rgba(50,
+            205,
+            50,
+            1);
+        --green70: rgba(60,
+            179,
+            113,
+            1);
+        --green60: rgba(46,
+            139,
+            87,
+            1);
+        --green50: rgba(144,
+            238,
+            144,
+            1);
+        --green40: rgba(152,
+            251,
+            152,
+            1);
+        --green30: rgba(143,
+            188,
+            143,
+            1);
+        --green20: rgba(32,
+            178,
+            170,
+            1);
+        --green10: rgba(152,
+            251,
+            152,
+            1);
+        /* Gray */
+        --gray100: rgba(169,
+            169,
+            169,
+            1);
+        --gray90: rgba(105,
+            105,
+            105,
+            1);
+        --gray80: rgba(128,
+            128,
+            128,
+            1);
+        --gray70: rgba(192,
+            192,
+            192,
+            1);
+        --gray60: rgba(211,
+            211,
+            211,
+            1);
+        --gray50: rgba(220,
+            220,
+            220,
+            1);
+        --gray40: rgba(245,
+            245,
+            245,
+            1);
+        --gray30: rgba(240,
+            255,
+            240,
+            1);
+        --gray20: rgba(245,
+            255,
+            250,
+            1);
+        --gray10: rgba(255,
+            255,
+            255,
+            1);
+        /* Purple */
+        --purple100: rgba(128,
+            0,
+            128,
+            1);
+        --purple90: rgba(75,
+            0,
+            130,
+            1);
+        --purple80: rgba(139,
+            0,
+            139,
+            1);
+        --purple70: rgba(148,
+            0,
+            211,
+            1);
+        --purple60: rgba(186,
+            85,
+            211,
+            1);
+        --purple50: rgba(221,
+            160,
+            221,
+            1);
+        --purple40: rgba(238,
+            130,
+            238,
+            1);
+        --purple30: rgba(216,
+            191,
+            216,
+            1);
+        --purple20: rgba(230,
+            230,
+            250,
+            1);
+        --purple10: rgba(255,
+            240,
+            245,
+            1);
+        /* Yellow */
+        --yellow100: rgba(255,
+            255,
+            0,
+            1);
+        --yellow90: rgba(255,
+            255,
+            102,
+            1);
+        --yellow80: rgba(255,
+            255,
+            153,
+            1);
+        --yellow70: rgba(255,
+            255,
+            204,
+            1);
+        --yellow60: rgba(255,
+            255,
+            229,
+            1);
+        --yellow50: rgba(255,
+            255,
+            240,
+            1);
+        --yellow40: rgba(255,
+            250,
+            205,
+            1);
+        --yellow30: rgba(255,
+            245,
+            160,
+            1);
+        --yellow20: rgba(255,
+            239,
+            134,
+            1);
+        --yellow10: rgba(255,
+            250,
+            205,
+            1);
+        /* Font sizes */
+        /* Font Sizes */
+        --font-size-xs: 0.75rem;
+        --font-size-sm: 0.875rem;
+        --font-size-md: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-size-xl: 1.25rem;
+        --font-size-2xl: 1.5rem;
+        --font-size-3xl: 1.875rem;
+        --font-size-4xl: 2.25rem;
+        --font-size-5xl: 3rem;
+        --font-size-6xl: 4rem;
+        /* Line Heights */
+        --line-height-xs: 1rem;
+        --line-height-sm: 1.25rem;
+        --line-height-md: 1.5rem;
+        --line-height-lg: 1.75rem;
+        --line-height-xl: 2rem;
+        --line-height-2xl: 2.5rem;
+        --line-height-3xl: 3rem;
+        --line-height-4xl: 3.5rem;
+        --line-height-5xl: 4rem;
+        --line-height-6xl: 5rem;
     }
