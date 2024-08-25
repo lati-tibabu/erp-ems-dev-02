@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../../../styles/admin-school.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../button-styles.css'
 
 import PrincipalListing from '../../../../../../components/principal-components/principal_listings';
@@ -16,15 +16,59 @@ library.add(fas)
 function ViewPrincipal() {
 
     const apiURL = import.meta.env.VITE_API_URL;
-    const [userData, setUserData] = useState({})
-    const {user_id} = useParams()
+    const [principal, setPrincipal] = useState({});
+    const [principalData, setPrincipalData] = useState({});
+    const { principalId } = useParams();
+    const { state } = useLocation();
 
-    const getUser = async (user_id) => {
-        const response = await fetch(`${apiURL}/api/user/load/${user_id}`);
-        const data = await response.json();
-        return data
+    // const getPrincipal = async (principalId) => {
+    //     try{
+    //     const response = await fetch(`${apiURL}/api/principal/load/${principalId}`);
+    //     const data = await response.json();
+    //     setPrincipal(data)
+    //     } catch (error) {
+    //         console.error('Error fetching principal: ', error)
+    //     }
+    // };
+
+    // const getPrincipalData = async (principalObj) =>{
+    //     const dataWithRelation = await Promise.all([
+    //         fetch(`${apiURL}/api/user/load/${principalObj.user_id}`).then(response => response.json()),
+    //         fetch(`${apiURL}/api/school/load/${principalObj.school_id}`).then(response => response.json()),
+    //         fetch(`${apiURL}/api/contact/loadu/${principalObj.user_id}`).then(response => response.json()),
+    //     ]);
+
+    //     const [user, school, contact] = dataWithRelation;
+
+    //     const principalData = { ...principalObj, user: user, school: school, contact: contact };
+    
+    //     setPrincipalData(principalData);
+    // }        
+
+    // useEffect(() => {
+    //     if (principalId) {
+    //         getPrincipal(principalId);
+    //     }
+    // }, [principalId]);
+
+    // useEffect(() => {
+    //     if (principal) {
+    //         getPrincipalData(principal);
+    //     }
+    // }, [principal]);
+
+    // console.log(principal);
+    // console.log("principal Data", principalData);
+
+    useEffect(() => {
+        setPrincipalData(state?.principal);
+    },[state])
+
+    const navigate = useNavigate();
+
+    const handleViewProfile = (principal) => {
+        navigate(`/admin/users/overview/principal/view_profile`, {state: {principal}})
     }
-
     return (
         <ColumnWrapper style={{
             width: '30%',
@@ -39,24 +83,30 @@ function ViewPrincipal() {
                 <FontAwesomeIcon icon='fa-solid fa-xmark' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
                 </RowWrapper>
                 <ColumnWrapper style={{justifyContent: 'center', alignItems: 'center', gap: '20px', border: 'none',}}>
-                <img src="https://img.freepik.com/free-photo/confident-good-looking-beautiful-woman-with-blonde-dyed-hair-dressed-casual-clothes-looking-seriously_176420-15186.jpg" alt="principal_profile_image" 
+                <img 
+                // src="https://img.freepik.com/free-photo/confident-good-looking-beautiful-woman-with-blonde-dyed-hair-dressed-casual-clothes-looking-seriously_176420-15186.jpg" 
+                src={principalData?.user?.profile_photo ? principalData?.user?.profile_photo : 
+                    "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} 
+                    
+                
+                alt="principal_profile_image" 
                     style={{width: '160px', height: '160px', borderRadius: '50%', objectFit: 'cover'}}
                 />
-                <Label style={{fontWeight: 'bold'}} text='Alice James' />
+                <Label style={{fontWeight: 'bold'}} text={principalData?.user?.first_name+" "+principalData?.user?.middle_name+" "+principalData?.user?.last_name} />
                 </ColumnWrapper>
                 <ColumnWrapper style={{gap: '10px', border: 'none',}}>
 
                 <RowWrapper style={{gap: '10px', border: 'none',}}>
                     <ColumnWrapper style={{gap: '10px', border: 'none',}}>
                         <Label text='Gender' style={{fontWeight: 'bold'}}/>
-                        <Label text='Female' />
+                        <Label text={principalData?.user?.gender} />
                     </ColumnWrapper>
                 </RowWrapper>
 
                 <RowWrapper style={{justifyContent:'space-between', alignItems: 'center', border: 'none'}}>
                     <ColumnWrapper style={{gap: '10px', border: 'none',}}>
                         <Label text='Email' style={{fontWeight: 'bold'}}/>
-                        <Label text='p8b2z@example.com' />
+                        <Label text={principalData?.user?.email} />
                     </ColumnWrapper>
                     <FontAwesomeIcon icon='fa-solid fa-envelope' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
                 </RowWrapper>
@@ -64,13 +114,18 @@ function ViewPrincipal() {
                 <RowWrapper style={{justifyContent:'space-between', alignItems: 'center', border: 'none'}}>
                     <ColumnWrapper style={{gap: '10px', border: 'none',}}>
                         <Label text='Phone Number' style={{fontWeight: 'bold'}}/>
-                        <Label text='08012345678' />
+                        {/* {principalData?.contact.map((cont, index) => (<div key={index}> <Label text={`${cont?.name}: `}/> <Label text={`${cont?.phone}`}/> </div>))} */}
+                        {Array.isArray(principalData?.contact) && 
+                            principalData?.contact.map((cont, index) => (
+                                <Label key={index} text={`${cont?.name}: ${cont?.phone}`}/> 
+                            ))}
+                        
                     </ColumnWrapper>
                     <FontAwesomeIcon icon='fa-solid fa-phone' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
                 </RowWrapper>
                 </ColumnWrapper>
 
-                <TertiaryButton style={{fontSize: '0.7rem'}}>View Profile</TertiaryButton>
+                <TertiaryButton style={{fontSize: '0.7rem'}} onClick={()=> handleViewProfile(principalData)} >View Profile</TertiaryButton>
             </ColumnWrapper>
     )
 }

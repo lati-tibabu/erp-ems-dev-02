@@ -7,7 +7,7 @@ function CreatePrincipal (){
 
     return (
         <ColumnWrapper style={{
-                width: '30vw', 
+                // width: '30vw', 
                 borderRadius: '30px', 
                 padding: '30px',
                 background: 'white',

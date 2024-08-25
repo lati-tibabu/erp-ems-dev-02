@@ -12,6 +12,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Heading6, Label, Paragraph } from '../../../../../../components/Typography';
 import { TertiaryButton } from '../../../../../../components/buttons';
 import { Outlet } from 'react-router-dom';
+import loading from '/loading.gif'
+import { CenterColumn } from '../../../../../../components/center';
 
 library.add(fas);
 
@@ -44,11 +46,20 @@ function PrincipalList() {
             const schoolResponse = await fetch(`${apiURL}/api/school/load/${principal.school_id}`);
             const schoolData = await schoolResponse.json();
 
-            return { ...principal, user: userData, school: schoolData };
+            // const contactResponse = await fetch(`${apiURL}/api/contact/load/${principal.contact_id}`);
+            // const contactData = await contactResponse.json();
+            const contactResponse = await fetch(`${apiURL}/api/contact/loadu/${principal.user_id}`);
+            const contactData = await contactResponse.json();
+
+
+            return { ...principal, user: userData, school: schoolData, contact: contactData };
         })
     );
     setPrincipalData(dataWithRelations);
   };
+
+  console.log(principalData);
+  
 
   useEffect(() => {
     getPrincipals()
@@ -76,16 +87,23 @@ const navigate = useNavigate();
   return (
     <>
     <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none',}}>
+      {
+        principalData.length === 0?
+        <CenterColumn>
+          <img src={loading} alt="" style={{width: '100px'}} />
+        </CenterColumn>
+        :
         <PrincipalListing
           title='Principals'
           principals={principalData}
           handleEdit={handleEdit}
-          handleView={handleView}
+          // handleView={handleView}
           width='100%'
         />
+        }
 
         <Outlet />
-        
+
     </RowWrapper>
     </>
   )

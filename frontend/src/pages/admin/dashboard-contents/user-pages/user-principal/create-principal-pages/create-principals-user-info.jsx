@@ -7,7 +7,7 @@ import { PrimaryButton } from '../../../../../../components/buttons';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 function CreatePrincipalUser (props){
 
@@ -18,6 +18,12 @@ function CreatePrincipalUser (props){
     const [address_id, setAddressId] = useState('')
     const [role_id, setRoleId] = useState('')
     const [gender, setGender] = useState({gender: ''})
+    const location = useLocation();
+
+    const onPage = location.pathname;
+
+    const onSpecificPage = onPage.startsWith('/admin/users/overview/principal/create/user/specific')
+    // console.log(onPage);
 
     const getAddress = async () => {
         try{
@@ -74,7 +80,7 @@ function CreatePrincipalUser (props){
 
             if (response.status === 201) {
                 alert(`User created succesfully!`);
-                navigate('/admin/users/overview/principal/create/specific/' + response.data.user_id);
+                navigate('/admin/users/overview/principal/create/user/specific/' + response.data.user_id);
                 console.log('User created succesfully',response);
             } else {
                 alert('Error Adding User');
@@ -96,123 +102,133 @@ function CreatePrincipalUser (props){
     }
 
     return (
-        <>
-            <Label text="Enter principal's user's information"/>
-            
-            <HorizontalLine style={{background: 'rgb(0, 57, 110)',height:'2px' }} />
-            
-            <form onSubmit={handleSubmit}>
-
-                <InputField 
-                    labelName="First Name" 
-                    placeholder="Enter First Name" 
-                    name="first_name" 
-                    type="text" 
-                    value={userData.first_name} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Middle Name" 
-                    placeholder="Enter Middle Name" 
-                    name="middle_name" 
-                    type="text" 
-                    value={userData.middle_name} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Last Name" 
-                    placeholder="Enter Last Name" 
-                    name="last_name" 
-                    type="text" 
-                    value={userData.last_name} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Username" 
-                    required 
-                    placeholder="Enter Username" 
-                    name="username" 
-                    type="text" 
-                    value={userData.username} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Password" 
-                    required 
-                    placeholder="Enter Password" 
-                    name="password" 
-                    type="password" 
-                    value={userData.password} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Date of Birth" 
-                    placeholder="Select Date of Birth" 
-                    name="date_of_birth" 
-                    type="date" 
-                    value={userData.date_of_birth} 
-                    onChange={handleUserChange} />
-
-                <ColumnWrapper>
-                    <Label text="Gender" required />
-                    <Select placeholder="Select User's Gender"
-                    options={[
-                        {value: 'Male', label: 'Male'},
-                        {value: 'Female', label: 'Female'},
-                    ]} 
-                    onChange={(e) => {setGender({ gender: e.value })}}
-                    />
-                </ColumnWrapper>
+        <RowWrapper style={{
+            width: '100%', 
+            border: 'none', 
+            justifyContent: 'space-between',
+            gap: '20px',
+            }}>
+            <ColumnWrapper style={{width: '50%', padding: '20px', borderRadius: '20px', borderWidth: '2px', background: 'white', boxShadow: '3px 3px 5px 0px #0088ff23'}}>
+                <Label text="Enter principal's user's information"/>
                 
-                <InputField 
-                    labelName="Email Address" 
-                    placeholder="Enter Email Address" 
-                    name="email" 
-                    type="email" 
-                    value={userData.email} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="House Number" 
-                    placeholder="Enter House Number" 
-                    name="house_number" 
-                    type="text" 
-                    value={userData.house_number} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Nationality" 
-                    placeholder="Enter Nationality" 
-                    name="nationality" 
-                    type="text" 
-                    value={userData.nationality} 
-                    onChange={handleUserChange} />
-
-                <InputField 
-                    labelName="Profile Photo URL" 
-                    placeholder="Enter Profile Photo URL" 
-                    name="profile_photo" 
-                    type="text" 
-                    value={userData.profile_photo} 
-                    onChange={handleUserChange} />
+                <HorizontalLine style={{background: 'rgb(0, 57, 110)',height:'2px' }} />
                 
-                <ColumnWrapper>
-                
-                <Label text="Address" required/>
-                    <Select placeholder="Select User's Address"
-                        options={addressData.map((address) => ({
-                            value: address.address_id,
-                            label: `${address.city}, ${address.subcity}, ${address.woreda}, ${address.kebele}`,
-                        }))}
-                        onChange={(e) => setAddressId(e.value)}></Select>
-                </ColumnWrapper>
+                <form onSubmit={handleSubmit}>
 
-                <RowWrapper style={{ justifyContent: 'flex-end'}}>
-                    <PrimaryButton style={{width:'100px', fontWeight: 'normal'}}>Next</PrimaryButton>
-                </RowWrapper>
+                    <InputField 
+                        labelName="First Name" 
+                        placeholder="Enter First Name" 
+                        name="first_name" 
+                        type="text" 
+                        value={userData.first_name} 
+                        onChange={handleUserChange} />
 
-            </form>
-        </>
+                    <InputField 
+                        labelName="Middle Name" 
+                        placeholder="Enter Middle Name" 
+                        name="middle_name" 
+                        type="text" 
+                        value={userData.middle_name} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Last Name" 
+                        placeholder="Enter Last Name" 
+                        name="last_name" 
+                        type="text" 
+                        value={userData.last_name} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Username" 
+                        required 
+                        placeholder="Enter Username" 
+                        name="username" 
+                        type="text" 
+                        value={userData.username} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Password" 
+                        required 
+                        placeholder="Enter Password" 
+                        name="password" 
+                        type="password" 
+                        value={userData.password} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Date of Birth" 
+                        placeholder="Select Date of Birth" 
+                        name="date_of_birth" 
+                        type="date" 
+                        value={userData.date_of_birth} 
+                        onChange={handleUserChange} />
+
+                    <ColumnWrapper style={{border:'none'}}>
+                        <Label text="Gender" required />
+                        <Select placeholder="Select User's Gender"
+                        options={[
+                            {value: 'Male', label: 'Male'},
+                            {value: 'Female', label: 'Female'},
+                        ]} 
+                        onChange={(e) => {setGender({ gender: e.value })}}
+                        />
+                    </ColumnWrapper>
+                    
+                    <InputField 
+                        labelName="Email Address" 
+                        placeholder="Enter Email Address" 
+                        name="email" 
+                        type="email" 
+                        value={userData.email} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="House Number" 
+                        placeholder="Enter House Number" 
+                        name="house_number" 
+                        type="text" 
+                        value={userData.house_number} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Nationality" 
+                        placeholder="Enter Nationality" 
+                        name="nationality" 
+                        type="text" 
+                        value={userData.nationality} 
+                        onChange={handleUserChange} />
+
+                    <InputField 
+                        labelName="Profile Photo URL" 
+                        placeholder="Enter Profile Photo URL" 
+                        name="profile_photo" 
+                        type="text" 
+                        value={userData.profile_photo} 
+                        onChange={handleUserChange} />
+                    
+                    <ColumnWrapper style={{border:'none'}}>
+                        <Label text="Address" required/>
+                            <Select placeholder="Select User's Address"
+                                options={addressData.map((address) => ({
+                                    value: address.address_id,
+                                    label: `${address.city}, ${address.subcity}, ${address.woreda}, ${address.kebele}`,
+                                }))}
+                                onChange={(e) => setAddressId(e.value)}></Select>
+                    </ColumnWrapper>
+
+                    {!onSpecificPage&&<RowWrapper style={{ justifyContent: 'flex-end', border: 'none'}}>
+                        <PrimaryButton style={{width:'100px', fontWeight: 'normal'}}>Next</PrimaryButton>
+                    </RowWrapper>}
+                </form>
+            </ColumnWrapper>
+            {onSpecificPage&&
+            <ColumnWrapper style={{width: '50%', padding: '20px', borderRadius: '20px', borderWidth: '2px', background: 'white', boxShadow: '3px 3px 5px 0px #0088ff23'}}>
+                <Outlet />
+            </ColumnWrapper>}
+        </RowWrapper>
+        
     );
 }
 

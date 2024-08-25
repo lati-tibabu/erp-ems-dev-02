@@ -7,7 +7,7 @@ import { PrimaryButton } from '../../../../../../components/buttons';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function CreatePrincipalSpecific (props){
 
@@ -21,6 +21,8 @@ function CreatePrincipalSpecific (props){
     const [principalData, setPrincipalData] = useState({});
 
     const [schools, setSchools] = useState([])
+
+    const navigate = useNavigate();
 
     const salaryRanges = [
         { value: "0-20000", label: "0 - 20,000" },
@@ -64,15 +66,6 @@ function CreatePrincipalSpecific (props){
         }))
     }
 
-    const handleGenderChange = (event) => {
-        const { value } = event.target;
-        setGender({ gender: value });
-    };
-
-    // const handleAddressChange = (event) => {
-    //     const { value } = event.target;
-    //     setAddressId(value);
-    // }
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -87,13 +80,18 @@ function CreatePrincipalSpecific (props){
             const response = await axios.post('http://localhost:3060/api/principal/create', combinedData)
 
             if (response.status === 201) {
-                alert(`Principal created succesfully with id ${response.data.id}`);
+                alert(`Principal created succesfully with id ${response.data.user_id}`);
                 console.log('Principal created succesfully',response);
+                if(window.confirm("The user(principal) does not have a contand do you want to add one for it?")){
+                    navigate('/admin/users/overview/principal/create/contact/'+response.data.user_id)
+                } else{
+                    navigate('/admin/users/overview/principal/list');
+                }
             } else {
                 alert('Error Adding Principal');
                 console.log('Error Adding Principal');
             }
-            console.log(combinedData);
+            // console.log(combinedData);
 
         } catch (error) {
             console.error('Error: ', error);

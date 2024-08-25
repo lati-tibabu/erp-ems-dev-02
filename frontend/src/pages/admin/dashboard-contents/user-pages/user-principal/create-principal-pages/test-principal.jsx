@@ -2,7 +2,7 @@ import React from 'react'
 
 function TestPrincipal() {
   return (
-    <div>TestPrincipal</div>
+    <div className='flex-col justify-center items-center'>TestPrincipal</div>
   )
 }
 
