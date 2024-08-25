@@ -45,32 +45,50 @@ app.use(express.json());
 app.use(cors());
 
 // database sync route
-app.post("/syncDB", async (req, res) => {
-  try {
-    await sequelize.sync({ force: true });
-    // await sequelize.sync({ alter: true });
-    res.json({ message: "Database Synced" });
-  } catch (error) {
-    res.status(500).send("Error syncing database: " + error.message);
-  }
+app.post("/syncDB", async(req, res) => {
+    try {
+        await sequelize.sync({ force: true });
+        // await sequelize.sync({ alter: true });
+        res.json({ message: "Database Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing database: " + error.message);
+    }
 });
 
-app.post("/syncSchool", async (req, res) => {
-  try {
-    await sequelize.models.School.sync({ alter: true }); //  { force: true }
-    res.json({ message: "School Model Synced" });
-  } catch (error) {
-    res.status(500).send("Error syncing School model: " + error.message);
-  }
+app.post("/syncSchool", async(req, res) => {
+    try {
+        await sequelize.models.School.sync({ alter: true }); //  { force: true }
+        res.json({ message: "School Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing School model: " + error.message);
+    }
 });
 
-app.post("/syncPrincipal", async (req, res) => {
-  try {
-    await sequelize.models.Principal.sync({ alter: true }); // or { force: true }
-    res.json({ message: "Principal Model Synced" });
-  } catch (error) {
-    res.status(500).send("Error syncing Principal model: " + error.message);
-  }
+app.post("/syncPrincipal", async(req, res) => {
+    try {
+        await sequelize.models.Principal.sync({ alter: true }); // or { force: true }
+        res.json({ message: "Principal Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Principal model: " + error.message);
+    }
+});
+
+app.post("/syncClass", async(req, res) => {
+    try {
+        await sequelize.models.Class.sync({ alter: true }); // or { force: true }
+        res.json({ message: "Class Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Class model: " + error.message);
+    }
+});
+
+app.post("/syncTeacher", async(req, res) => {
+    try {
+        await sequelize.models.Teacher.sync({ alter: true }); // or { force: true }
+        res.json({ message: "Teacher Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Teacher model: " + error.message);
+    }
 });
 
 // app.post("/syncUser", async (req, res) => {

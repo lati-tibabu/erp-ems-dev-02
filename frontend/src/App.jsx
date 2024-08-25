@@ -1,10 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AllRoutes from './routes'
+// import './App.css'
 
 import 'normalize.css'; // for normalizing the default styling applied by the react itself
 
-import './index.css'
+// import './index.css'
 // import CreateUser from './pages/create_user'
 // import AdminLogin from './pages/admin_login'
 // import AdminDashboard from './pages/admin/admin_dashboard'
@@ -24,7 +25,10 @@ function App() {
     // <AdminDashboard />
     // <StudentLogin />
     // <SchoolCreate/>
-    <ViewSchool />
+    // <ViewSchool />
+    <>
+      IDK Whats happening
+    </>
   )
 }
 

@@ -35,6 +35,8 @@ import Teacher from '../pages/admin/dashboard-contents/user-pages/teacher';
 import Student from '../pages/admin/dashboard-contents/user-pages/student';
 import Parent from '../pages/admin/dashboard-contents/user-pages/parent';
 
+// Principal routes
+
 import CreatePrincipal from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal';
   import CreatePrincipalUser from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-principals-user-info';
   import CreatePrincipalSpecific from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-principal-specific-info';
@@ -42,9 +44,20 @@ import CreatePrincipal from '../pages/admin/dashboard-contents/user-pages/user-p
 // import PrincipalList from '../pages/admin/dashoard-contents/user-pages/user-principal/principal-list/principal-lists';
 import PrincipalList from '../pages/admin/dashboard-contents/user-pages/user-principal/principal-list/principal-lists.jsx';
   import ViewPrincipal from '../pages/admin/dashboard-contents/user-pages/user-principal/principal-list/view-principal.jsx';
+  import ViewPrincipalProfile from '../pages/admin/dashboard-contents/user-pages/user-principal/principal-list/view-principal-profile.jsx';
 
+// Teacher routes
+
+import CreateTeacher from '../pages/admin/dashboard-contents/user-pages/user-teacher/create-teacher';
+  import CreateTeacherUser from '../pages/admin/dashboard-contents/user-pages/user-teacher/create-teacher-pages/create-teachers-user-info'
+  import CreateTeacherSpecific from '../pages/admin/dashboard-contents/user-pages/user-teacher/create-teacher-pages/create-teacher-specific-info';
+  import TestTeacher from '../pages/admin/dashboard-contents/user-pages/user-teacher/create-teacher-pages/test-teacher';
+import TeacherList from '../pages/admin/dashboard-contents/user-pages/user-teacher/teacher-list/teacher-lists';
+  import ViewTeacher from '../pages/admin/dashboard-contents/user-pages/user-teacher/teacher-list/view-teacher';
+  import ViewTeacherProfile from '../pages/admin/dashboard-contents/user-pages/user-teacher/teacher-list/view-teacher-profile';
 // import { elements } from 'chart.js';
 import ProtectedRoute from '../components/protectred_routes';
+import CreateContact from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-contact';
 
 const adminRoutes = {
   path: '/admin',
@@ -105,21 +118,51 @@ const adminRoutes = {
               children: [
                 {path: 'create', element: <CreatePrincipal />,
                   children : [
-                    {path: 'user', element: <CreatePrincipalUser />},
-                    {path: 'specific/:user_id', element: <CreatePrincipalSpecific />},
+                    {path: 'user', element: <CreatePrincipalUser />,
+                      children: [
+                        {path: 'specific/:user_id', element: <CreatePrincipalSpecific />}
+                      ]
+                    },
+                    // {path: 'specific/:user_id', element: <CreatePrincipalSpecific />},
+                    {path: 'contact/:user_id', element: <CreateContact />},
                     {path: 'test', element: <TestPrincipal />},
                     // {path: 'specific', element: <CreatePrincipalSpecific />},
                   ]
                 },
                 {path: 'list', element: <PrincipalList />,
                   children: [
-                    {path: 'view/:principalId', element: <ViewPrincipal />},
+                    // {path: 'view/:principalId', element: <ViewPrincipal />},
+                    {path: 'view', element: <ViewPrincipal />},
                   ]
-                }
+                },
+                {path: 'view_profile', element: <ViewPrincipalProfile />}
               ]
             },
             {path: 'supervisor', element: <Supervisor />},
-            {path: 'teacher', element: <Teacher />},
+            {path: 'teacher', element: <Teacher />,
+              children: [
+                {path: 'create', element: <CreateTeacher />,
+                  children : [
+                    {path: 'user', element: <CreateTeacherUser />,
+                      children: [
+                        {path: 'specific/:user_id', element: <CreateTeacherSpecific />}
+                      ]
+                    },
+                    // {path: 'specific/:user_id', element: <CreateTeacherSpecific />},
+                    {path: 'contact/:user_id', element: <CreateContact />},
+                    {path: 'test', element: <TestTeacher />},
+                    // {path: 'specific', element: <CreateTeacherSpecific />},
+                  ]
+                },
+                {path: 'list', element: <TeacherList />,
+                  children: [
+                    // {path: 'view/:TeacherId', element: <ViewTeacher />},
+                    {path: 'view', element: <ViewTeacher />},
+                  ]
+                },
+                {path: 'view_profile', element: <ViewTeacherProfile />}
+              ]
+            },
             {path: 'student', element: <Student />},
             {path: 'parent', element: <Parent />},
           ]
