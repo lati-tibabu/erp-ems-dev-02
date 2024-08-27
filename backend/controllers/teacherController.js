@@ -11,11 +11,19 @@ const createTeacher = async(req, res) => {
 
 const getAllTeachers = async(req, res) => {
     try {
-        const teachers = await teacherServices.getAllTeachers();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const teachers = await teacherServices.getAllTeachers(page, limit);
         if (Object.keys(teachers).length === 0) {
             res.json({ message: 'no teachers' });
         } else {
-            res.json(teachers);
+            res.json({
+                teachers: teachers,
+                totalTeachers: teachers.count,
+                totalPages: Math.ceil(teachers.count / limit),
+                currentPage: page
+            });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });

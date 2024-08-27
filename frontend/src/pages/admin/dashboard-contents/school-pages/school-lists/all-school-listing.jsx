@@ -71,7 +71,7 @@ const navigate = useNavigate();
         <Label text='School Per Page' />
 
         <FontAwesomeIcon icon="fa-solid fa-minus" onClick={() => !(limit===1) && setLimit(limit-1) }  className={styleClasses.plusMinus}/>
-        <input type="text" name="" value={limit} onChange={(e) => setLimit(parseInt(e.target.value))} className='w-15p br-2px'/>
+        <input type="text" name="" value={limit} onChange={(e) => setLimit(parseInt(e.target.value))} className='w-20px br-2px'/>
         <FontAwesomeIcon icon="fa-solid fa-plus" onClick={() => setLimit(limit + 1)} className={styleClasses.plusMinus}/>
 
       </div>

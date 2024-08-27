@@ -25,15 +25,23 @@ function PrincipalList() {
 
   const apiURL = import.meta.env.VITE_API_URL;
 
-  const [principals, setPrincipals] = useState([])
+  const [principals, setPrincipals] = useState({principals:[],totalPages:0,currentPage:1,count:0, headers:[]})
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  // const [principals, setPrincipals] = useState([])
   const [user, setUser] = useState([])
   const [school, setSchool] = useState([])
 
   const [principalData, setPrincipalData] = useState([])
 
-  const getPrincipals = async () => {
+  const getPrincipals = async (page, limit) => {
     try {
-      const response = await fetch(`${apiURL}/api/principal/load`);
+      const response = await fetch(`${apiURL}/api/principal/load?page=${page}&limit=${limit}`, {
+        method: 'GET',
+        headers: header
+      });
+      
       const data = await response.json();
       setPrincipals(data);
     } catch (error) {
@@ -71,22 +79,22 @@ function PrincipalList() {
     setPrincipalData(dataWithRelations);
   };
 
-  console.log(principalData);
   
 
   useEffect(() => {
-    getPrincipals()
-  }, []);
+    getPrincipals(page, limit)
+  }, [page, limit]);
 
   useEffect(() => {
-    // getSchools(principals);
-    // getUsers(principals);
-    if (principals.length > 0) {
-        getPrincipalData(principals);
+    if (parseInt(principals.principals.count) > 0) {
+        getPrincipalData(principals.principals.rows);
     }
   },[principals]);
+
+  // console.log("Principal Data",principalData);
+  console.log("Principal Data",principals.principals.rows);
  
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleEdit = (principalID) => {
     console.log('Editing principal with ID:', principalID);
@@ -97,22 +105,51 @@ const navigate = useNavigate();
     alert('ViewSchool')
     // navigate(`/admin/principal/view/${principalID}`)
   }
+
+  const styleClasses = {
+    plusMinus : 'color-blueGreen100 '
+  }
+
+
   return (
     <>
     <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none',}}>
       {
-        principalData.length === 0?
+        principals.count === 0?
         <CenterColumn>
           <img src={loading} alt="" style={{width: '100px'}} />
         </CenterColumn>
         :
-        <PrincipalListing
-          title='Principals'
-          principals={principalData}
-          handleEdit={handleEdit}
-          // handleView={handleView}
-          width='100%'
-        />
+        <div className='flex-column'>
+          <div className='flex-row align-center gap-10 bw-1px bs-solid bc-blueGreen100-60 back-color-blueGreen80-30 p-10 w-20p min-w-250px br-4px'>
+          <Label text='Principals per page' />
+
+            <FontAwesomeIcon icon="fa-solid fa-minus" onClick={() => !(limit===1) && setLimit(limit-1) }  className={styleClasses.plusMinus}/>
+            <input type="text" name="" value={limit} onChange={(e) => setLimit(parseInt(e.target.value))} className='w-20px br-2px'/>
+            <FontAwesomeIcon icon="fa-solid fa-plus" onClick={() => setLimit(limit + 1)} className={styleClasses.plusMinus}/>
+
+          </div>
+          <PrincipalListing
+            title='Principals'
+            principals={principalData}
+            handleEdit={handleEdit}
+            // handleView={handleView}
+            width='100%'
+          />
+          <div className='flex-column'>
+            <p>Page {principals.currentPage} of {principals.totalPages}</p>
+            <div className='flex- row gap-10'>
+              {!(principals.currentPage === 1)
+                ?<FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => setPage(page-1)} icon='fa-solid fa-chevron-left' className='p-5 back-color-blueGreen100-50 w-30px br-4px color-white'/>
+                :<FontAwesomeIcon style={{cursor: 'not-allowed'}} icon='fa-solid fa-chevron-left' className='p-5 back-color-gray100-50 w-30px br-4px color-white'/>
+              }
+              {!(principals.currentPage === principals.totalPages)
+              ?<FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => setPage(page+1)} icon='fa-solid fa-chevron-right'className='p-5 back-color-blueGreen100-50 w-30px br-4px color-white' />
+              :<FontAwesomeIcon style={{cursor: 'not-allowed'}} icon='fa-solid fa-chevron-right' className='p-5 back-color-gray100-50 w-30px br-4px color-white'/>
+            }
+            </div>
+          </div>
+        </div>
         }
 
         <Outlet />

@@ -11,8 +11,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function CreatePrincipalSpecific (props){
 
-    const {user_id} = useParams()
-
+    const token = localStorage.getItem('jwt')
+    const header = {'authorization': `Bearer ${token}`};
+    
+    const {user_id} = useParams();
     const userID = {user_id: user_id}
     const [schoolID, setSchoolID] = useState({school_id: ''})
     const [salaryRange, setSalaryRange] = useState({salary_range: ''})
@@ -34,7 +36,8 @@ function CreatePrincipalSpecific (props){
         { value: "120001-140000", label: "120,001 - 140,000" },
         { value: "140001-160000", label: "140,001 - 160,000" },
         { value: "160001-180000", label: "160,001 - 180,000" },
-        { value: "180001-200000", label: "180,001 - 200,000" },
+        { value: "180001-200000",
+             label: "180,001 - 200,000" },
         { value: "200001+", label: "200,001 and above" }
       ];
 
@@ -42,7 +45,10 @@ function CreatePrincipalSpecific (props){
     const getSchools = async () => {
         try{
 
-            const response = await fetch('http://localhost:3060/api/school/load');
+            const response = await fetch('http://localhost:3060/api/school/load',  {
+                method: 'GET',
+                headers: header,
+            });
             const data = await response.json();
             setSchools(data);
 

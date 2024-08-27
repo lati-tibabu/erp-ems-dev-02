@@ -62,20 +62,12 @@ import CreateContact from '../pages/admin/dashboard-contents/user-pages/user-pri
 const adminRoutes = {
   path: '/admin',
   element: <AdminDashboard />,
-  // errorElement: <div>404</div>,
-  // element: { path: 'home', element: <ProtectedRoute component={Home} />},
   children: [
-    // { path: 'home', element: <Home /> },
     { path: 'home', element: <ProtectedRoute component={Home} />},
-    // { path: 'help', element: <Help /> },
     { path: 'help', element: <ProtectedRoute component={Help} />},
-    // { path: 'logout', element: <Logout /> },
     { path: 'logout', element: <ProtectedRoute component={Logout} /> },
-    // { path: 'profile', element: <Profile /> },
     { path: 'profile', element: <ProtectedRoute component={Profile} /> },
-    // { path: 'report', element: <Report /> },
     { path: 'report', element: <ProtectedRoute component={Report} /> },
-    // { path: 'school', element: <School />,
     { path: 'school', element: <ProtectedRoute component={School} />,
       children : [
         {path: 'add', element: <AddSchool />},
@@ -102,13 +94,8 @@ const adminRoutes = {
         {path: 'edit/:schoolId', element: <EditSchool />},
       ]
     },
-    // { path: 'school/add', element: <AddSchool /> },
-    // { path: 'school/listing', element: <SchoolListing /> },
-    // { path: 'settings', element: <Settings /> },
     { path: 'settings', element: <ProtectedRoute component={Settings} /> },
-    // { path: 'users', element: <Users /> },
     { path: 'users', element: < ProtectedRoute component={Users} /> ,
-      // errorElement: <div>404</div>, // Place errorElement here
       children: [
         {path: 'overview', element: <OverviewPages />,
           children: [
@@ -121,15 +108,12 @@ const adminRoutes = {
                         {path: 'specific/:user_id', element: <CreatePrincipalSpecific />}
                       ]
                     },
-                    // {path: 'specific/:user_id', element: <CreatePrincipalSpecific />},
                     {path: 'contact/:user_id', element: <CreateContact />},
                     {path: 'test', element: <TestPrincipal />},
-                    // {path: 'specific', element: <CreatePrincipalSpecific />},
                   ]
                 },
                 {path: 'list', element: <PrincipalList />,
                   children: [
-                    // {path: 'view/:principalId', element: <ViewPrincipal />},
                     {path: 'view', element: <ViewPrincipal />},
                   ]
                 },
@@ -146,15 +130,12 @@ const adminRoutes = {
                         {path: 'specific/:user_id', element: <CreateTeacherSpecific />}
                       ]
                     },
-                    // {path: 'specific/:user_id', element: <CreateTeacherSpecific />},
                     {path: 'contact/:user_id', element: <CreateContact />},
                     {path: 'test', element: <TestTeacher />},
-                    // {path: 'specific', element: <CreateTeacherSpecific />},
                   ]
                 },
                 {path: 'list', element: <TeacherList />,
                   children: [
-                    // {path: 'view/:TeacherId', element: <ViewTeacher />},
                     {path: 'view', element: <ViewTeacher />},
                   ]
                 },
@@ -167,7 +148,6 @@ const adminRoutes = {
         },
       ],
 
-    // },
   },
   ],
 };

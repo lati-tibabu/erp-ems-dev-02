@@ -11,8 +11,17 @@ const createPrincipal = async(req, res) => {
 
 const getAllPrincipals = async(req, res) => {
     try {
-        const principals = await principalServices.getAllPrincipals();
-        res.json(principals);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const principals = await principalServices.getAllPrincipalsC(page, limit);
+
+        res.json({
+            principals: principals,
+            totalPrincipals: principals.count,
+            totalPages: Math.ceil(principals.count / limit),
+            currentPage: page
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

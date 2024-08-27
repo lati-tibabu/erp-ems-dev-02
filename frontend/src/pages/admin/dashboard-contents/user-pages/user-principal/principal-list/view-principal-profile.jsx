@@ -29,6 +29,9 @@ function ViewPrincipalProfile() {
     const [userEditData, setUserEditData] = useState({})
     const [principalEditData, setPrincipalEditData] = useState({})
 
+    const token = localStorage.getItem('jwt');
+    const headers = {'authorization': `Bearer ${token}`}
+
     useEffect(() => {
         setPrincipalData(state?.principal);
     }, [state]);
@@ -69,13 +72,19 @@ function ViewPrincipalProfile() {
         try{
             let responses = {};
             if( user_len>0 ) {
-                const response = await axios.put(`${apiURL}/api/user/update/${principalData?.user_id}`, userEditData);
+                const response = await axios.put(`${apiURL}/api/user/update/${principalData?.user_id}`, userEditData, {
+                    method: 'PUT',
+                    headers: headers
+                });
 
                 // console.log(response)
                 responses.user = response;
             }
             if ( principal_len>0 ) {
-                const response2 = await axios.put(`${apiURL}/api/principal/update/${principalData?.principal_id}`, principalEditData)
+                const response2 = await axios.put(`${apiURL}/api/principal/update/${principalData?.principal_id}`, principalEditData,{
+                    method: 'PUT',
+                    headers: headers
+                })
 
                 // console.log(response2)
                 responses.principal = response2

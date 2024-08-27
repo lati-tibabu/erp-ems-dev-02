@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-function Login() {
+function PrincipalLogin() {
 
   const apiURL = import.meta.env.VITE_API_URL;
 
@@ -55,29 +55,20 @@ function Login() {
       if (response.status === 200){
         localStorage.setItem('jwt', token)
         localStorage.setItem('jwt_expiration', Date.now() + 1000 * 60 * 60 )
-
-        // console.log(token);
-        // console.log(response.data);
-        // console.log(response.data.user.role);
       
         const userRole = response.data.user.role;
-        
         try {
           const response2 = await fetch(`${apiURL}/api/role/load/${userRole}`);
           const data = await response2.json();
-          // console.log(data);
-          if(data.role_name === 'Admin'){
+          if(data.role_name === 'Principal'){
             setRoleCorrect(true);
             dispatch(login({username: response.data.user.username, role: response.data.user.role, token:token}))
-            navigate('/admin/home');
-            // dispatch(login({username: response.data.user.username, role: response.data.user.role, token:token}))
+            navigate('/principal/home');
           } else {
-            // alert(`Invalid Role you are ${(data.role_name)} bro, what the heck are you doing here`);
             setRole(data.role_name);
             setContent(`Access Denied: Your role is '${data.role_name}', which does not have permission to access this section. Please contact your administrator if you believe this is an error.`);
             setRoleCorrect(false);
-
-            console.log('Invalid Role');
+            console.log('Invalid Role'); 
           };
 
         } catch (error) {
@@ -95,7 +86,6 @@ function Login() {
         alert(error.response.data.message) 
       }
       if (error.response && error.response.status === 500) {
-        // alert("An internal server error occurred. Please try again later.");
         console.log("An internal server error occurred. Please try again later.");
       } else {
         // alert("An error occurred while submitting the form. Please check your input and try again.");
@@ -182,7 +172,7 @@ function Login() {
         <div className='flex-column align-center gap-30 color-red100 w-30p p-20 bw-2px bc-black br-10px back-color-white'>
           <div className='flex-row justify-between w-100p'>
             <span className='font-2xl color-red100 font-w-900'>Wrong Role</span>
-            <FontAwesomeIcon style={{cursor: 'pointer', color: 'black'}} icon='fa-solid fa-times' onClick={() => {setRoleCorrect(true);navigate('/auth/login')}}/>
+            <FontAwesomeIcon style={{cursor: 'pointer', color: 'black'}} icon='fa-solid fa-times' onClick={() => {setRoleCorrect(true);navigate('/auth/plogin')}}/>
           </div>
           <img src="https://img.freepik.com/free-vector/bad-idea-concept-illustration_114360-8061.jpg" alt="" className='w-60p' />
           <div className='color-black'>
@@ -228,4 +218,4 @@ const styles = {
 
 }
 
-export default Login;
+export default PrincipalLogin;

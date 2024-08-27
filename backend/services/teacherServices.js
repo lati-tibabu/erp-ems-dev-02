@@ -1,37 +1,41 @@
 const Teacher = require("../models/teacher");
 
-const createTeacher = async (teacherInfo) => {
-  return await Teacher.create(teacherInfo);
+const createTeacher = async(teacherInfo) => {
+    return await Teacher.create(teacherInfo);
 };
 
-const getAllTeachers = async () => {
-  return await Teacher.findAll();
+const getAllTeachers = async(page, limit) => {
+    return await Teacher.findAndCountAll({
+        offset: (page - 1) * limit,
+        limit: limit,
+    });
 };
 
-const getTeacher = async (teacherID) => {
-  return await Teacher.findByPk(teacherID);
+
+const getTeacher = async(teacherID) => {
+    return await Teacher.findByPk(teacherID);
 };
 
-const updateTeacher = async (teacherID, teacherInfo) => {
-  const teacher = await Teacher.findByPk(teacherID);
-  if (teacher) {
-    await teacher.update(teacherInfo);
-  }
-  return teacher;
+const updateTeacher = async(teacherID, teacherInfo) => {
+    const teacher = await Teacher.findByPk(teacherID);
+    if (teacher) {
+        await teacher.update(teacherInfo);
+    }
+    return teacher;
 };
 
-const deleteTeacher = async (teacherID) => {
-  const teacher = await Teacher.findByPk(teacherID);
-  if (teacher) {
-    await teacher.destroy();
-  }
-  return teacher;
+const deleteTeacher = async(teacherID) => {
+    const teacher = await Teacher.findByPk(teacherID);
+    if (teacher) {
+        await teacher.destroy();
+    }
+    return teacher;
 };
 
 module.exports = {
-  createTeacher,
-  getAllTeachers,
-  getTeacher,
-  updateTeacher,
-  deleteTeacher,
+    createTeacher,
+    getAllTeachers,
+    getTeacher,
+    updateTeacher,
+    deleteTeacher,
 };

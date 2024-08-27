@@ -13,6 +13,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function CreateTeacherSpecific (props){
 
+    const token = localStorage.getItem('jwt');
+    const header = {'authorization': `Bearer ${token}`};
+
     const {user_id} = useParams()
 
     const userID = {user_id: user_id};
@@ -46,7 +49,10 @@ function CreateTeacherSpecific (props){
 
     const getSchools = async () => {
         try{
-            const response = await fetch('http://localhost:3060/api/school/load');
+            const response = await fetch('http://localhost:3060/api/school/load', {
+                method: 'GET',
+                headers: header,
+            });
             const data = await response.json();
             setSchools(data);
         }catch(error){
