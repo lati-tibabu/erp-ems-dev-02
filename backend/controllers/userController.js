@@ -3,6 +3,8 @@ const userServices = require("../services/userServices");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 const createUser = async(req, res) => {
     try {
@@ -13,12 +15,71 @@ const createUser = async(req, res) => {
             // email: req.body.email.trim(),
             password: await bcrypt.hash(req.body.password, salt),
         };
+
         const user = await userServices.createUser(userData); // Pass the modified userData
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// const createUser = async(req, res) => {
+//     try {
+//         const salt = await bcrypt.genSalt(10);
+//         const userData = {
+//             ...req.body,
+//             username: req.body.username.toLowerCase(),
+//             password: await bcrypt.hash(req.body.password, salt),
+//         };
+
+//         const user = await userServices.createUser(userData);
+
+//         // Fetch the role name using axios or another HTTP library
+//         const response = await axios.get(`http://localhost:3060/api/role/load/${userData.role_id}`);
+//         const role_name = response.data.role_name;
+
+//         if (user) {
+//             if (req.body.email != null) {
+//                 const transporter = nodemailer.createTransport({
+//                     service: 'gmail',
+//                     auth: {
+//                         user: process.env.EMAIL_USER || 'flexidon3@gmail.com', // Store in environment variable
+//                         pass: process.env.EMAIL_PASS || 'vsai cftg meju vhht', // Store in environment variable
+//                     }
+//                 });
+
+//                 const mailOptions = {
+//                     from: process.env.EMAIL_USER || 'flexidon3@gmail.com',
+//                     to: userData.email,
+//                     subject: 'Your Account Has Been Created',
+//                     html: `
+//                         <p>Dear ${userData.first_name} ${userData.middle_name} ${userData.last_name},</p>
+//                         <p>Your account has been created successfully with role ${role_name}.</p>
+//                         <p>Please keep this information secure and change your password after your first login.</p>
+//                         <p>Best regards,<br><strong>SchoolStream</strong></p>
+//                     `
+//                 };
+
+//                 transporter.sendMail(mailOptions, function(error, info) {
+//                     if (error) {
+//                         console.error(error);
+//                     } else {
+//                         console.log("Email sent: " + info.response);
+
+//                     }
+//                 })
+//             }
+
+//             res.status(201).json(user);
+//         } else {
+//             res.status(500).json({ message: "User creation failed" });
+//         }
+//     } catch (error) {
+//         console.error("Error: ", error);
+//         res.status(500).json({ message: error.message });
+//     }
+// };
 
 const getAllUsers = async(req, res) => {
     try {
@@ -37,6 +98,15 @@ const getUser = async(req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+const getUserByUname = async(req, res) => {
+    try {
+        const user = await userServices.getUserByUname(req.params.username);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 const updateUser = async(req, res) => {
     try {
@@ -151,6 +221,7 @@ module.exports = {
     createUser,
     getAllUsers,
     getUser,
+    getUserByUname,
     updateUser,
     deleteUser,
     loginUser,

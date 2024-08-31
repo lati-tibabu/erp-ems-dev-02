@@ -38,6 +38,17 @@ const getPrincipal = async(req, res) => {
     }
 };
 
+//controller to get the pricipal info by user id
+
+const getPrincipalByUserId = async(req, res) => {
+    try {
+        const principal = await principalServices.getPrincipalByUserId(req.params.user_id);
+        res.json(principal);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 const updatePrincipal = async(req, res) => {
     try {
         const principal = await principalServices.updatePrincipal(
@@ -76,6 +87,7 @@ module.exports = {
     createPrincipal,
     getAllPrincipals,
     getPrincipal,
+    getPrincipalByUserId,
     updatePrincipal,
     deletePrincipal,
 };
