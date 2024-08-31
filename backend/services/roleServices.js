@@ -4,6 +4,10 @@ const Role = require("../models/role");
 const createRole = async(role_info) => {
     return await Role.create(role_info);
 };
+
+const createRoles = async(roles_info) => {
+    return await Promise.all(roles_info.map((role) => Role.create(role)))
+};
 const getAllRole = async() => {
     return await Role.findAll();
 };
@@ -39,6 +43,7 @@ const deleteRole = async(roleID) => {
 
 module.exports = {
     createRole,
+    createRoles,
     getAllRole,
     getRole,
     getRoleByName,

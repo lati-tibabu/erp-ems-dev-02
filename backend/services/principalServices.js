@@ -19,8 +19,10 @@ const getPrincipal = async(principalID) => {
     return await Principal.findByPk(principalID);
 };
 
-
-
+//getting principal data by using user id
+const getPrincipalByUserId = async(userID) => {
+    return await Principal.findOne({ where: { user_id: userID } })
+}
 const updatePrincipal = async(principalID, principalInfo) => {
     const principal = await Principal.findByPk(principalID);
     if (principal) {
@@ -42,6 +44,7 @@ module.exports = {
     getAllPrincipals,
     getAllPrincipalsC,
     getPrincipal,
+    getPrincipalByUserId,
     updatePrincipal,
     deletePrincipal,
 };
