@@ -83,6 +83,15 @@ app.post("/syncClass", async(req, res) => {
     }
 });
 
+app.post("/syncStudent", async(req, res) => {
+    try {
+        await sequelize.models.Student.sync({ alter: true }); // or { force: true }
+        res.json({ message: "Student Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Student model: " + error.message);
+    }
+});
+
 app.post("/syncTeacher", async(req, res) => {
     try {
         await sequelize.models.Teacher.sync({ alter: true }); // or { force: true }
