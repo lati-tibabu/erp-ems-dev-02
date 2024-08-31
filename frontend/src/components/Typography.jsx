@@ -33,7 +33,7 @@ export const Heading5 = (props)=> {
 
 export const Heading6 = (props)=> {
   return (
-    <div style={props.style} className='heading6'>{props.text}</div>
+    <div style={props.style} className={`heading6 ${props.className}`} >{props.text}</div>
   )
 }
 

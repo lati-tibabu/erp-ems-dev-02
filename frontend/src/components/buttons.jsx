@@ -20,7 +20,7 @@ export const PrimaryButton = (props) => {
             aria-label={props.ariaLabel}
             aria-hidden={props.ariaHidden}
             aria-expanded={props.ariaExpanded}
-            style={props.style}
+            style={props.style} 
         >
             {props.children}
         </button>

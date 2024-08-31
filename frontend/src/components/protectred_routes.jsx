@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({component: Component, ...rest}) => {
+    const [exp, setExp] = useState(false);
     const handleExpireToken = () => {
         localStorage.removeItem('jwt');
         localStorage.removeItem('jwt_expiration');
@@ -13,13 +14,14 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
             const expirationTime = new Date(parseInt(storedExpiration));
             if (expirationTime < new Date()) {
                 handleExpireToken();
+                setExp(true);
             }
         }
     })
     const token = localStorage.getItem('jwt')
 
     return(
-        token ? <Component {...rest} /> : <Navigate to="/auth/login" />
+        (!exp && token) ? <Component {...rest} /> : <Navigate to="/auth/login" />
     )
 }
 
