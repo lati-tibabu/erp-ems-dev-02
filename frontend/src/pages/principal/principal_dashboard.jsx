@@ -14,6 +14,7 @@ import '../../styles/admin_dashboard.css';
 
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store';
+import { PrimaryButton } from '../../components/buttons';
 
 library.add(fas);
 
@@ -21,6 +22,7 @@ function PrincipalDashboard() {
     const homePage = '/principal/home';
     const studentsPage = '/principal/students';
     const teachersPage = '/principal/teachers';
+    const classesPage = '/principal/classes';
     const departmentsPage = '/principal/departments';
     const clubsPage = '/principal/clubs';
     const calendarPage = '/principal/calendar';
@@ -34,6 +36,7 @@ function PrincipalDashboard() {
     const onHomePage = currentLocation.startsWith(homePage);
     const onStudentsPage = currentLocation.startsWith(studentsPage);
     const onTeachersPage = currentLocation.startsWith(teachersPage);
+    const onClassPage = currentLocation.startsWith(classesPage);
     const onDepartmentsPage = currentLocation.startsWith(departmentsPage);
     const onClubsPage = currentLocation.startsWith(clubsPage);
     const onCalendarPage = currentLocation.startsWith(calendarPage);
@@ -41,12 +44,13 @@ function PrincipalDashboard() {
     const onProfilePage = currentLocation.startsWith(profilePage);
     const onHelpPage = currentLocation.startsWith(helpPage);
     
-  const [theme, setTheme] = useState('light');
-  const dispatch = useDispatch();
-  const uname2 = localStorage.getItem('username');
-  const [visibleNav, setVisibleNav] = useState(0);
-  const navigate = useNavigate();
-  const username = (uname2 && "@" + uname2) || "Admin";
+    const [theme, setTheme] = useState('light');
+    const dispatch = useDispatch();
+    const uname2 = localStorage.getItem('username');
+    const data22 = JSON.parse(localStorage.getItem('data'));
+    const [visibleNav, setVisibleNav] = useState(0);
+    const navigate = useNavigate();
+    const username = (uname2 && "@" + uname2) || "Admin";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -279,9 +283,11 @@ function PrincipalDashboard() {
           </RowWrapper>
 
           <RowWrapper style={styles.light_dark_toggle}>
+
               <RowWrapper style={styles.dark_light_toggle_button_style} onClick={themeToggleHandler}>
                 {theme === 'light' ? <FontAwesomeIcon icon="fa-solid fa-sun" style={styles.moon_sun_button_styles} /> : <FontAwesomeIcon icon="fa-solid fa-moon" style={styles.moon_sun_button_styles} />}
               </RowWrapper>
+
           </RowWrapper>
 
           <RowWrapper style={styles.header_user_notification}>
@@ -321,6 +327,7 @@ function PrincipalDashboard() {
                 { linkTo: homePage, icon: 'fa-house', label: 'Home', styleClassName: onHomePage && 'onPage' },
                 { linkTo: studentsPage, icon: 'fa-user-graduate', label: 'Students', styleClassName: onStudentsPage && 'onPage' },
                 { linkTo: teachersPage, icon: 'fa-chalkboard-teacher', label: 'Teachers', styleClassName: onTeachersPage && 'onPage' },
+                { linkTo: classesPage, icon: 'fa-school', label: 'Classes', styleClassName: onClassPage && 'onPage' },
                 { linkTo: departmentsPage, icon: 'fa-building', label: 'Departments', styleClassName: onDepartmentsPage && 'onPage' },
                 { linkTo: clubsPage, icon: 'fa-users', label: 'Clubs', styleClassName: onClubsPage && 'onPage' },
                 { linkTo: calendarPage, icon: 'fa-calendar-alt', label: 'Calendar', styleClassName: onCalendarPage && 'onPage' },

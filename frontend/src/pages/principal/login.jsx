@@ -8,7 +8,7 @@ import { InputField } from "../../components/input_field";
 import RowWrapper from "../../components/row_wrapper";
 import { Heading1, Label, Heading2 } from "../../components/Typography";
 import axios from 'axios';
-import { login } from '../../store';
+import { login, schoolLogin } from '../../store';
 import '../../styles/login.css'
 
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,9 @@ function PrincipalLogin() {
 
   const apiURL = import.meta.env.VITE_API_URL;
 
+  const token = localStorage.getItem('jwt');
+  const header = {'authorization' : `Bearer ${token}`};
+
   // defining dispatch from redux
 
   const dispatch = useDispatch();
@@ -26,6 +29,7 @@ function PrincipalLogin() {
   const [role, setRole] = useState('');
   const [content, setContent] = useState('');
   const [roleCorrect, setRoleCorrect] = useState(true);
+  const [userDataInfo, setUserDataInfo] = useState({user: {},principal: {}, school: {}})
   
   const [userData, setUserData] = useState({
     username: '',
@@ -43,57 +47,172 @@ function PrincipalLogin() {
     }))
   }
 
-  
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     // console.log(userData);
+  //     const response = await axios.post(`${apiURL}/api/user/login`, userData);
+      
+  //     const loggedInUsername = response.data.user.username;
+  //     const loggedInUserRole = response.data.user.role;
+  //     const { token } = response.data;
+
+  //     if (response.status === 200) {
+  //       localStorage.setItem('jwt', token);
+  //       localStorage.setItem('jwt_expiration', Date.now() + 1000 * 60 * 60);
+
+  //       const userRole = response.data.user.role;
+  //       const roleResponse = await fetch(`${apiURL}/api/role/load/${userRole}`);
+  //       const roleData = await roleResponse.json();
+
+  //       if (roleData.role_name === 'Principal') {
+  //         setRoleCorrect(true);
+
+  //         const getUserInfo = async (u) => {
+  //           try {
+  //             const response = await fetch(`${apiURL}/api/user/loadu/${u}`, {
+  //               method: 'GET',
+  //               headers: header,
+  //             });
+  //             const userData = await response.json();
+  //             // console.log(userData)
+
+  //             const principalResponse = await fetch(`${apiURL}/api/principal/loadu/${userData.user_id}`, {
+  //               method: 'GET',
+  //               headers: header,
+  //             });
+  //             const principalData = await principalResponse.json();
+  //             // console.log(principalData)
+
+  //             const schoolResponse = await fetch(`${apiURL}/api/school/load/${principalData.school_id}`, {
+  //               method: 'GET',
+  //               headers: header,
+  //             });
+  //             const schoolData = await schoolResponse.json();
+  //             // console.log(schoolData)
+
+  //             setUserDataInfo({ user: userData, principal: principalData, school: schoolData });
+              
+  //             console.log(userDataInfo);
+              
+  //             // console.log(response.data.user.username);
+  //             // console.log(response);
+  //             console.log(loggedInUsername);
+  //             console.log(loggedInUserRole)
+  //             console.log(token);
+  //             console.log(userDataInfo)
+                        
+  //             dispatch(login({username: loggedInUsername, role: loggedInUserRole, token:token, data:userDataInfo}))
+
+  //             // navigate('/principal/home');
+              
+
+  //           } catch (err) {
+  //             console.error("Error loading user information:", err);
+  //           }
+  //         };
+
+  //         await getUserInfo(userData.username);
+  //         // console.log(response.data);
+          
+
+  //         // try{
+  //         //   getUserInfo(userData.username);
+  //         //   dispatch(login({username: response.data.user.username, role: response.data.user.role, token:token, data:userDataInfo}))
+  //         //   navigate('/principal/home');
+  //         // } catch(err) {
+  //         //   console.error("Error loading user information:", err);
+  //         // }
+          
+  //         // console.log('fetched at login user data: ', userDataInfo);
+          
+  //       } else {
+  //         setRole(roleData.role_name);
+  //         setContent(`Access Denied: Your role is '${roleData.role_name}', which does not have permission to access this section. Please contact your administrator if you believe this is an error.`);
+  //         setRoleCorrect(false);
+  //       }
+  //     } else {
+  //       console.log(response.message);
+  //       alert('Login Failed, read console message');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error: ', error);
+  //     if (error.response) {
+  //       console.error('Error details: ', error.response.data);
+  //       alert(error.response.data.message);
+  //     } else if (error.response && error.response.status === 500) {
+  //       console.log("An internal server error occurred. Please try again later.");
+  //     } else {
+  //       console.log("An error occurred while submitting the form. Please check your input and try again.");
+  //     }
+  //   }
+  // };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try{
-      console.log(userData);
-      const response = await axios.post(`${apiURL}/api/user/login`, userData)
+  
+    try {
+      const response = await axios.post(`${apiURL}/api/user/login`, userData);
+      const { username: loggedInUsername, role: loggedInUserRole } = response.data.user;
       const { token } = response.data;
-
-      if (response.status === 200){
-        localStorage.setItem('jwt', token)
-        localStorage.setItem('jwt_expiration', Date.now() + 1000 * 60 * 60 )
-      
-        const userRole = response.data.user.role;
-        try {
-          const response2 = await fetch(`${apiURL}/api/role/load/${userRole}`);
-          const data = await response2.json();
-          if(data.role_name === 'Principal'){
-            setRoleCorrect(true);
-            dispatch(login({username: response.data.user.username, role: response.data.user.role, token:token}))
-            navigate('/principal/home');
-          } else {
-            setRole(data.role_name);
-            setContent(`Access Denied: Your role is '${data.role_name}', which does not have permission to access this section. Please contact your administrator if you believe this is an error.`);
-            setRoleCorrect(false);
-            console.log('Invalid Role'); 
+  
+      if (response.status === 200) {
+        localStorage.setItem('jwt', token);
+        localStorage.setItem('jwt_expiration', Date.now() + 1000 * 60 * 60);
+  
+        const roleResponse = await fetch(`${apiURL}/api/role/load/${loggedInUserRole}`);
+        const roleData = await roleResponse.json();
+  
+        if (roleData.role_name === 'Principal') {
+          setRoleCorrect(true);
+  
+          const getUserInfo = async (u) => {
+            try {
+              const response = await fetch(`${apiURL}/api/user/loadu/${u}`, { headers: header });
+              const userData = await response.json();
+  
+              const principalResponse = await fetch(`${apiURL}/api/principal/loadu/${userData.user_id}`, { headers: header });
+              const principalData = await principalResponse.json();
+  
+              const schoolResponse = await fetch(`${apiURL}/api/school/load/${principalData.school_id}`, { headers: header });
+              const schoolData = await schoolResponse.json();
+  
+              const userInfo = { user: userData, principal: principalData, school: schoolData };
+              setUserDataInfo(userInfo);
+  
+              // Ensure the state is updated before dispatch
+              dispatch(login({ username: loggedInUsername, role: loggedInUserRole, token: token, data: userInfo }));
+              navigate('/principal/home');
+            } catch (err) {
+              console.error("Error loading user information:", err);
+            }
           };
-
-        } catch (error) {
-          console.error('Error fetching role:', error);
+  
+          await getUserInfo(userData.username);
+        } else {
+          setRole(roleData.role_name);
+          setContent(`Access Denied: Your role is '${roleData.role_name}', which does not have permission to access this section. Please contact your administrator if you believe this is an error.`);
+          setRoleCorrect(false);
         }
-
       } else {
-        alert('Login Failed, read console message')
         console.log(response.message);
+        alert('Login Failed, read console message');
       }
-    } catch (error){
+    } catch (error) {
       console.error('Error: ', error);
       if (error.response) {
         console.error('Error details: ', error.response.data);
-        alert(error.response.data.message) 
-      }
-      if (error.response && error.response.status === 500) {
+        alert(error.response.data.message);
+      } else if (error.response && error.response.status === 500) {
         console.log("An internal server error occurred. Please try again later.");
       } else {
-        // alert("An error occurred while submitting the form. Please check your input and try again.");
         console.log("An error occurred while submitting the form. Please check your input and try again.");
       }
     }
-  }
-
+  };
+  
   return (
     roleCorrect 
     ?<div>
@@ -104,7 +223,7 @@ function PrincipalLogin() {
                 text="EMS" 
                 style={styles.heading1_style} />
               <Heading2 text="Login" />
-              <Label text="Admin Login Portal" />
+              <Label text="Principal Login Portal" />
               <form onSubmit={handleSubmit}>
                 <InputField 
                   placeholder="Enter Username" 
@@ -125,7 +244,6 @@ function PrincipalLogin() {
                 <PrimaryButton style={{ width: '50%', marginTop: '20px' }}>Login</PrimaryButton>
               </form>
               {/* <Label text="Forgot Password?" /> */}
-              <Link style={styles.link_style} to={'/auth/create_user'}>Create New User</Link>
             </CenterColumn>
           </ColumnWrapper>
         </RowWrapper>

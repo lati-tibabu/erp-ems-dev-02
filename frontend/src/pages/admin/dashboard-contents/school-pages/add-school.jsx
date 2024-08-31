@@ -11,6 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function AddSchool() {
   const apiURL = import.meta.env.VITE_API_URL;
+  
+  const token = localStorage.getItem('token');
+  const header = {'authorization': `Bearer ${token}`};
+
 
   const [address, setAddress] = useState([]);
   const [schoolData, setSchoolData] = useState({
@@ -62,7 +66,10 @@ function AddSchool() {
 
   const getAddress = async () => {
     try {
-      const response = await fetch(`${apiURL}/api/address/load`); 
+      const response = await fetch(`${apiURL}/api/address/load`, {
+        method: 'GET',
+        headers: header
+      }); 
       const data = await response.json();
       setAddress(data);
     } catch (error) {
@@ -114,7 +121,10 @@ function AddSchool() {
         ...contactData
       };
 
-      const response = await axios.post(`${apiURL}/api/school/create`, combinedData);
+      const response = await axios.post(`${apiURL}/api/school/create`, combinedData, {
+        method: 'POST',
+        headers: header,
+      });
 
       if (response.status === 201) {
         alert("School added successfully!");
@@ -211,15 +221,18 @@ function AddSchool() {
                     value={schoolData.established_year}
                     onChange={handleSchoolChange}
                     />
-                    {/* <InputField
-                    labelName="Type"
-                    required
-                    placeholder="Enter School Type"
-                    name="type"
-                    type="text"
-                    value={schoolData.type}
-                    onChange={handleSchoolChange}
-                    /> */}
+                    
+                    {
+                      /* <InputField
+                      labelName="Type"
+                      required
+                      placeholder="Enter School Type"
+                      name="type"
+                      type="text"
+                      value={schoolData.type}
+                      onChange={handleSchoolChange}
+                      /> */
+                    }
 
                     <ColumnWrapper style={{border:'none'}}>
                       <Label text='School Type' required/>
