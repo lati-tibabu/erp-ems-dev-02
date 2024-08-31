@@ -1,56 +1,57 @@
 const sequelize = require("../config/database");
-const { DataTypes, ENUM, Model } = require("sequelize");
+const { DataTypes, Model } = require("sequelize");
 
 const School = require("./school");
 const Teacher = require("./teacher");
 const Student = require("./student");
 
 class Class extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-  static associate(models) {
-    // define association here
-    Class.belongsTo(School, { foreignKey: "school_id" });
-    Class.belongsToMany(Teacher, {
-      through: "TeacherClass",
-      foreignKey: "class_id",
-      otherKey: "teacher_id",
-    });
-    Class.hasMany(Student, { foreignKey: "class_id" });
-  }
+    static associate(models) {
+        Class.belongsTo(School, { foreignKey: "school_id" });
+        Class.belongsToMany(Teacher, {
+            through: "TeacherClass",
+            foreignKey: "class_id",
+            otherKey: "teacher_id",
+        });
+        Class.hasMany(Student, { foreignKey: "class_id" });
+    }
 }
-Class.init(
-  {
+
+Class.init({
     class_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    class_name: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
     },
     class_grade: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    class_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    section_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: false
     },
     teacher_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
+        type: DataTypes.UUID,
+        allowNull: true,
     },
     school_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
+        type: DataTypes.UUID,
+        allowNull: true,
     },
-  },
-  {
+}, {
     sequelize,
     modelName: "Class",
-  }
-);
+    indexes: [{
+        unique: true,
+        fields: ["school_id", "section_name"], // Composite unique constraint
+    }, ],
+});
 
 module.exports = Class;
