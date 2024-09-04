@@ -18,15 +18,15 @@ class User extends Model {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-        User.hasOne(Administrator, { foreignKey: "user_id" });
-        User.hasOne(Principal, { foreignKey: "user_id" });
-        User.hasOne(Teacher, { foreignKey: "user_id" });
-        User.hasOne(Student, { foreignKey: "user_id" });
-        User.hasOne(Parent, { foreignKey: "user_id" });
+        User.hasOne(models.Administrator, { foreignKey: "user_id" });
+        User.hasOne(models.Principal, { foreignKey: "user_id" });
+        User.hasOne(models.Teacher, { foreignKey: "user_id" });
+        User.hasOne(models.Student, { foreignKey: "user_id" });
+        User.hasOne(models.Parent, { foreignKey: "user_id" });
 
-        User.belongsTo(Address, { foreignKey: "address_id" });
-        User.hasMany(Contact, { foreignKey: "user_id" });
-        User.belongsTo(Role, { foreignKey: "role_id" });
+        User.belongsTo(models.Address, { foreignKey: "address_id" });
+        User.hasMany(models.Contact, { foreignKey: "user_id" });
+        User.belongsTo(models.Role, { foreignKey: "role_id" });
         // define association here
     }
 }

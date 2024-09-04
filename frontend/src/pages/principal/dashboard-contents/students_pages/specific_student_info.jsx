@@ -7,7 +7,6 @@ import { PrimaryButton } from '../../../../components/buttons';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../../../api';
 import axios from 'axios';
 
 
@@ -20,6 +19,9 @@ function StudentSpecificInfo() {
     const {user_id} = useParams()
 
     const schoolData = JSON.parse(localStorage.getItem('data'));
+    // const [idNumber, setIdNumber] = useState(schoolData.school.school_code.slice(0,3)+'/S/'+schoolData.school.student_id_count)
+    const [idNumber, setIdNumber] = useState();
+    const [currentSchool, setCurrentSchool] = useState({});
 
     const schoolID = schoolData.school.school_id;
     const [userData, setUserData] = useState({});
@@ -48,6 +50,21 @@ function StudentSpecificInfo() {
         }
     }
     
+    const getSchoolIdCounter = async(school_id) => {
+        try {
+            const school = await fetch(`${apiURL}/api/school/load/${school_id}`, {
+                method: 'GET',
+                headers: header,
+            });
+            const data = await school.json();
+            setIdNumber(schoolData.school.school_code.slice(0,3)+'/S/'+data.student_id_count);
+            setCurrentSchool(data);
+
+        } catch (error) {
+            
+        }
+    }
+
     const getClasses = async(school_id) => {
         try {
             // const schoolID = localStorage.school.school_id;
@@ -62,17 +79,21 @@ function StudentSpecificInfo() {
         }
     }
 
+    // console.log(currentSchool);
+
+    useEffect(() => {
+        getSchoolIdCounter(schoolData.school.school_id);
+    });
+    
     useEffect( () => {
         getUser(user_id);
     }, [user_id])
 
-    // console.log(userData);
 
     useEffect(()=>{
         getClasses(schoolID);
     },[schoolID])
     
-    // console.log('Classes: ',s_classes);
     const handleStudentChange = (event) =>{
         const{ name, value } = event.target;
         setStudentData((prevData) => ({
@@ -86,6 +107,7 @@ function StudentSpecificInfo() {
         try{
             const combinedData = {
                 ...studentData,
+                id_number: idNumber,
                 user_id: user_id,
                 class_id: classID,
                 student_gender: userData.gender,
@@ -93,13 +115,29 @@ function StudentSpecificInfo() {
             }
             // alert('information');
             console.log(combinedData);
-            console.log('information');
+            // console.log(studentData);
+            // console.log(s_classes);
+            
+            // console.log('information');
             
             const response = await axios.post(`${apiURL}/api/student/create`, combinedData, {
                 headers: header,
             });
 
             if(response.status === 201) {
+                
+                //Updating Schools student id number counter
+                const response2 = await axios.put(`${apiURL}/api/school/update/${schoolData?.school?.school_id}`, {student_id_count: parseInt(currentSchool.student_id_count)+1}, {
+                    headers: header
+                });
+                if (response2.status === 200) { // Assuming successful update returns status 200
+                  console.log("School Information Updated Successfully");
+                  alert("School Information Updated Successfully");
+                } else {
+                  console.error("Update failed with status:", response2.status);
+                  // alert("Failed to update school information. Please try again."); // User feedback
+                }                
+                
                 console.log('Student Created Succesfully');
                 alert('Student Added');
                 navigate('/principal/students');
@@ -109,42 +147,7 @@ function StudentSpecificInfo() {
         }
     }
 
-
-    // const classes = [
-    //     {
-    //         class_id: "123e4567-e89b-12d3-a456-426614174000",
-    //         name: "Grade 1 - A",
-    //     },
-    //     {
-    //         class_id: "123e4567-e89b-12d3-a456-426614174001",
-    //         name: "Grade 2 - B",
-    //     },
-    //     {
-    //         class_id: "123e4567-e89b-12d3-a456-426614174002",
-    //         name: "Grade 3 - C",
-    //     },
-    // ];
-
-    // const medicalConditions = [
-    //     { value: 'asthma', label: 'Asthma' },
-    //     { value: 'allergies', label: 'Allergies' },
-    //     { value: 'diabetes', label: 'Diabetes' },
-    //     { value: 'epilepsy', label: 'Epilepsy' },
-    //     { value: 'adhd', label: 'ADHD (Attention Deficit Hyperactivity Disorder)' },
-    //     { value: 'autism', label: 'Autism Spectrum Disorder' },
-    //     { value: 'anemia', label: 'Anemia' },
-    //     { value: 'heart_conditions', label: 'Heart Conditions' },
-    //     { value: 'celiac_disease', label: 'Celiac Disease' },
-    //     { value: 'visual_impairment', label: 'Visual Impairment' },
-    //     { value: 'hearing_impairment', label: 'Hearing Impairment' },
-    //     { value: 'physical_disabilities', label: 'Physical Disabilities' },
-    //     { value: 'mental_health_conditions', label: 'Mental Health Conditions' },
-    //     { value: 'chronic_conditions', label: 'Chronic Conditions (e.g., Crohn\'s Disease, Sickle Cell Disease)' },
-    //     { value: 'food_intolerances', label: 'Food Intolerances' },
-    //     { value: 'severe_eczema', label: 'Severe Eczema or Skin Conditions' },
-    // ];
-    
-    const today = new Date().toISOString().split('T')[0];
+   const today = new Date().toISOString().split('T')[0];
     
   return(
     <>
@@ -157,10 +160,12 @@ function StudentSpecificInfo() {
             labelName="Student ID"
             type="text"
             name="id_number"
-            value={studentData.id_number}
+            // value={studentData.id_number}
+            value={idNumber}
             onChange={handleStudentChange}
             placeholder="Enter student's id number"
             required
+            readOnly
         />
 
         <InputField 
@@ -185,7 +190,9 @@ function StudentSpecificInfo() {
             <Label text="Class" />
             <Select 
                 placeholder="Select Class"
-                options={s_classes.map((classItem) => ({
+                options={s_classes
+                    .filter((classItem) => (classItem.class_grade === parseInt(studentData?.grade_level)))
+                    .map((classItem) => ({
                     value: classItem.class_id,
                     label: classItem.section_name,
                 }))}

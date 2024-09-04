@@ -6,6 +6,8 @@ import ProtectedRoute from "../components/protectred_routes";
 import Home from "../pages/principal/dashboard-contents/home";
 import Students from "../pages/principal/dashboard-contents/students";
     import StudentList from "../pages/principal/dashboard-contents/students_pages/student-list";
+        import ViewStudent from "../pages/principal/dashboard-contents/students_pages/view-student/view-student";
+
     import StudentRegistration from "../pages/principal/dashboard-contents/students_pages/student-registration";
         import BatchRegistration from "../pages/principal/dashboard-contents/students_pages/batch_registration";
         import SingleStudentRegistration from "../pages/principal/dashboard-contents/students_pages/single_registration";
@@ -29,7 +31,11 @@ const principalRoutes = {
         {path: 'home', element: <Home/>},
         {path: 'students', element: <Students/>, 
             children: [
-                {path: 'list', element: <StudentList />},
+                {path: 'list', element: <StudentList />,
+                    children: [
+                        {path: 'view', element: <ViewStudent />},
+                    ]
+                },
                 {path: 'registration', element: <StudentRegistration />,
                     children: [
                         {path: 'batch', element: <BatchRegistration />},

@@ -26,6 +26,8 @@ function SingleStudentRegistration() {
 
     const onSpecificPage = onPage.startsWith('/principal/students/registration/single/specific')
 
+    // const genusername = async (first_name,)
+
     const getAddress = async () => {
         try{
             const response = await fetch('http://localhost:3060/api/address/load')
@@ -75,6 +77,8 @@ function SingleStudentRegistration() {
                 ...userData,
                 address_id,
                 role_id,
+                username: (userData.first_name + userData.last_name).toLowerCase()+(Math.ceil(Math.random()*1000)),
+                password: (Math.ceil(Math.random()*10000000)).toString(36),
                 ...gender
             };
             const response = await axios.post('http://localhost:3060/api/user/create', combinedData)
@@ -87,7 +91,7 @@ function SingleStudentRegistration() {
                 alert('Error Adding User');
                 console.log('Error Adding User');
             }
-            console.log(combinedData);
+            // console.log(combinedData);
 
         } catch (error) {
             console.error('Error: ', error);
@@ -133,7 +137,7 @@ function SingleStudentRegistration() {
                     value={userData.last_name} 
                     onChange={handleUserChange} />
 
-                <InputField 
+                {/* <InputField 
                     labelName="Username" 
                     required 
                     placeholder="Enter Username" 
@@ -149,7 +153,7 @@ function SingleStudentRegistration() {
                     name="password" 
                     type="password" 
                     value={userData.password} 
-                    onChange={handleUserChange} />
+                    onChange={handleUserChange} /> */}
 
                 <InputField 
                     labelName="Date of Birth" 

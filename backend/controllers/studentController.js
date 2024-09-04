@@ -52,6 +52,19 @@ const getAllStudentsByClass = async(req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+const getAllStudentsByGrade = async(req, res) => {
+    try {
+        const students = await studentServices.getAllStudentsByGrade(
+            req.params.school_id,
+            req.params.grade_level
+        );
+        res.json(students);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 const getStudent = async(req, res) => {
     try {
         const student = await studentServices.getStudent(req.params.student_id);
@@ -93,13 +106,24 @@ const deleteStudent = async(req, res) => {
     }
 };
 
+const getStudentData = async(req, res) => {
+    try {
+        const student = await studentServices.getStudentData(req.params.student_id);
+        res.json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     createStudent,
     getAllStudents,
     getAllStudentsBySchool,
     getAllStudentsByGender,
     getAllStudentsByClass,
+    getAllStudentsByGrade,
     getStudent,
     updateStudent,
     deleteStudent,
+    getStudentData
 };

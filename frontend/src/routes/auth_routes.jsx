@@ -6,11 +6,18 @@ import StudentLogin from "../pages/auth-pages/student_login"
 import CreateUser from "../pages/auth-pages/create_user"
 import Login from "../pages/admin/login"
 import PrincipalLogin from "../pages/principal/login"
+import AuthPage from "../pages/auth-page"
+import PageHolder from "../pages/page-holder"
 
 const authRoutes = {
     path: '/auth',
+    element: <AuthPage />,
     children: [
-        { path: 'login', element: <Login /> },
+        { path: 'login',
+             children: [
+                {path: 'admin', element: <Login />},
+                {path: 'principal', element: <PrincipalLogin />}
+             ]},
         { path: 'plogin', element: <PrincipalLogin />},
         { path: 'admin_login', element: <AdminLogin /> },
         { path: 'student_login', element: <StudentLogin /> },

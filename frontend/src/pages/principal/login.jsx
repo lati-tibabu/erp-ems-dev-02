@@ -315,7 +315,7 @@ const styles = {
   },
 
   outside_wrapper: { 
-    height: '95vh',
+    // height: '95vh',
     gap: '20px', 
     justifyContent: 'center',
     alignItems: 'center',

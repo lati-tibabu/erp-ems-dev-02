@@ -5,7 +5,7 @@ const User = require("./user");
 
 class Role extends Model {
     static associate(models) {
-        Role.hasMany(User, { foreignKey: "role_id" });
+        Role.hasMany(models.User, { foreignKey: "role_id" });
     }
 }
 

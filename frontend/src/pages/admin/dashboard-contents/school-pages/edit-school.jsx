@@ -14,7 +14,9 @@ import Select from 'react-select'
 
 function EditSchool() {
     const apiURL = import.meta.env.VITE_API_URL;
-    
+    const token = localStorage.getItem('jwt');
+    const header = {'authorization': `Bearer ${token}`};
+
     const [schoolInfo, setSchoolInfo] = useState({
         name: '',
         established_year: '',
@@ -179,7 +181,10 @@ function EditSchool() {
           console.log('Logging from inside');
           console.log(updatedData);
 
-          const response = await axios.put(`${apiURL}/api/school/update/${schoolId}`, updatedData);
+          const response = await axios.put(`${apiURL}/api/school/update/${schoolId}`, updatedData, {
+            method: 'GET',
+            headers: header
+          });
           if (response.status === 200) { // Assuming successful update returns status 200
             console.log("School Information Updated Successfully");
             navigate(`/admin/school/view/${schoolId}`)

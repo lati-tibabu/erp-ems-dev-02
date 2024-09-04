@@ -13,10 +13,10 @@ class Teacher extends Model {
      */
     static associate(models) {
         // define association here
-        Teacher.belongsTo(User, { foreignKey: "user_id", unique: true });
+        Teacher.belongsTo(models.User, { foreignKey: "user_id", unique: true });
         // Teacher.belongsTo(School, { foreignKey: "school_id", unique: true });
-        Teacher.belongsTo(School, { foreignKey: "school_id" });
-        Teacher.belongsToMany(ClassModel, {
+        Teacher.belongsTo(models.School, { foreignKey: "school_id" });
+        Teacher.belongsToMany(models.ClassModel, {
             through: "TeacherClass",
             foreignKey: "teacher_id",
             otherKey: "class_id",

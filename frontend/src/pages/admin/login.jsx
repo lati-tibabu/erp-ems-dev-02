@@ -198,7 +198,7 @@ const styles = {
   
   column_with_shadow: {
     width: '30%', 
-    height:'70%',
+    // height:'70%',
     borderRadius: '30px',
     boxShadow: '0 0 5px rgba(0, 100, 130, 0.21)',
     justifyContent: 'center',
@@ -207,7 +207,7 @@ const styles = {
   },
 
   outside_wrapper: { 
-    height: '95vh',
+    // height: '95vh',
     gap: '20px', 
     justifyContent: 'center',
     alignItems: 'center',

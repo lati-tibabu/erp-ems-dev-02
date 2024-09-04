@@ -9,7 +9,7 @@ export const Heading1 = (props)=> {
 
 export const Heading2 = (props)=> {
   return (
-    <div style={props.style} className='heading2'>{props.text}</div>
+    <div style={props.style} className={`heading2 ${props.className}`}>{props.text}</div>
   )
 }
 
@@ -21,13 +21,13 @@ export const Heading3 = (props)=> {
 
 export const Heading4 = (props)=> {
   return (
-    <div style={props.style} className='heading4'>{props.text}</div>
+    <div style={props.style} className={`heading4 ${props.className}`}>{props.text}</div>
   )
 }
 
 export const Heading5 = (props)=> {
   return (
-    <div style={props.style} className='heading5'>{props.text}</div>
+    <div style={props.style} className={`heading5 ${props.className}`}>{props.text}</div>
   )
 }   
 
@@ -39,7 +39,7 @@ export const Heading6 = (props)=> {
 
 export const Paragraph = (props)=> {
   return (
-    <div style={props.style} className='paragraph'>{props.text}</div>
+    <div style={props.style} className={`paragraph ${props.className}`}>{props.text}</div>
   )
 }
 

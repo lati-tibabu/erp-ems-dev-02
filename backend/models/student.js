@@ -14,10 +14,10 @@ class Student extends Model {
      */
     static associate(models) {
         // define association here
-        Student.belongsTo(School, { foreignKey: "school_id" });
-        Student.belongsTo(User, { foreignKey: "user_id" });
-        Student.belongsTo(ClassModel, { foreignKey: "class_id" });
-        Student.belongsToMany(Parent, {
+        Student.belongsTo(models.School, { foreignKey: "school_id" });
+        Student.belongsTo(models.User, { foreignKey: "user_id" });
+        Student.belongsTo(models.ClassModel, { foreignKey: "class_id" });
+        Student.belongsToMany(models.Parent, {
             through: "ParentStudent",
             foreignKey: "student_id",
             otherKey: "parent_id",
@@ -50,6 +50,7 @@ Student.init({
         allowNull: true,
         unique: true,
     },
+
     school_id: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -64,10 +65,12 @@ Student.init({
         type: DataTypes.DATE,
         allowNull: true,
     },
+
     grade_level: {
         type: DataTypes.STRING,
         allowNull: true,
     },
+
     class_id: {
         type: DataTypes.UUID,
         allowNull: false,

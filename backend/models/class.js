@@ -7,13 +7,13 @@ const Student = require("./student");
 
 class Class extends Model {
     static associate(models) {
-        Class.belongsTo(School, { foreignKey: "school_id" });
-        Class.belongsToMany(Teacher, {
+        Class.belongsTo(models.School, { foreignKey: "school_id" });
+        Class.belongsToMany(models.Teacher, {
             through: "TeacherClass",
             foreignKey: "class_id",
             otherKey: "teacher_id",
         });
-        Class.hasMany(Student, { foreignKey: "class_id" });
+        Class.hasMany(models.Student, { foreignKey: "class_id" });
     }
 }
 

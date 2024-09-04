@@ -5,41 +5,38 @@ const User = require("./user");
 const School = require("./school");
 
 class Address extends Model {
-  static associate(models) {
-    Address.hasMany(User, { foreignKey: "address_id" });
-    Address.hasMany(School, { foreignKey: "address_id" });
-  }
+    static associate(models) {
+        Address.hasMany(models.User, { foreignKey: "address_id" });
+        Address.hasMany(models.School, { foreignKey: "address_id" });
+    }
 }
 
-Address.init(
-  {
+Address.init({
     address_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
     },
     city: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     subcity: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     woreda: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     kebele: {
-      type: DataTypes.STRING,
-      allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
-  },
-  {
+}, {
     sequelize,
     modelName: "Address",
-  }
-);
+});
 
 module.exports = Address;

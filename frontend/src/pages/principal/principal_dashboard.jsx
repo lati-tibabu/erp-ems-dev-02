@@ -47,7 +47,7 @@ function PrincipalDashboard() {
     const [theme, setTheme] = useState('light');
     const dispatch = useDispatch();
     const uname2 = localStorage.getItem('username');
-    const data22 = JSON.parse(localStorage.getItem('data'));
+    const schoolData = JSON.parse(localStorage.getItem('data'));
     const [visibleNav, setVisibleNav] = useState(0);
     const navigate = useNavigate();
     const username = (uname2 && "@" + uname2) || "Admin";
@@ -55,7 +55,7 @@ function PrincipalDashboard() {
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem('jwt');
-    navigate('/auth/plogin');
+    navigate('/auth/login');
   };
 
   const themeToggleHandler = () => {
@@ -297,7 +297,9 @@ function PrincipalDashboard() {
               <span style={styles.username_styles}>
                 {username}
               </span>
-              {(username === '@lati') ? <img src={circle8175} style={styles.user_icon_image} /> : <FontAwesomeIcon icon="fa-solid fa-user" style={styles.user_icon} />}
+              {(username === '@lati') 
+              ? <img src={circle8175} style={styles.user_icon_image} /> 
+              : (schoolData && schoolData.user.profile_photo) ? <img src={schoolData.user.profile_photo} style={styles.user_icon_image} /> : <FontAwesomeIcon icon="fa-solid fa-user" style={styles.user_icon} />}
             </RowWrapper>
           </RowWrapper>
         </RowWrapper>

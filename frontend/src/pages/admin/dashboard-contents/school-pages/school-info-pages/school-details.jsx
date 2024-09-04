@@ -51,7 +51,8 @@ function SchoolDetails() {
     }, [schoolInfo.address_id]);
 
     return (
-        <>
+    <div className='flex-column align-center'>
+        <div className='flex-column gap-10 w-70p'>
             <ColumnWrapper style={styles.card_section_style}>
                 <Heading4 text='Basic Information' />
                 {/* <h2>{uname || 'Username'}</h2> */}
@@ -68,25 +69,25 @@ function SchoolDetails() {
                         { label: 'School Motto', value: schoolInfo.school_motto },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}} />
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}} />
                         </RowWrapper>
                     ))}
                     <RowWrapper style={styles.information_row}>
-                        <Label text='School Logo: ' />
+                        <Label text='School Logo: ' style={{flex: '1'}} />
                         <img
                             src={schoolInfo.school_logo || 'https://via.placeholder.com/150'}
                             alt='School Logo'
                             style={styles.school_logo_info_styles}
-                        />
+                            />
                     </RowWrapper>
                     <RowWrapper style={styles.information_row}>
-                        <Label text='Website: ' />
-                        <Paragraph text={schoolInfo.website || 'N/A'} />
+                        <Label text='Website: ' style={{flex: '1'}} />
+                        <Paragraph text={schoolInfo.website || 'N/A'} style={{flex: '1'}} />
                     </RowWrapper>
                     <RowWrapper style={styles.information_row}>
-                        <Label text='Email: ' />
-                        <Paragraph text={schoolInfo.email || 'N/A'} />
+                        <Label text='Email: ' style={{flex: '1'}} />
+                        <Paragraph text={schoolInfo.email || 'N/A'} style={{flex: '1'}} />
                     </RowWrapper>
                 </ColumnWrapper>
             </ColumnWrapper>
@@ -95,14 +96,13 @@ function SchoolDetails() {
                 <Heading4 text='Contact Information' />
                 <ColumnWrapper style={styles.info_section_style}>
                     <RowWrapper style={styles.information_row}>
-                        <Label text='Address: ' />
+                        <Label text='Address: ' style={{flex: '1'}} />
                         <Paragraph
-                            text={`${address.city || ''}, ${address.subcity || ''}, ${address.woreda || ''}, ${address.kebele || ''}` || 'N/A'}
-                        />
+                            text={`${address.city || ''}, ${address.subcity || ''}, ${address.woreda || ''}, ${address.kebele || ''}` || 'N/A'} style={{flex: '1'}}/>
                     </RowWrapper>
                     <RowWrapper style={styles.information_row}>
-                        <Label text='Contact Details: ' />
-                        <Paragraph text={schoolInfo.contact_details || 'N/A'} />
+                        <Label text='Contact Details: ' style={{flex: '1'}} />
+                        <Paragraph text={schoolInfo.contact_details || 'N/A'} style={{flex: '1'}} />
                     </RowWrapper>
                 </ColumnWrapper>
             </ColumnWrapper>
@@ -120,8 +120,8 @@ function SchoolDetails() {
                         { label: 'Accessibility Features', value: schoolInfo.accessibility_features },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}} />
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}} />
                         </RowWrapper>
                     ))}
                 </ColumnWrapper>
@@ -137,8 +137,8 @@ function SchoolDetails() {
                         { label: 'Teacher-Student Ratio', value: schoolInfo.teacher_student_ratio },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}}/>
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}}/>
                         </RowWrapper>
                     ))}
                 </ColumnWrapper>
@@ -154,8 +154,8 @@ function SchoolDetails() {
                         { label: 'Language Offerings', value: schoolInfo.language_offerings },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}} />
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}} />
                         </RowWrapper>
                     ))}
                 </ColumnWrapper>
@@ -170,8 +170,8 @@ function SchoolDetails() {
                         { label: 'Sponsorship Details', value: schoolInfo.sponsorship_details },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}} />
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}} />
                         </RowWrapper>
                     ))}
                 </ColumnWrapper>
@@ -187,8 +187,8 @@ function SchoolDetails() {
                         { label: 'Accessibility Features', value: schoolInfo.accessibility_features },
                     ].map((item, index) => (
                         <RowWrapper key={index} style={styles.information_row}>
-                            <Label text={`${item.label}: `} />
-                            <Paragraph text={item.value || 'N/A'} />
+                            <Label text={`${item.label}: `} style={{flex: '1'}} />
+                            <Paragraph text={item.value || 'N/A'} style={{flex: '1'}} />
                         </RowWrapper>
                     ))}
                 </ColumnWrapper>
@@ -198,7 +198,8 @@ function SchoolDetails() {
                     <SecondaryButton>Edit Details</SecondaryButton>
                 </Link>
             </ColumnWrapper>
-        </>
+        </div>
+        </div>
     );
 }
 
@@ -207,12 +208,14 @@ export default SchoolDetails;
 const styles = {
     card_section_style: {
         padding: '20px',
-        border: 'none',
+        // border: 'none',
         borderRadius: '30px',
-        background: 'white'
+        background: 'white',
+        gap: '20px',
+        // width: '50%',
     },
     info_section_style: {
-        background: 'rgba(0,180,250,0.05)',
+        // background: 'rgba(0,180,250,0.05)',
         padding: '10px',
         borderRadius: '20px',
         border: 'none',
@@ -228,5 +231,7 @@ const styles = {
     },
     school_logo_info_styles: {
         maxWidth: '200px',
+        flex: '1',
+        borderRadius: '5px'
     },
 };

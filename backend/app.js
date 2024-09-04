@@ -41,6 +41,7 @@ const TeacherClass = require("./models/teacherclass");
 const User = require("./models/user");
 
 const authToken = require("./middlewares/auth-token");
+const { Model } = require("sequelize");
 // middle-wares
 app.use(express.json());
 app.use(cors());
@@ -65,6 +66,8 @@ app.post("/syncSchool", async(req, res) => {
     }
 });
 
+console.log('Association:', Student.associations)
+
 app.post("/syncPrincipal", async(req, res) => {
     try {
         await sequelize.models.Principal.sync({ alter: true }); // or { force: true }
@@ -83,12 +86,22 @@ app.post("/syncClass", async(req, res) => {
     }
 });
 
+
 app.post("/syncStudent", async(req, res) => {
     try {
         await sequelize.models.Student.sync({ alter: true }); // or { force: true }
         res.json({ message: "Student Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing Student model: " + error.message);
+    }
+});
+
+app.post("/syncUser", async(req, res) => {
+    try {
+        await sequelize.models.User.sync({ alter: true }); // or { force: true }
+        res.json({ message: "User Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing User model: " + error.message);
     }
 });
 
