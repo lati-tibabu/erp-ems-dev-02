@@ -9,6 +9,7 @@ export const InputField = (props) => {
         <input 
          className={"input"+" "+props.className}
          id= {props.id}
+         accept={props.accept}
          type= {props.type} 
          name= {props.name}
          value= {props.value}

@@ -3,7 +3,7 @@ import '../styles/buttons.css';
 
 export const PrimaryButton = (props) => {
     return(
-        <button className="primary"
+        <button className={`primary ${props.className}`}
             type={props.type}
             disabled={props.disabled}
             name={props.name}
