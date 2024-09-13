@@ -7,6 +7,7 @@ import router from './routes'
 import 'flexifycss'
 import { Provider } from 'react-redux'
 import store from './store'
+import './styles/file_selector_btn.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
