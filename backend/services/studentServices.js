@@ -9,8 +9,11 @@ const createStudent = async(studentInfo) => {
     return await Student.create(studentInfo);
 };
 
-const getAllStudents = async() => {
-    return await Student.findAll();
+const getAllStudents = async(page, limit) => {
+    return await Student.findAll({
+        offset: (page - 1) * limit,
+        limit: limit,
+    });
 };
 
 const getAllStudentsBySchool = async(schoolID) => {

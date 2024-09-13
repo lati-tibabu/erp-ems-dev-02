@@ -11,6 +11,14 @@ const getAllTeachers = async(page, limit) => {
     });
 };
 
+const getAllTeachersBySchool = async(schoolID) => {
+    return await Teacher.findAll({
+        where: {
+            school_id: schoolID
+        }
+    });
+}
+
 
 const getTeacher = async(teacherID) => {
     return await Teacher.findByPk(teacherID);
@@ -35,6 +43,7 @@ const deleteTeacher = async(teacherID) => {
 module.exports = {
     createTeacher,
     getAllTeachers,
+    getAllTeachersBySchool,
     getTeacher,
     updateTeacher,
     deleteTeacher,
