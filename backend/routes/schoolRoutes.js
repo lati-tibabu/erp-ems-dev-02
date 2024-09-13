@@ -5,6 +5,7 @@ const authToken = require("../middlewares/auth-token");
 
 router.post("/create", schoolController.createSchool);
 router.get("/load", authToken, schoolController.getAllSchools);
+router.get("/load_s", schoolController.getAllSchools);
 router.get("/load/pagination", authToken, schoolController.getSchoolsPagination);
 router.get("/load/paginationC", authToken, schoolController.getSchoolsPaginationC);
 router.get("/load/active", authToken, schoolController.getActiveSchool);

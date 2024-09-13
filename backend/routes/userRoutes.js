@@ -7,6 +7,7 @@ router.post("/create", userController.createUser);
 router.post("/login", userController.loginUser);
 router.get("/load_", userController.getAllUsers);
 router.get("/load", authToken, userController.getAllUsers);
+router.get("/loadx", userController.getAllUsers);
 router.get("/load/:user_id", authToken, userController.getUser);
 router.get("/loadu/:username", userController.getUserByUname);
 router.put("/update/:user_id", authToken, userController.updateUser);
