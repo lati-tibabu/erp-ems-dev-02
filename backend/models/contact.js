@@ -54,7 +54,7 @@ Contact.init({
     sequelize,
     modelName: "Contact",
     validate: {
-        onltOneUser() {
+        onlyOneUser() {
             if (
                 (this.user_id && this.school_id) ||
                 (!this.user_id && !this.school_id)

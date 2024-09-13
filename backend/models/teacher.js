@@ -15,11 +15,18 @@ class Teacher extends Model {
         // define association here
         Teacher.belongsTo(models.User, { foreignKey: "user_id", unique: true });
         // Teacher.belongsTo(School, { foreignKey: "school_id", unique: true });
+        // Teacher.belongsTo(models.Department, { foreignKey: 'department_id' });
         Teacher.belongsTo(models.School, { foreignKey: "school_id" });
-        Teacher.belongsToMany(models.ClassModel, {
+        Teacher.belongsToMany(models.Class, {
             through: "TeacherClass",
             foreignKey: "teacher_id",
             otherKey: "class_id",
+        });
+
+        Teacher.belongsToMany(models.Course, {
+            through: "TeacherCourse",
+            foreignKey: "teacher_id",
+            otherKey: "course_id",
         });
     }
 }
@@ -49,10 +56,17 @@ Teacher.init({
         type: DataTypes.STRING,
         allowNull: true,
     },
-    department_id: {
-        type: DataTypes.UUID,
-        allowNull: true,
-    },
+    // department_id: {
+    //     type: DataTypes.UUID,
+    //     allowNull: true,
+    //     references: {
+    //         model: "Departments",
+    //         key: "department_id",
+    //     },
+    //     onDelete: "CASCADE",
+    //     onUpdate: "CASCADE",
+    //     unique: true,
+    // },
     qualifications: {
         type: DataTypes.STRING,
         allowNull: true,

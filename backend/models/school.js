@@ -20,7 +20,7 @@ class School extends Model {
      */
     static associate(models) {
         // define association here
-        School.belongsToMany(Parent, {
+        School.belongsToMany(models.Parent, {
             through: "SchoolParent",
             foreignKey: "school_id",
             otherKey: "parent_id",
@@ -33,10 +33,16 @@ class School extends Model {
         School.hasMany(models.Principal, { foreignKey: "school_id" });
         School.hasMany(models.Teacher, { foreignKey: "school_id" });
 
-        School.belongsToMany(Department, {
+        School.belongsToMany(models.Department, {
             through: "SchoolDepartment",
             foreignKey: "school_id",
             otherKey: "department_id",
+        });
+
+        School.belongsToMany(models.Course, {
+            through: "SchoolCourse",
+            foreignKey: "school_id",
+            otherKey: "course_id",
         });
     }
 }

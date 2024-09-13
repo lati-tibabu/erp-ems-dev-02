@@ -13,6 +13,13 @@ class Class extends Model {
             foreignKey: "class_id",
             otherKey: "teacher_id",
         });
+
+        Class.belongsToMany(models.Course, {
+            through: "ClassCourse",
+            foreignKey: "class_id",
+            otherKey: "course_id",
+        });
+
         Class.hasMany(models.Student, { foreignKey: "class_id" });
     }
 }
