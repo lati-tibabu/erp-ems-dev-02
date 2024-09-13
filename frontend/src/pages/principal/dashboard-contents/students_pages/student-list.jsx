@@ -140,6 +140,8 @@ function StudentList() {
   const handleViewStudent = (student) => {
     navigate('/principal/students/list/view', {state: {student}})
   }
+  
+
   return (
     <>
     <div className="flex-row gap-10">
@@ -186,7 +188,7 @@ function StudentList() {
             <ColumnWrapper className='bw-none'>
                 <SecondaryButton 
                     className = {classNames.filteringbtn} 
-                    onClick={() => (setListType('all'), setFilterDisplay(!filterDisplay))}>
+                    onClick={() => (setListType('all'),setListFilterName('All Students'), setFilterDisplay(!filterDisplay))}>
                     All Classes
                 </SecondaryButton>
                 {classGrades.map((item) => (
@@ -236,13 +238,14 @@ function StudentList() {
         
       </div>
     </div>
-    <div className="flex-row align-start gap-20">
+    <div className="flex-row align-start gap-20 p-20 br-50px back-color-gray100-10 justify-between ">
         {studentsData.length > 0 ? (
         <table
         border="1"
         cellPadding="10"
         cellSpacing="0"
-        className="br-10px back-color-white font-w-100 font-sm"
+        className="br-10px back-color-white font-w-100 font-sm w-100p bw-none"
+        style={{color: '#034303'}}
         >
         <thead className="bw-0">
             <tr>

@@ -26,6 +26,7 @@ function AdminDashboard() {
   const schoolPageCheck = '/admin/school';
   const usersPage = '/admin/users/overview';
   const usersPageCheck = '/admin/users';
+  const coursePage = '/admin/course';
   const reportPage = '/admin/report';
   const profilePage = '/admin/profile';
   const settingsPage = '/admin/settings';
@@ -38,6 +39,7 @@ function AdminDashboard() {
   const onHomePage  = (currentLocation.startsWith(homePage));
   const onSchoolPage = (currentLocation.startsWith(schoolPageCheck));
   const onUsersPage = (currentLocation.startsWith(usersPageCheck));
+  const onCoursePage = (currentLocation.startsWith(coursePage));
   const onReportPage = (currentLocation.startsWith(reportPage));
   const onProfilePage = (currentLocation.startsWith(profilePage));
   const onSettingsPage = (currentLocation.startsWith(settingsPage));
@@ -395,6 +397,7 @@ function AdminDashboard() {
                 {linkTo: homePage, icon: 'fa-house', label: 'Home', styleClassName: onHomePage && 'onPage'},
                 {linkTo: schoolPage, icon: 'fa-school', label: 'School', styleClassName: onSchoolPage && 'onPage'},
                 {linkTo: usersPage, icon: 'fa-users', label: 'Users', styleClassName: onUsersPage && 'onPage'},
+                {linkTo: coursePage, icon: 'fa-book', label: 'Course', styleClassName: onCoursePage && 'onPage'},
                 {linkTo: reportPage, icon: 'fa-file-alt', label: 'Reports', styleClassName: onReportPage && 'onPage'},
                 {linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage'},
                 {linkTo: settingsPage, icon: 'fa-cog', label: 'Settings', styleClassName: onSettingsPage && 'onPage'},

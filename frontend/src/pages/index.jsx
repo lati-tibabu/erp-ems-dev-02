@@ -420,11 +420,11 @@ function Home() {
 
             {/* Pricing Section */}
             <ColumnWrapper className="pricing_section_container" style={styles.pricing_section_container}>
-              <Heading2 style={styles.pricing_section_header} text='Pricing' />
+              {/* <Heading2 style={styles.pricing_section_header} text='Pricing' /> */}
               {/* <img src="path/to/your/pricing-image.jpg" alt="Pricing Image" style={styles.pricing_image} /> */}
               <RowWrapper style={styles.pricing_plan_wrapper}>
                 
-                <ColumnWrapper style={styles.pricing_plan}>
+                {/* <ColumnWrapper style={styles.pricing_plan}>
                   <ColumnWrapper style={{border: em_border}}>
                       <Heading3 text='Free' style={styles.pricing_plan_header} />
                       <Paragraph style={styles.pricing_plan_price} text='0 Birr' />
@@ -469,13 +469,13 @@ function Home() {
                   </ColumnWrapper>
 
                   <PrimaryButton>Go Premium</PrimaryButton>
-                </ColumnWrapper>
+                </ColumnWrapper> */}
               </RowWrapper>
             </ColumnWrapper>
             {/* Super Admin Dashboard Button (for development) */}
             <RowWrapper style={styles.super_admin_button_wrapper}>
-              <Link to="/admin/home" style={styles.super_admin_button}>
-                Super Admin Dashboard
+              <Link className='gap-10' to="/auth/login" style={styles.super_admin_button}>
+                Login
               <FontAwesomeIcon icon="fa-solid fa-arrow-right" style={styles.super_admin_icon} />
               </Link>
             </RowWrapper>

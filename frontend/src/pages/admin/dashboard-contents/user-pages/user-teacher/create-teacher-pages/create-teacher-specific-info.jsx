@@ -85,7 +85,9 @@ function CreateTeacherSpecific (props){
                 // is_classroom_teacher: isClassroomTeacher,
                 // school_id,
             };
-            const response = await axios.post('http://localhost:3060/api/teacher/create', combinedData)
+            const response = await axios.post('http://localhost:3060/api/teacher/create', combinedData, {
+                headers: header
+            });
 
             if (response.status === 201) {
                 alert(`Teacher created succesfully with id ${response.data.teacher_id}`);
@@ -143,6 +145,7 @@ function CreateTeacherSpecific (props){
                     <Label text="Choose the Teacher's School" required/>
                         <Select 
                             placeholder="Select School"
+                            required
                             options={schools.map((school) => ({
                                 value: school.school_id,
                                 label: school.name,
@@ -150,6 +153,16 @@ function CreateTeacherSpecific (props){
                             onChange={(e) => setSchoolID(prevState => ({ ...prevState,school_id: e.value}))}
                         />
                 </ColumnWrapper>
+
+                <InputField
+                    labelName="Specialization"
+                    required
+                    type='text'
+                    name='specialization'
+                    value={teacherData.specialization}
+                    onChange={handleTeacherChange}
+                    placeholder="Enter the teacher's specialization"
+                />
 
                 <InputField 
                     labelName="Hire Date"
@@ -183,15 +196,6 @@ function CreateTeacherSpecific (props){
                     />
                 </ColumnWrapper>
                 
-
-                <InputField
-                    labelName="Specialization"
-                    type='text'
-                    name='specialization'
-                    value={teacherData.specialization}
-                    onChange={handleTeacherChange}
-                    placeholder="Enter the teacher's specialization"
-                />
 
                 <InputField
                     labelName="Employee Number"
