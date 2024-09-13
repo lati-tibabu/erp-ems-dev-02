@@ -58,6 +58,7 @@ import TeacherList from '../pages/admin/dashboard-contents/user-pages/user-teach
 // import { elements } from 'chart.js';
 import ProtectedRoute from '../components/protectred_routes';
 import CreateContact from '../pages/admin/dashboard-contents/user-pages/user-principal/create-principal-pages/create-contact';
+import Course from '../pages/admin/dashboard-contents/course.jsx';
 
 const adminRoutes = {
   path: '/admin',
@@ -68,6 +69,7 @@ const adminRoutes = {
     { path: 'logout', element: <ProtectedRoute component={Logout} /> },
     { path: 'profile', element: <ProtectedRoute component={Profile} /> },
     { path: 'report', element: <ProtectedRoute component={Report} /> },
+    { path: 'course', element: <ProtectedRoute component={Course} /> },
     { path: 'school', element: <ProtectedRoute component={School} />,
       children : [
         {path: 'add', element: <AddSchool />},
