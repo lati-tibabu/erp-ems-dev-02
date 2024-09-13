@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-// route importing
+// Route importing
 const schoolRoutes = require("./routes/schoolRoutes");
 const userRoutes = require("./routes/userRoutes");
 const roleRoutes = require("./routes/roleRoutes");
@@ -18,39 +18,36 @@ const schoolDepartmentRoutes = require("./routes/schoolDepartmentRoutes");
 const schoolParentRoutes = require("./routes/schoolParentRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
-const teacherClassRoutes = require("./routes/teacherClassRoutes");
+// const teacherClassRoutes = require("./routes/teacherClassRoutes");
+const courseRoutes = require("./routes/courseRoutes");
+const classAssignRoutes = require("./routes/classAssignRoutes"); // Class Course Assign Routes
+const teacherAssignRoutes = require("./routes/teacherClassRoutes"); // Teacher Class Assign Routes
+const teacherCourseRoutes = require("./routes/teacherCourseRoutes");
+
+// Database connection
 
 const sequelize = require("./config/database");
-
-// model importing
-const Address = require("./models/address");
-const Administrator = require("./models/administrator");
-const Class = require("./models/class");
-const Contact = require("./models/contact");
-const Department = require("./models/department");
-const Parent = require("./models/parent");
-const ParentStudent = require("./models/parentstudent");
-const Principal = require("./models/principal");
-const Role = require("./models/role");
-const SchoolDepartment = require("./models/schooldepartment");
-const School = require("./models/school");
-const SchoolParent = require("./models/schoolparent");
-const Student = require("./models/student");
-const Teacher = require("./models/teacher");
-const TeacherClass = require("./models/teacherclass");
-const User = require("./models/user");
+const db = require("./models");
 
 const authToken = require("./middlewares/auth-token");
-const { Model } = require("sequelize");
-// middle-wares
+
+// Middlewares
 app.use(express.json());
 app.use(cors());
 
-// database sync route
+// Database sync routes
+app.post("/syncDatabase", async(req, res) => {
+    try {
+        await db.sequelize.sync({ force: true });
+        res.json({ message: "Database Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing database: " + error.message);
+    }
+});
+
 app.post("/syncDB", async(req, res) => {
     try {
-        await sequelize.sync({ force: true });
-        // await sequelize.sync({ alter: true });
+        await sequelize.sync({ alter: true });
         res.json({ message: "Database Synced" });
     } catch (error) {
         res.status(500).send("Error syncing database: " + error.message);
@@ -59,37 +56,43 @@ app.post("/syncDB", async(req, res) => {
 
 app.post("/syncSchool", async(req, res) => {
     try {
-        await sequelize.models.School.sync({ alter: true }); //  { force: true }
+        await sequelize.models.School.sync({ alter: true });
         res.json({ message: "School Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing School model: " + error.message);
     }
 });
 
-console.log('Association:', Student.associations)
-
 app.post("/syncPrincipal", async(req, res) => {
     try {
-        await sequelize.models.Principal.sync({ alter: true }); // or { force: true }
+        await sequelize.models.Principal.sync({ alter: true });
         res.json({ message: "Principal Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing Principal model: " + error.message);
     }
 });
 
+app.post("/syncCourse", async(req, res) => {
+    try {
+        await sequelize.models.Course.sync({ force: true });
+        res.json({ message: "Course Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Course model: " + error.message);
+    }
+});
+
 app.post("/syncClass", async(req, res) => {
     try {
-        await sequelize.models.Class.sync({ alter: true }); // or { force: true }
+        await sequelize.models.Class.sync({ alter: true });
         res.json({ message: "Class Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing Class model: " + error.message);
     }
 });
 
-
 app.post("/syncStudent", async(req, res) => {
     try {
-        await sequelize.models.Student.sync({ alter: true }); // or { force: true }
+        await sequelize.models.Student.sync({ alter: true });
         res.json({ message: "Student Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing Student model: " + error.message);
@@ -98,7 +101,7 @@ app.post("/syncStudent", async(req, res) => {
 
 app.post("/syncUser", async(req, res) => {
     try {
-        await sequelize.models.User.sync({ alter: true }); // or { force: true }
+        await sequelize.models.User.sync({ alter: true });
         res.json({ message: "User Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing User model: " + error.message);
@@ -107,21 +110,21 @@ app.post("/syncUser", async(req, res) => {
 
 app.post("/syncTeacher", async(req, res) => {
     try {
-        await sequelize.models.Teacher.sync({ alter: true }); // or { force: true }
+        await sequelize.models.Teacher.sync({ alter: true });
         res.json({ message: "Teacher Model Synced" });
     } catch (error) {
         res.status(500).send("Error syncing Teacher model: " + error.message);
     }
 });
 
-// app.post("/syncUser", async (req, res) => {
-//   try {
-//     await sequelize.models.user.sync({ alter: true }); // or { force: true } if you want to drop and recreate the table
-//     res.json({ message: "User Model Synced" });
-//   } catch (error) {
-//     res.status(500).send("Error syncing User model: " + error.message);
-//   }
-// });
+app.post("/syncCourse", async(req, res) => {
+    try {
+        await sequelize.models.Course.sync({ alter: true });
+        res.json({ message: "Course Model Synced" });
+    } catch (error) {
+        res.status(500).send("Error syncing Course model: " + error.message);
+    }
+});
 
 // Route middleware
 app.use("/api/school", schoolRoutes);
@@ -139,20 +142,17 @@ app.use("/api/school-department", schoolDepartmentRoutes);
 app.use("/api/school-parent", schoolParentRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/teacher", teacherRoutes);
-app.use("/api/teacher-class", teacherClassRoutes);
+app.use("/api/course", courseRoutes);
+app.use("/api/assign_course", classAssignRoutes);
+app.use("/api/teacher-class", teacherAssignRoutes);
+app.use("/api/teacher-course", teacherCourseRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-
-// route for a protected endpoint
+// Route for a protected endpoint
 app.get('/protected-route', authToken, (req, res) => {
-    // Access the user details provided by the authToken middleware
-    // const user = req.user;
-
-    // Respond with data or perform actions for the authorized user
-    // res.json({ message: `Welcome, ${user.username}!` });
     res.json({ message: `Welcome, user!` });
 });
 

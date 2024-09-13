@@ -30,6 +30,17 @@ const getAllTeachers = async(req, res) => {
     }
 };
 
+const getAllTeachersBySchool = async(req, res) => {
+    try {
+        const teachers = await teacherServices.getAllTeachersBySchool(
+            req.params.school_id
+        );
+        res.json(teachers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 const getTeacher = async(req, res) => {
     try {
         const teacher = await teacherServices.getTeacher(req.params.teacher_id);
@@ -74,6 +85,7 @@ const deleteTeacher = async(req, res) => {
 module.exports = {
     createTeacher,
     getAllTeachers,
+    getAllTeachersBySchool,
     getTeacher,
     updateTeacher,
     deleteTeacher,

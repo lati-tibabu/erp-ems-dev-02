@@ -11,7 +11,8 @@ const createStudent = async(req, res) => {
 
 const getAllStudents = async(req, res) => {
     try {
-        const students = await studentServices.getAllStudents();
+        const { page, limit } = req.query;
+        const students = await studentServices.getAllStudents(parseInt(page), parseInt(limit));
         res.json(students);
     } catch (error) {
         res.status(500).json({ message: error.message });
