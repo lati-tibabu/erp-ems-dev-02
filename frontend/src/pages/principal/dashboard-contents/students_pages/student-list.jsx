@@ -8,6 +8,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Outlet, useNavigate } from "react-router-dom";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 library.add(fas);
 
@@ -26,6 +28,7 @@ function StudentList() {
   const [listType, setListType] = useState('all');
   const [listFilterName, setListFilterName] = useState('All Students');
   const [filterDisplay, setFilterDisplay] = useState(false);
+  const [query, setQuery] = useState('');
 
   const getClasses = async () => {
     try {
@@ -48,6 +51,37 @@ function StudentList() {
   }, [classes]);
 
   const classGrades = [...new Set(classes.map((item) => item.class_grade))];
+
+  const handleInputChange = async (e) => {
+    setQuery(e.target.value);
+    try {
+      const response = await fetch(`${apiURL}/api/student/search?query=${query}&school_id=${schoolId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setStudents(data); 
+      } else {
+        console.error('Failed to fetch students');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  // const handleStudentSearch = async () => {
+  //   // const schoolId = schoolId; 
+  //   try {
+  //     const response = await fetch(`${apiURL}/api/student/search?query=${query}&school_id=${schoolId}`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setStudents(data); 
+  //     } else {
+  //       console.error('Failed to fetch students');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+
 
   const getStudents = async () => {
     setStudents([]);
@@ -142,6 +176,45 @@ function StudentList() {
   }
   
 
+  // Export to CSV
+  const exportToCSV = () => {
+    const worksheet = XLSX.utils.json_to_sheet(studentsData.map((student, index) => ({
+      RollNo: index + 1,
+      IDNumber: student.id_number,
+      StudentName: `${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`,
+      Gender: student.user.gender,
+      Grade: student.class.class_grade,
+      Section: student.class.class_name,
+    })));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
+    const csvData = XLSX.write(workbook, { bookType: 'csv', type: 'array' });
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, `${schoolData.school.name} - ${listFilterName} - Students.csv`);
+  };
+
+  // Export to Excel
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(studentsData.map((student, index) => ({
+      RollNo: index + 1,
+      IDNumber: student.id_number,
+      StudentName: `${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`,
+      Gender: student.user.gender,
+      Grade: student.class.class_grade,
+      Section: student.class.class_name,
+    })));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
+    const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelData], { type: 'application/octet-stream' });
+    saveAs(blob, `${schoolData.school.name} - ${listFilterName} - Students.xlsx`);
+  };
+
+  // const handleSort = () => {
+    // setWithRoleNo(true);
+    studentsData.sort((a, b) => a.user.first_name.localeCompare(b.user.first_name));
+  // }
+  
   return (
     <>
     <div className="flex-row gap-10">
@@ -238,27 +311,51 @@ function StudentList() {
         
       </div>
     </div>
-    <div className="flex-row align-start gap-20 p-20 br-50px back-color-gray100-10 justify-between ">
+    
+    <div className="flex-column gap-20 back-color-gray100-10 p-10">
+        
+    <div id="student_search" className="flex-row w-40p align-center">
+      <div className='back-color-blue100 color-white p-10 font-sm'>
+        Search
+      </div>
+      <input
+        id="bar"
+        placeholder="Search student"
+        type="text"
+        className="flex-grow-1 p-10"
+        style={{borderRadius: '0 10px 10px 0'}}
+        value={query}
+        onChange={handleInputChange} />
+      {/* <div
+        id="search_button"
+        className="flex-row justify-center align-center back-color-blue100 color-white p-10"
+        style={{ cursor: 'pointer' }}
+        onClick={handleStudentSearch} >
+        <FontAwesomeIcon icon="fa-solid fa-search" />
+      </div> */}
+    </div>
+
+        <div className="flex-row align-start gap-20 p-20 br-50px justify-between ">
         {studentsData.length > 0 ? (
         <table
         border="1"
         cellPadding="10"
         cellSpacing="0"
         className="br-10px back-color-white font-w-100 font-sm w-100p bw-none"
-        style={{color: '#034303'}}
+        style={{color: '#0  x 34303'}}
         >
         <thead className="bw-0">
             <tr>
             <th className="bw-none">Student ID</th>
             <th className="bw-none">Name</th>
             <th className="bw-none">Gender</th>
-            <th className="bw-none">Class</th>
+            <th className="bw-none">Grade</th>
             <th className="bw-none">Section</th>
             </tr>
         </thead>
         <tbody>
             {studentsData.map((student, index) => (
-            <tr key={index} className="bw-0" style={{cursor: 'pointer'}} onClick={() => handleViewStudent(student)}>
+            <tr key={index} className="bw-0 font-w-400" style={{cursor: 'pointer'}} onClick={() => handleViewStudent(student)}>
                 <td className="bc-gray100-30">{`${student.id_number}`}</td>
                 <td className="bc-gray100-30">{`${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`}</td>
                 <td className="bc-gray100-30">{student.user.gender}</td>
@@ -270,6 +367,11 @@ function StudentList() {
         </table>) : (
         <Heading5 className='color-red100' text="No students" />)}
         <Outlet />
+        </div>
+    </div>
+    <div className="flex-row gap-10 mt-20" style={{justifyContent: 'center'}}>
+      <SecondaryButton onClick={exportToCSV}>Export to CSV</SecondaryButton>
+      <SecondaryButton onClick={exportToExcel}>Export to Excel</SecondaryButton>
     </div>
     </>
   );

@@ -17,6 +17,7 @@ function SingleStudentRegistration() {
 
     const [userData, setUserData] = useState({});
     const [addressData, setAddressData] = useState([]);
+    const [credentials, setCredentials] = useState({});
     const [address_id, setAddressId] = useState('')
     const [role_id, setRoleId] = useState('')
     const [gender, setGender] = useState({gender: ''})
@@ -77,34 +78,46 @@ function SingleStudentRegistration() {
                 ...userData,
                 address_id,
                 role_id,
-                username: (userData.first_name + userData.last_name).toLowerCase()+(Math.ceil(Math.random()*1000)),
-                password: (Math.ceil(Math.random()*10000000)).toString(36),
+                username: (userData.first_name + userData.last_name).toLowerCase() + (Math.ceil(Math.random() * 1000)),
+                password: (Math.ceil(Math.random() * 10000000)).toString(36),
                 ...gender
             };
-            const response = await axios.post('http://localhost:3060/api/user/create', combinedData)
-
+            
+            const response = await axios.post('http://localhost:3060/api/user/create', combinedData);
+    
             if (response.status === 201) {
-                alert(`User created succesfully!`);
-                navigate('/principal/students/registration/single/specific/' + response.data.user_id, {state: combinedData});
-                console.log('User created succesfully',response);
+                alert(`User created successfully!`);
+                
+                // Set the credentials state
+                setCredentials({
+                    user_id: response.data.user_id,
+                    username: combinedData.username,
+                    password: combinedData.password
+                });
+                
+                navigate('/principal/students/registration/single/specific/' + response.data.user_id, { state: combinedData });
+                console.log('User created successfully', response);
             } else {
                 alert('Error Adding User');
                 console.log('Error Adding User');
             }
-            // console.log(combinedData);
-
         } catch (error) {
             console.error('Error: ', error);
             if (error.response) {
                 console.error('Error details:', error.response.data);
-              }
-              if (error.response && error.response.status === 500) {
+            }
+            if (error.response && error.response.status === 500) {
                 alert("An internal server error occurred. Please try again later.");
-              } else {
+            } else {
                 alert("An error occurred while submitting the form. Please check your input and try again.");
-              }
+            }
         }
     }
+
+    console.log('Credentials: ',credentials);
+
+    
+    
   return (
     <RowWrapper className='w-100p bw-none justify-between gap-20 align-start'>
         <ColumnWrapper style={{width: '50%', padding: '20px', borderRadius: '20px', borderWidth: '2px', background: 'white', boxShadow: '3px 3px 5px 0px #0088ff23'}}>

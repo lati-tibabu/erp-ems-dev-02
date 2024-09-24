@@ -21,7 +21,7 @@
             User.hasOne(models.Administrator, { foreignKey: "user_id" });
             User.hasOne(models.Principal, { foreignKey: "user_id" });
             User.hasOne(models.Teacher, { foreignKey: "user_id" });
-            User.hasOne(models.Student, { foreignKey: "user_id" });
+            User.hasOne(models.Student, { foreignKey: 'user_id', as: 'student' });
             User.hasOne(models.Parent, { foreignKey: "user_id" });
 
             User.belongsTo(models.Address, { foreignKey: "address_id" });
@@ -82,6 +82,7 @@
         profile_photo: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
         },
         address_id: {
             type: DataTypes.UUID,

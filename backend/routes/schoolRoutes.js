@@ -13,6 +13,7 @@ router.get("/load/pending", authToken, schoolController.getPendingSchool);
 router.get("/load/deleted", authToken, schoolController.getDeletedSchool);
 router.get("/load/archived", authToken, schoolController.getArchivedSchool);
 router.get("/load/:school_id", schoolController.getSchool);
+router.get("/total", schoolController.getSchoolTotal)
 router.put("/update/:school_id", authToken, schoolController.updateSchool);
 router.delete("/delete/:school_id", authToken, schoolController.deleteSchool);
 

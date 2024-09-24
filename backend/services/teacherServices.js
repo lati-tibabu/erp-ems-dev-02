@@ -24,6 +24,14 @@ const getTeacher = async(teacherID) => {
     return await Teacher.findByPk(teacherID);
 };
 
+const getTeacherByUserId = async(userID) => {
+    return await Teacher.findOne({ where: { user_id: userID } })
+}
+const getTeacherTotal = async() => {
+    return await Teacher.count();
+}
+
+
 const updateTeacher = async(teacherID, teacherInfo) => {
     const teacher = await Teacher.findByPk(teacherID);
     if (teacher) {
@@ -45,6 +53,8 @@ module.exports = {
     getAllTeachers,
     getAllTeachersBySchool,
     getTeacher,
+    getTeacherByUserId,
+    getTeacherTotal,
     updateTeacher,
     deleteTeacher,
 };

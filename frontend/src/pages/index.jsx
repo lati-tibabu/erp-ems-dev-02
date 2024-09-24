@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ColumnWrapper from '../components/column_wrapper';
 import RowWrapper from '../components/row_wrapper';
-import { AiLogo, AiLogo2, AiLogo3 } from '../components/ems_logo';
+import { AiLogo, AiLogo2, AiLogo3, ProperLogo1, ProperLogo2, ProperLogo4, ProperLogo5, } from '../components/ems_logo';
 import { Label, Paragraph, Heading1, Heading2, Heading3, Heading4, Heading5 } from '../components/Typography';
 // import { color } from 'chart.js/helpers';
 import { PrimaryButton } from "../components/buttons";
 import {Link} from 'react-router-dom'
 import 'normalize.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../index.css';
+import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 function Home() {
+  const [theme, setTheme] = useState('light');
+
+  const handleThemeChange = ()=> {
+    theme==='light'?setTheme('dark'):setTheme('light');
+  }
+
+  const themeColor = theme==='dark'&&'dark_theme_color'
+  
+  const quickLinkThemeColor = theme==='dark'?'color-white':'color-gray10';
+
+  const iconThemeColor = theme==='dark'?'color-white':'color-blue90';
+
   const em_border = 'none';
   const styles = {
     main_container: {
@@ -44,7 +58,7 @@ function Home() {
       border: em_border,
     },
     header_container: {
-      background: 'white',
+      // background: 'white',
       borderRadius: '20px',
       gap: '20px',
       alignItems: 'center',
@@ -61,7 +75,8 @@ function Home() {
     side_body_container: {
       width: '20%',
       padding: '20px',
-      background: '#f5f5f5',
+      height: '400px',
+      // background: '#f5f5f5',
       border: em_border,
       display: 'flex',
       flexDirection: 'column',
@@ -77,7 +92,8 @@ function Home() {
       gap: '30px',
     },
     footer_container: {
-      background: '#004d99',
+      // background: '#004d99',
+      background: '#0000f9',
       color: 'white',
       padding: '10px 20px',
       textAlign: 'center',
@@ -102,16 +118,17 @@ function Home() {
     },
     section_container: {
       marginBottom: '30px',
-      // maxWidth: '100vh',
+      // maxWidth: '',
       border: em_border,
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
+      position: 'relative', // For positioning text over image
     },
     feature_card: {
       padding: '20px',
       border: '1px solid #ddd',
-      borderRadius: '8px',
+      borderRadius: '30px',
       marginBottom: '20px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
       flex: '1',
@@ -260,6 +277,25 @@ function Home() {
       marginTop: '20px',
       border: em_border,
     },
+    heroImage: {
+      // zIndex: '100',
+      width: '100%',
+      height: '500px',
+      objectFit: 'cover',
+      borderRadius: '8px',
+      marginBottom: '20px',
+      // filter: 'opacity(0.3)', // Fading effect
+      // backgroundBlendMode: 'darken '
+    },
+    heroContent: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      textAlign: 'center',
+      color: 'white', // White text for contrast
+      zIndex: 1,
+    },
   };
 
 
@@ -274,36 +310,41 @@ function Home() {
   };
 
   return (
-    <>
-      <ColumnWrapper style={styles.main_container}>
+    <div className='flex-row justify-center w-100p back'
+      style={{background: theme==='light'?'white': 'rgba(0,10,60)'}}>
+      <ColumnWrapper style={styles.main_container} className='flex-column align-center w-98p'>
         {/* Header */}
-        <RowWrapper style={styles.header_container}>
-          
-          {/* <RowWrapper style={styles.logo_and_name}>
-            <RowWrapper style={styles.saas_name_wrapper}>
-              <RowWrapper style={styles.saas_name_school}>
-                <Heading3 text='School' style={styles.saas_name_school_text} />
-              </RowWrapper>
-              <RowWrapper style={styles.saas_name_stream}>
-                <Heading3 text='Stream' />
-              </RowWrapper>
-            </RowWrapper>
-          </RowWrapper> */}
-
-          <AiLogo2 style={{ width: '50px', height: '50px' }} />
-          <RowWrapper style={styles.navigation_container}>
+        <RowWrapper style={styles.header_container} className='w-95p'>
+          { theme === 'light'
+            ?<ProperLogo5 style={{ height: '70px' }} />
+            :<ProperLogo4 style={{ height: '70px' }} />
+          }
+          <RowWrapper style={styles.navigation_container} className='w-100p flex-row align-center justify-between'>
             <RowWrapper style={styles.navigation_bar_container}>
-              <Paragraph style={styles.navigation_bar_texts_style} text='Home' />
-              <Paragraph style={styles.navigation_bar_texts_style} text='About Us' />
-              <Paragraph style={styles.navigation_bar_texts_style} text='Features' />
-              <Paragraph style={styles.navigation_bar_texts_style} text='Register School' />
-              <Paragraph style={styles.navigation_bar_texts_style} text='Contact Us' />
+              <Paragraph style={styles.navigation_bar_texts_style} text='Home' className={`${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='About Us' className={`${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Features' className={`${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Register School' className={`${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Contact Us' className={`${themeColor}`}/>
             </RowWrapper>
-            <RowWrapper style={styles.header_extras_button_wrapper}>
-              <PrimaryButton 
+
+            <div className='flex-column align-center justify-center'>
+              {/* <Paragraph text='Theme' className={`${themeColor} font-w-400`}/> */}
+              <button 
+                onClick={handleThemeChange} 
+                className={`color-blue100 font-w-400 bw-1px bs-dashed 
+                  ${theme==='dark'?'back-color-gray100-10':'back-color-blue100-10'}
+                  flex-row align-center gap-10
+                  `}>
+                <FontAwesomeIcon icon={theme==='dark'?'fa-solid fa-moon':'fa-solid fa-sun'} />
+                {theme}
+              </button>
+            </div>
+            {/* <RowWrapper style={styles.header_extras_button_wrapper}> */}
+              {/* <PrimaryButton 
                 onClick={handleRegisterClick} 
                 style={{
-                  // backgroundColor: '#007bff',
+                  backgroundColor: '#007bff',
                   color: 'white',
                   padding: '10px 20px',
                   borderRadius: '5px',
@@ -314,104 +355,173 @@ function Home() {
                   fontSize: '1em',
                 }}>
                 Register Your School
-              </PrimaryButton>
-            </RowWrapper>
+              </PrimaryButton> */}
+            {/* </RowWrapper> */}
           </RowWrapper>
         </RowWrapper>
-
+        
+        {/* Hero Section */}    
+        <ColumnWrapper style={styles.section_container}>
+              {/* <img src="/school-manag.png" alt="School Management" style={styles.heroImage} /> */}
+              <div className='w-99p h-500px back-color-gray100 br-30px p-10 flex-row align-center justify-between' 
+                style={{
+                  backgroundImage: theme === 'light' 
+                    ? 'linear-gradient(-135deg, #0f03, #0000ff)' // Light theme gradient
+                    : 'linear-gradient(-135deg, #1a1a1a, #000040)', // Dark theme gradient
+                }}>                   <div /*style={styles.heroContent}*/ className='flex-column gap-20 w-40p'>
+                    <Heading1 className='color-white' text='Welcome to SchoolStream' />
+                    <Heading2 className='color-gray10-70' text='Your all-in-one school management system.' />
+                    <Paragraph className='color-gray10-80' text='Simplify your school operations and enhance student engagement with our comprehensive suite of features.' />
+                  </div>
+                  <img src="/educator.svg" alt="" srcset="" className='w-40p' />
+              </div>              
+        </ColumnWrapper>
+        
         {/* Body */}
         <RowWrapper style={styles.body_container}>
           {/* Side Body */}
-          <ColumnWrapper style={styles.side_body_container}>
-            <Heading3 text='Quick Links' />
-            <Paragraph text='Student Portal' />
-            <Paragraph text='Teacher Login' />
-            <Paragraph text='Admin Dashboard' />
-            <Paragraph text='Support' />
-            <Paragraph text='FAQs' />
+          <ColumnWrapper style={styles.side_body_container} className = {`${theme==='dark'?'dark_theme_background':'light_theme_background'} p-10 br-30px`} >
+            
+            <div className='flex-column align-center'>
+              <Heading2 text='🔗' />
+              <Heading3 text='Quick Links' className = {`${quickLinkThemeColor}`} />
+            </div>
+
+            <Link to='/auth/login/student' style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-user-graduate' color='white'/>
+              <Paragraph text='Student Portal' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+            <Link to='/auth/login/teacher' style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-chalkboard-teacher' color='white'/>
+              <Paragraph text='Teacher Login' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+            <Link to='/auth/login/principal' style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-school' color='white'/>
+              <Paragraph text='Principal Login' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+            <Link to='/auth/login/admin' style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-user-shield' color='white'/>
+              <Paragraph text='Admin Dashboard' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+            <Link style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-headset' color='white'/>
+              <Paragraph text='Support' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+            <Link style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-question-circle' color='white'/>
+              <Paragraph text='FAQs' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
+
           </ColumnWrapper>
 
           {/* Main Body */}
-          <ColumnWrapper style={styles.main_content_container}>
-            {/* Hero Section */}
-            <ColumnWrapper style={styles.section_container}>
-              <Heading1 text='Welcome to SchoolStream' />
-              <Heading2 text='Your all-in-one school management system.' />
-              <Paragraph text='SchoolStream is your all-in-one school management system designed to make administration seamless and efficient.' />
-              <Paragraph text='Simplify your school operations and enhance student engagement with our comprehensive suite of features.' />
-            </ColumnWrapper>
 
+          <ColumnWrapper style={styles.main_content_container}>
             {/* Features Section */}
             <ColumnWrapper style={styles.section_container}>
-              <Heading2 text='Key Features' />
+              <Heading2 text='Key Features' className = {`${themeColor}`}/>
               <RowWrapper style={styles.row_wrapper}>
                 <ColumnWrapper style={styles.feature_card}>
-                  <Heading4 text='Student Information Management' />
-                  <Paragraph text='Centralize and manage student data, including demographics, attendance, grades, and more.' />
+                  {/* <FontAwesomeIcon icon='fa-solid fa-database' className={`${iconThemeColor} font-6xl`}/> */}
+                  <div className={`${iconThemeColor} font-3xl`}>🧑‍🎓 📊 📚</div>
+                  <div>
+                    <Heading4 text='Student Information Management' className = {`${themeColor}`}/>
+                    <Paragraph text='Centralize and manage student data, including demographics, attendance, grades, and more.' className = {`${themeColor}`}/>
+                  </div>
+
                 </ColumnWrapper>
                 <ColumnWrapper style={styles.feature_card}>
-                  <Heading4 text='Attendance Tracking' />
-                  <Paragraph text='Track student attendance, analyze trends, and generate reports for improved accountability.' />
+                  {/* <FontAwesomeIcon icon='fa-solid fa-check-circle' className={`${iconThemeColor} font-3xl`}/> */}
+                  <div className={`${iconThemeColor} font-3xl`}>✅ ⏰ 📅</div>
+                  <div>
+                    <Heading4 text='Attendance Tracking' className = {`${themeColor}`}/>
+                    <Paragraph text='Track student attendance, analyze trends, and generate reports for improved accountability.' className = {`${themeColor}`}/>
+                  </div>
                 </ColumnWrapper>
               </RowWrapper>
               <RowWrapper style={styles.row_wrapper}>
                 <ColumnWrapper style={styles.feature_card}>
-                  <Heading4 text='Gradebook and Reporting' />
-                  <Paragraph text='Effortlessly manage grades, generate detailed reports, and provide insightful performance analysis.' />
+
+                  {/* <FontAwesomeIcon icon='fa-solid fa-chart-bar' className={`${iconThemeColor} font-3xl`}/> */}
+                  <div className={`${iconThemeColor} font-3xl`}>🅰️ 📊 📃</div>
+                  <div>
+                    <Heading4 text='Gradebook and Reporting' className = {`${themeColor}`}/>
+                    <Paragraph text='Effortlessly manage grades, generate detailed reports, and provide insightful performance analysis.' className = {`${themeColor}`}/>
+                  </div>
+
                 </ColumnWrapper>
                 <ColumnWrapper style={styles.feature_card}>
-                  <Heading4 text='Online Assignments' />
-                  <Paragraph text='Create, assign, and grade assignments online, fostering student engagement and providing real-time feedback.' />
+
+                  {/* <FontAwesomeIcon icon='fa-solid fa-clipboard-list' className={`${iconThemeColor} font-3xl`}/> */}
+                  <div className={`${iconThemeColor} font-3xl`}>📝 🌐 ✅</div>
+                  <div>
+                    <Heading4 text='Online Assignments' className = {`${themeColor}`}/>
+                    <Paragraph text='Create, assign, and grade assignments online, fostering student engagement and providing real-time feedback.' className = {`${themeColor}`}/>
+                  </div>
+                  
                 </ColumnWrapper>
               </RowWrapper>
               <RowWrapper style={styles.row_wrapper}>
                 <ColumnWrapper style={styles.feature_card}>
-                  <Heading4 text='Parent Communication Portal' />
-                  <Paragraph text='Connect with parents seamlessly through a dedicated portal, enabling communication, information sharing, and collaboration.' />
+
+                  {/* <FontAwesomeIcon icon='fa-solid fa-envelope' className={`${iconThemeColor} font-3xl`}/> */}
+                  <div className={`${iconThemeColor} font-3xl`}>👨‍👩‍👧‍👦 💬 📧</div>
+                  <div>
+                    <Heading4 text='Parent Communication Portal' className = {`${themeColor}`}/>
+                    <Paragraph text='Connect with parents seamlessly through a dedicated portal, enabling communication, information sharing, and collaboration.' className = {`${themeColor}`}/>
+                  </div>
+
                 </ColumnWrapper>
               </RowWrapper>
             </ColumnWrapper>
 
             {/* Benefits Section */}
             <ColumnWrapper style={styles.section_container}>
-              <Heading2 text='Why Choose SchoolStream?' />
-              <Paragraph text='SchoolStream empowers educators and administrators to streamline their workflows, enhance student outcomes, and foster a collaborative learning environment.' />
+              <Heading2 text='Why Choose SchoolStream?' className = {`${themeColor}`}/>
+              <Paragraph text='SchoolStream empowers educators and administrators to streamline their workflows, enhance student outcomes, and foster a collaborative learning environment.' className = {`${themeColor}`}/>
               <RowWrapper style={styles.row_wrapper}>
                 <ColumnWrapper style={{ border: em_border }}>
-                  <Heading5 text='Seamless Integration' />
-                  <Paragraph text='Effortlessly integrate with existing school systems and platforms for a unified and streamlined experience.' />
+                  <Heading5 text='Seamless Integration' className = {`${themeColor}`}/>
+                  <Paragraph text='Effortlessly integrate with existing school systems and platforms for a unified and streamlined experience.' className = {`${themeColor}`}/>
                 </ColumnWrapper>
                 <ColumnWrapper style={{ border: em_border }}>
-                  <Heading5 text='User-Friendly Interface' />
-                  <Paragraph text='Intuitive design and easy navigation make SchoolStream accessible to users of all technical abilities.' />
+                  <Heading5 text='User-Friendly Interface' className = {`${themeColor}`}/>
+                  <Paragraph text='Intuitive design and easy navigation make SchoolStream accessible to users of all technical abilities.' className = {`${themeColor}`}/>
                 </ColumnWrapper>
                 <ColumnWrapper style={{ border: em_border }}>
-                  <Heading5 text='Exceptional Support' />
-                  <Paragraph text='Our dedicated support team is here to assist you every step of the way, ensuring a smooth and successful implementation.' />
+                  <Heading5 text='Exceptional Support' className = {`${themeColor}`}/>
+                  <Paragraph text='Our dedicated support team is here to assist you every step of the way, ensuring a smooth and successful implementation.' className = {`${themeColor}`}/>
                 </ColumnWrapper>
               </RowWrapper>
             </ColumnWrapper>
 
             {/* Testimonials Section */}
+            
             <ColumnWrapper style={styles.section_container}>
-              <Heading2 text='What Our Users Say' />
+              <Heading2 text='What Our Users Say' className = {`${themeColor}`} />
               <RowWrapper style={styles.row_wrapper}>
                 <ColumnWrapper style={styles.testimonial_card}>
                   <Paragraph style={styles.testimonial_quote}
-                    text='"SchoolStream has revolutionized the way we manage our school. The intuitive interface and robust features have made our daily tasks much more efficient."' />
-                  <Paragraph style={styles.testimonial_author} text='John Smith, Principal, ABC High School' />
+                    text='"SchoolStream has revolutionized the way we manage our school. The intuitive interface and robust features have made our daily tasks much more efficient."' className = {`${themeColor}`}/>
+                  <Paragraph style={styles.testimonial_author} text='John Smith, Principal, ABC High School' className = {`${themeColor}`}/>
                 </ColumnWrapper>
                 <ColumnWrapper style={styles.testimonial_card}>
                   <Paragraph style={styles.testimonial_quote}
-                    text='"As a teacher, I appreciate the ease with which I can create and grade assignments online. The feedback system helps my students stay engaged and on track."' />
-                  <Paragraph style={styles.testimonial_author} text='Jane Doe, English Teacher, XYZ Elementary School' />
+                    text='"As a teacher, I appreciate the ease with which I can create and grade assignments online. The feedback system helps my students stay engaged and on track."' className = {`${themeColor}`}/>
+                  <Paragraph style={styles.testimonial_author} text='Jane Doe, English Teacher, XYZ Elementary School' className = {`${themeColor}`}/>
                 </ColumnWrapper>
               </RowWrapper>
             </ColumnWrapper>
 
             {/* Call to Action */}
             <ColumnWrapper style={styles.section_container}>
-              <Paragraph text='Ready to transform your school? Get started with SchoolStream today!' />
+              <Paragraph text='Ready to transform your school? Get started with SchoolStream today!' className = {`${themeColor}`}/>
               {/* <RowWrapper style={styles.button_wrapper}>
                 <button style={styles.button}>Register Your School</button>
               </RowWrapper> */}
@@ -485,14 +595,35 @@ function Home() {
         
 
         {/* Footer */}
-        <RowWrapper style={styles.footer_container}>
-          <Paragraph text='© 2024 SchoolStream. All rights reserved.' style={{ color: 'white' }} />
-          <Paragraph text='Contact Us' style={{ color: 'white' }} />
-          <Paragraph text='About Us' style={{ color: 'white' }} />
-          <Paragraph text='Privacy Policy | Terms of Service' style={{ color: 'white' }} />
-        </RowWrapper>
+        <div className='w-100p'>
+          <RowWrapper 
+            style={{
+              // background: '#004d99',
+              background: '#0000f9',
+              color: 'white',
+              padding: '10px 20px',
+              textAlign: 'center',
+              border: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px'
+            
+            }} 
+            className=''>
+              <ProperLogo4 style={{width: '80px'}}/>
+              <Paragraph className='font-xs font-w-400' text='© 2024 SchoolStream. All rights reserved.' style={{ color: 'white' }} />
+              <Paragraph className='font-xs font-w-400' text='Contact Us' style={{ color: 'white' }} />
+              <Paragraph className='font-xs font-w-400' text='About Us' style={{ color: 'white' }} />
+              <Link>
+                <Paragraph className='font-xs font-w-400' text='Privacy Policy | Terms of Service' style={{ color: 'white' }} />
+              </Link>
+          </RowWrapper>
+        </div>
+        
       </ColumnWrapper>
-    </>
+    </div>
   );
 }
 

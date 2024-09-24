@@ -44,11 +44,31 @@ const getAllTeachersBySchool = async(req, res) => {
 const getTeacher = async(req, res) => {
     try {
         const teacher = await teacherServices.getTeacher(req.params.teacher_id);
-        res.json(teacher);
+        res.status(200).json(teacher);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+const getTeacherByUserId = async(req, res) => {
+    try {
+        const teacher = await teacherServices.getTeacherByUserId(
+            req.params.user_id
+        );
+        res.status(200).json(teacher);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getTeacherTotal = async(req, res) => {
+    try {
+        const total = await teacherServices.getTeacherTotal();
+        res.json({ count: total });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 const updateTeacher = async(req, res) => {
     try {
@@ -87,6 +107,8 @@ module.exports = {
     getAllTeachers,
     getAllTeachersBySchool,
     getTeacher,
+    getTeacherByUserId,
+    getTeacherTotal,
     updateTeacher,
     deleteTeacher,
 };

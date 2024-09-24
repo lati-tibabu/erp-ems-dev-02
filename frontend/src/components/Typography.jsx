@@ -3,7 +3,7 @@ import '../styles/typography_styles.css';
 
 export const Heading1 = (props)=> {
   return (
-    <div style={props.style} className='heading1'>{props.text}</div>
+    <div style={props.style} className={`heading1 ${props.className}`}>{props.text}</div>
   )
 }
 
@@ -15,7 +15,7 @@ export const Heading2 = (props)=> {
 
 export const Heading3 = (props)=> {
   return (
-    <div style={props.style} className='heading3'>{props.text}</div>
+    <div style={props.style} className={`heading3 ${props.className}`}>{props.text}</div>
   )
 }
 

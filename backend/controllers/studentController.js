@@ -9,15 +9,28 @@ const createStudent = async(req, res) => {
     }
 };
 
+// const getAllStudents = async(req, res) => {
+//     try {
+//         const { page, limit } = req.query;
+//         const students = await studentServices.getAllStudents(parseInt(page), parseInt(limit));
+//         res.json(students);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
 const getAllStudents = async(req, res) => {
     try {
-        const { page, limit } = req.query;
-        const students = await studentServices.getAllStudents(parseInt(page), parseInt(limit));
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const students = await studentServices.getAllStudents(page, limit);
         res.json(students);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const getAllStudentsBySchool = async(req, res) => {
     try {
@@ -75,6 +88,38 @@ const getStudent = async(req, res) => {
     }
 };
 
+const getStudentByUserId = async(req, res) => {
+    try {
+        const student = await studentServices.getStudentByUserId(
+            req.params.user_id
+        );
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getStudentTotal = async(req, res) => {
+    try {
+        const total = await studentServices.getStudentTotal();
+        res.json({ count: total });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const searchStudents = async(req, res) => {
+    try {
+        const query = req.query.query; // Search query for student name
+        const schoolId = req.query.school_id;
+        const students = await studentServices.searchStudents(query, schoolId);
+        res.json(students);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 const updateStudent = async(req, res) => {
     try {
         const student = await studentServices.updateStudent(
@@ -124,6 +169,9 @@ module.exports = {
     getAllStudentsByClass,
     getAllStudentsByGrade,
     getStudent,
+    getStudentByUserId,
+    getStudentTotal,
+    searchStudents,
     updateStudent,
     deleteStudent,
     getStudentData

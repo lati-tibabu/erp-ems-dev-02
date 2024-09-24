@@ -15,7 +15,7 @@ class Student extends Model {
     static associate(models) {
         // define association here
         Student.belongsTo(models.School, { foreignKey: "school_id" });
-        Student.belongsTo(models.User, { foreignKey: "user_id" });
+        Student.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
         Student.belongsTo(models.Class, { foreignKey: "class_id" });
         Student.belongsToMany(models.Parent, {
             through: "ParentStudent",

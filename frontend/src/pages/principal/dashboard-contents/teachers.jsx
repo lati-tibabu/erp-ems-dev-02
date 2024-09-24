@@ -15,8 +15,11 @@ function Teachers() {
   const [teachers, setTeachers] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [classes, setClasses] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [assignedClasses, setAssignedClasses] = useState([]);
+  const [assignedCourses, setAssignedCourses] = useState([]);
   const [classModify, setClassModify] = useState(false);
+  const [courseModify, setCourseModify] = useState(false);
   const [teacherListType, setTeacherListType] = useState('all');
   const [classId, setClassId] = useState('');
   const [categoryName, setCategoryName] = useState('All');
@@ -101,13 +104,12 @@ function Teachers() {
     setSelectedTeacher(teacher);
   };
 
-  // console.log("Selected Teacher: ", selectedTeacher);
-
-  // console.log('Hello, ', teachersData);
-
   const getClasses = async (school_id) => {
       try {
-          const classes = await fetch(`${apiURL}/api/class/load_s/${school_id}`);
+          const classes = await fetch(`${apiURL}/api/class/load_s/${school_id}`,{
+            method: 'GET',
+            headers: header
+          });
           const data = await classes.json();
           setClasses(data);
       } catch (err) {
@@ -121,6 +123,87 @@ function Teachers() {
 
   // console.log("Classes: ",classes)
 
+  const getCourses = async () => {
+    try {
+      const courses = await fetch(`${apiURL}/api/course/load`, {
+        method: 'GET',
+        headers: header
+      });
+      const data = await courses.json();
+      setCourses(data);
+    } catch (error) {
+      console.error("Error loading courses", error);
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
+
+  console.log('Courses: ', courses);
+
+  const getAssignedCourses = async (teacherId) => {
+    try {
+      const response = await fetch(`${apiURL}/api/teacher-course/load_course/${teacherId}/courses`, {
+        method: 'GET',
+        headers: header
+      });
+      const data = await response.json();
+      setAssignedCourses(data);
+    } catch (error) {
+      console.error("Error fetching assigned courses: ", error); 
+    }
+  }
+
+  useEffect(() => {
+    if (selectedTeacher && selectedTeacher.teacher_id) {
+      getAssignedCourses(selectedTeacher.teacher_id);
+    }
+  }, [selectedTeacher]);
+
+  console.log("Assigned courses: ", assignedCourses);
+
+  // Function to assign a teacher to a course
+  const handleAssignTeacherToCourse = async (course_id, teacher_id) => {
+    try {
+      const response = await axios.post(`${apiURL}/api/teacher-course/assign`, {
+        course_id: course_id,
+        teacher_id: teacher_id
+      }, {
+        headers: header
+      });
+      
+      const data = response.data;
+      alert(data.message); // Notify the user
+      getAssignedCourses(selectedTeacher?.teacher_id); // Fetch assigned courses for the selected teacher
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+// Function to remove a teacher from a course
+  const handleRemoveTeacherFromCourse = async (course_id, teacher_id) => {
+    try {
+      const response = await axios({
+        method: 'delete',
+        url: `${apiURL}/api/teacher-course/remove`,
+        headers: header,
+        data: {
+          teacher_id: teacher_id,
+          course_id: course_id,
+        },
+      });
+
+      const data = response.data;
+      alert(data.message); // Notify the user
+      getAssignedCourses(selectedTeacher?.teacher_id); // Fetch updated list of courses
+
+    } catch (error) {
+      alert("Error Occurred, check console for details.");
+      console.error(error);
+    }
+  }
 
   const handleAssignTeacherToClass = async (class_id, teacher_id) => {
     try{
@@ -181,8 +264,12 @@ function Teachers() {
 
   // console.log('Assigned Classes: ',assignedClasses);
 
-  const handleModifyToggle = () => {
+  const handleModifyClassToggle = () => {
     setClassModify(!classModify);
+  }
+
+  const handleModifyCourseToggle = () => {
+    setCourseModify(!courseModify);
   }
 
   console.log("Teacher List Type: ", teacherListType);
@@ -294,7 +381,7 @@ function Teachers() {
                   <div className="flex-row align-center gap-5">
                     <Heading6 text='Modify Class' className='font-w-100'/>
                       <div
-                          onClick={handleModifyToggle}
+                          onClick={handleModifyClassToggle}
                           className={`flex-row align-center w-50px h-25px br-15px back-color-white bw-2px bs-solid bc-blue100 ${classModify?'justify-end':'justify-start'}`} 
                           style={{cursor: 'pointer'}}>
                           <div className="w-20px h-20px back-color-blue100 br-50p mr-4 ml-4"></div>
@@ -355,6 +442,72 @@ function Teachers() {
                       </div>}
                   </div>
               </div>
+              
+              <div>
+                <div className="flex-row justify-between">
+                  <h3>Courses</h3>
+                  <div className="flex-row align-center gap-5">
+                    <Heading6 text='Modify Course' className='font-w-100' />
+                    <div
+                      onClick={handleModifyCourseToggle}
+                      className={`flex-row align-center w-50px h-25px br-15px back-color-white bw-2px bs-solid bc-blue100 ${courseModify ? 'justify-end' : 'justify-start'}`}
+                      style={{ cursor: 'pointer' }}>
+                      <div className="w-20px h-20px back-color-blue100 br-50p mr-4 ml-4"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-row br-10px p-5 justify-center gap-10 back-color-gray80-10">
+                  <div className="br-10px p-5 w-100p">
+                    <h4>Assigned Courses</h4>
+                    <div className="flex-column shadow-xs br-10px p-5 gap-5">
+                      {assignedCourses.length > 0
+                        ? assignedCourses.map((course, index) => (
+                          <div className="font-xs flex-row align-center justify-between gap-10 back-color-white p-10 br-10px" key={course.course_id}>
+                            <p>{`${index + 1}- Grade ${course.course_grade} ${course.course_name}`}</p>
+                            {courseModify && <FontAwesomeIcon
+                              icon='fa-solid fa-xmark'
+                              onClick={() => handleRemoveTeacherFromCourse(course.course_id, selectedTeacher.teacher_id)}
+                              style={{ cursor: 'pointer' }}
+                              className="flex-row p-5 color-red100 w-30px bw-1px bs-dashed bc-red100 br-20px back-color-red30-10"
+                            />}
+                          </div>
+                        ))
+                        : <Label text='No course is assigned' className='color-red100' />
+                      }
+                    </div>
+                  </div>
+
+                  {courseModify && <div className="back-color-white br-10px p-5 w-100p">
+                    <h4>All Courses</h4>
+                    <div className="flex-column align-start p-5 br-10px">
+                    {
+                      courses.map((course, index) => (
+                        assignedClasses.map((assignedC) => assignedC.class_grade).includes(course.course_grade) &&
+                        <div className="font-xs flex-row justify-center gap-10 align-center" key={course.course_id}>
+                          {assignedCourses.map((assigned) => assigned.course_id).includes(course.course_id)
+                            ? <div className="flex-row align-center gap-5 bw-1px bs-solid bc-blue60 p-10 br-20px back-color-blue60">
+                              <FontAwesomeIcon icon='fa-solid fa-check' />
+                              Assigned
+                            </div>
+                            : <div
+                              className="flex-row align-center gap-5 bw-1px bs-solid bc-blue60 p-10 br-20px"
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => handleAssignTeacherToCourse(course.course_id, selectedTeacher.teacher_id)}
+                            >
+                              <FontAwesomeIcon icon='fa-solid fa-check' />
+                              Assign
+                            </div>
+                          }
+                          <p>{`Grade ${course.course_grade} ${course.course_name}`}</p>
+                        </div>
+
+                      ))
+                    }
+                      </div>
+                  </div>}
+                </div>
+            </div>
           </div>
           }
       </div>

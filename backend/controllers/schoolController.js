@@ -145,6 +145,15 @@ const getSchool = async(req, res) => {
     }
 };
 
+const getSchoolTotal = async(req, res) => {
+    try {
+        const total = await schoolServices.getSchoolTotal();
+        res.json({ count: total });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 const updateSchool = async(req, res) => {
     try {
         const school = await schoolServices.updateSchool(
@@ -187,6 +196,7 @@ module.exports = {
     getDeletedSchool,
     getArchivedSchool,
     getSchool,
+    getSchoolTotal,
     updateSchool,
     deleteSchool,
 };

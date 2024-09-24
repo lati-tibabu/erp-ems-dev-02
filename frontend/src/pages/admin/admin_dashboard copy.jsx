@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import RowWrapper from '../../components/row_wrapper';
 import ColumnWrapper from '../../components/column_wrapper';
-import { AiLogo } from '../../components/ems_logo';
+// import { AiLogo } from '../../components/ems_logo';
 import circle8175 from '../../assets/circle8175.png';
 import { Heading3,Heading6, Label } from '../../components/Typography';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -154,7 +154,8 @@ const username = (uname2 && "@"+uname2) || "Admin";
       }}>
       {/* Header */}
       <RowWrapper style={styles.header_styles}>
-        <AiLogo style={{ width: '80px' }} />
+        {/* <AiLogo style={{ width: '80px' }} /> */}
+        <ProperLogo2 style={{ height: '70px' }} />
         <RowWrapper style={{ width: '100%',border:'none'}}>
           <RowWrapper style={{ width: '100%',border:'none' }}>
             <Heading3 text="Admin Dashboard" style={{ fontSize: '2rem' }} />

@@ -5,6 +5,10 @@ const Role = require("../models/role");
 const Student = require("../models/student");
 const User = require("../models/user");
 
+const { Op } = require('sequelize');
+
+// import { Op } from('sequelize');
+
 const createStudent = async(studentInfo) => {
     return await Student.create(studentInfo);
 };
@@ -54,6 +58,71 @@ const getAllStudentsByGrade = async(schoolID, grade) => {
 const getStudent = async(studentID) => {
     return await Student.findByPk(studentID);
 };
+
+const getStudentByUserId = async(userID) => {
+    return await Student.findOne({ where: { user_id: userID } })
+}
+
+const getStudentTotal = async() => {
+    return await Student.count();
+}
+
+const searchStudents = async(query, schoolId) => {
+    return await Student.findAll({
+        include: [{
+            model: User, // Search in the User model
+            as: 'user',
+            attributes: ['first_name', 'middle_name', 'last_name', 'email'],
+            where: {
+                [Op.or]: [{
+                        first_name: {
+                            [Op.like]: `%${query}%`
+                        }
+                    },
+                    {
+                        middle_name: {
+                            [Op.like]: `%${query}%`
+                        }
+                    },
+                    {
+                        last_name: {
+                            [Op.like]: `%${query}%`
+                        }
+                    },
+                    {
+                        email: {
+                            [Op.like]: `%${query}%`
+                        }
+                    },
+                ]
+            },
+            required: true // Allow students without a matching user
+        }],
+        where: {
+            school_id: schoolId,
+        }
+        // where: {
+        //     [Op.or]: [{
+        //             student_id: {
+        //                 [Op.like]: `%${query}%`
+        //             }
+        //         },
+        //         {
+        //             id_number: {
+        //                 [Op.like]: `%${query}%`
+        //             }
+        //         },
+        //         {
+        //             admission_number: {
+        //                 [Op.like]: `%${query}%`
+        //             }
+        //         },
+        //     ]
+        // }
+    });
+};
+
+
 
 const updateStudent = async(studentID, studentInfo) => {
     const student = await Student.findByPk(studentID);
@@ -110,6 +179,9 @@ module.exports = {
     getAllStudentsByClass,
     getAllStudentsByGrade,
     getStudent,
+    searchStudents,
+    getStudentByUserId,
+    getStudentTotal,
     updateStudent,
     deleteStudent,
     getStudentData

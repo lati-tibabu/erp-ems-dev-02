@@ -59,6 +59,10 @@ const getSchool = async(schoolID) => {
     return await School.findByPk(schoolID);
 };
 
+const getSchoolTotal = async() => {
+    return await School.count();
+}
+
 const updateSchool = async(schoolID, schoolInfo) => {
     const school = await School.findByPk(schoolID);
     if (school) {
@@ -86,6 +90,7 @@ module.exports = {
     getDeletedSchool,
     getArchivedSchool,
     getSchool,
+    getSchoolTotal,
     updateSchool,
     deleteSchool,
 };
