@@ -12,7 +12,7 @@ import { SecondaryButton } from '../../../components/buttons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter } from '../../../store';
 
@@ -24,7 +24,8 @@ function School() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const [schoolWindow, setSchoolWindow] = useState('listing');
+  // const [schoolWindow, setSchoolWindow] = useState('listing');
+  const [schoolWindow, setSchoolWindow] = useState();
   const [isLoading, setIsLoading] = useState(false);
   
   const [filterVisible, setFilterVisible] = useState(false)
@@ -53,7 +54,17 @@ function School() {
   const filtersState = useSelector((state) => state.filter.filters)
 
   // console.log("FilterStates", filtersState);
-  
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/admin/school/listing')) {
+      setSchoolWindow('listing');
+    } else if (location.pathname.startsWith('/admin/school/add')) {
+      setSchoolWindow('add');
+    }
+  }, [location.pathname]);
+
 
   const handleFilterPrint = () => {
     // filterArray.push(filters)
@@ -223,6 +234,7 @@ function School() {
                 <RowWrapper style={styles.search_filter_container} onClick={handleFilterClick}>
                   <FontAwesomeIcon icon='fa-solid fa-filter' style={{color: 'white'}} / >
                   <Label text="Filter Search" style={{fontWeight: 'bold', color: 'white'}}/>
+                  {/* <h1>{onPage}</h1> */}
                 </RowWrapper>
 
                 <RowWrapper style={styles.searchWrapper}>
@@ -231,7 +243,7 @@ function School() {
                     icon="fa-solid fa-search"
                     color="#fff"
                     onClick={() => {
-                      alert('hi');
+                      alert('searching...');
                     }}
                     style={styles.searchIcon}
                   />

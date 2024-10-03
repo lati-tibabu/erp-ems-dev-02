@@ -8,6 +8,7 @@ import RowWrapper from '../../../../components/row_wrapper';
 import Select from 'react-select';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 function AddSchool() {
   const apiURL = import.meta.env.VITE_API_URL;
@@ -63,6 +64,9 @@ function AddSchool() {
   const [showAdditionalField, setShowAdditionalField] = useState('show');
   const [showFacilitiesField, setShowFacilitiesField] = useState('show');
   const [showContactField, setShowContactField] = useState('show');
+
+  const navigate = useNavigate();
+
 
   const getAddress = async () => {
     try {
@@ -129,6 +133,7 @@ function AddSchool() {
       if (response.status === 201) {
         alert("School added successfully!");
         // Reset the form or redirect to a success page
+        navigate('/admin/school/listing/all');
       } else {
         alert("Error adding school. Please try again.");
       }
@@ -605,6 +610,7 @@ function AddSchool() {
                     />
                     <InputField
                     labelName="Email Address"
+                    required
                     placeholder="Enter Email Address"
                     name="email"
                     type="text"

@@ -314,18 +314,18 @@ function Home() {
       style={{background: theme==='light'?'white': 'rgba(0,10,60)'}}>
       <ColumnWrapper style={styles.main_container} className='flex-column align-center w-98p'>
         {/* Header */}
-        <RowWrapper style={styles.header_container} className='w-95p'>
+        <RowWrapper style={styles.header_container} className='w-97p back-color-blue100-10'>
           { theme === 'light'
             ?<ProperLogo5 style={{ height: '70px' }} />
             :<ProperLogo4 style={{ height: '70px' }} />
           }
           <RowWrapper style={styles.navigation_container} className='w-100p flex-row align-center justify-between'>
             <RowWrapper style={styles.navigation_bar_container}>
-              <Paragraph style={styles.navigation_bar_texts_style} text='Home' className={`${themeColor}`}/>
-              <Paragraph style={styles.navigation_bar_texts_style} text='About Us' className={`${themeColor}`}/>
-              <Paragraph style={styles.navigation_bar_texts_style} text='Features' className={`${themeColor}`}/>
-              <Paragraph style={styles.navigation_bar_texts_style} text='Register School' className={`${themeColor}`}/>
-              <Paragraph style={styles.navigation_bar_texts_style} text='Contact Us' className={`${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Home' className={`navigation_bar_texts_style ${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='About Us' className={`navigation_bar_texts_style ${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Features' className={`navigation_bar_texts_style ${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Register School' className={`navigation_bar_texts_style ${themeColor}`}/>
+              <Paragraph style={styles.navigation_bar_texts_style} text='Contact Us' className={`navigation_bar_texts_style ${themeColor}`}/>
             </RowWrapper>
 
             <div className='flex-column align-center justify-center'>
@@ -363,12 +363,13 @@ function Home() {
         {/* Hero Section */}    
         <ColumnWrapper style={styles.section_container}>
               {/* <img src="/school-manag.png" alt="School Management" style={styles.heroImage} /> */}
-              <div className='w-99p h-500px back-color-gray100 br-30px p-10 flex-row align-center justify-between' 
+              <div className='w-99p h-500px back-color-gray100 br-30px p-10 flex-row align-center justify-evenly' 
                 style={{
                   backgroundImage: theme === 'light' 
                     ? 'linear-gradient(-135deg, #0f03, #0000ff)' // Light theme gradient
                     : 'linear-gradient(-135deg, #1a1a1a, #000040)', // Dark theme gradient
-                }}>                   <div /*style={styles.heroContent}*/ className='flex-column gap-20 w-40p'>
+                }}>                   
+                <div /*style={styles.heroContent}*/ className='flex-column gap-20 w-40p'>
                     <Heading1 className='color-white' text='Welcome to SchoolStream' />
                     <Heading2 className='color-gray10-70' text='Your all-in-one school management system.' />
                     <Paragraph className='color-gray10-80' text='Simplify your school operations and enhance student engagement with our comprehensive suite of features.' />

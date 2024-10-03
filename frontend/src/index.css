@@ -20,3 +20,13 @@
 .light_theme_background {
     background: rgb(0, 0, 255);
 }
+
+.navigation_bar_texts_style {
+    /* background-color: red; */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navigation_bar_texts_style:hover {
+    background-color: rgba(0, 110, 255, 0.209);
+}

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InputField } from '../../../../components/input_field';
 import "../../../../styles/admin-dashboard/edit_field.css"
-import { color } from 'chart.js/helpers';
+// import { color } from 'chart.js/helpers';
 import api from '../../../../api';
 import axios from 'axios';
 import Select from 'react-select'
