@@ -23,6 +23,7 @@
             User.hasOne(models.Teacher, { foreignKey: "user_id" });
             User.hasOne(models.Student, { foreignKey: 'user_id', as: 'student' });
             User.hasOne(models.Parent, { foreignKey: "user_id" });
+            User.hasOne(models.userCredentials, { foreignKey: "user_id" });
 
             User.belongsTo(models.Address, { foreignKey: "address_id" });
             User.hasMany(models.Contact, { foreignKey: "user_id" });

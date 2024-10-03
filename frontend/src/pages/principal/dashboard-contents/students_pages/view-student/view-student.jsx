@@ -3,7 +3,7 @@ import React from "react";
 import ColumnWrapper from "../../../../../components/column_wrapper";
 import RowWrapper from "../../../../../components/row_wrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Label } from "../../../../../components/Typography";
+import { Heading3, Heading5, Label } from "../../../../../components/Typography";
 import { TertiaryButton } from "../../../../../components/buttons";
 import { useLocation } from "react-router-dom";
 function ViewStudent() {
@@ -53,6 +53,14 @@ function ViewStudent() {
                 </ColumnWrapper>
                 <FontAwesomeIcon icon='fa-solid fa-envelope' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
             </RowWrapper>
+
+            <Heading5 text='Login Credentials' />
+            <ColumnWrapper>
+                <RowWrapper>
+                    <Label text='Username' style={{fontWeight: 'bold'}}/> 
+                    <Label text={`${student.credentials?.username}`} />                
+                </RowWrapper>
+            </ColumnWrapper>
 
             {/* <RowWrapper style={{justifyContent:'space-between', alignItems: 'center', border: 'none'}}>
                 <ColumnWrapper style={{gap: '10px', border: 'none',}}>

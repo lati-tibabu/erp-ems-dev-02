@@ -65,7 +65,6 @@ function School() {
     }
   }, [location.pathname]);
 
-
   const handleFilterPrint = () => {
     // filterArray.push(filters)
     // console.log(filterArray);

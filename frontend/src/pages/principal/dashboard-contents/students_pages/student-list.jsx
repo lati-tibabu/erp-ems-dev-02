@@ -23,6 +23,7 @@ function StudentList() {
   const [students, setStudents] = useState([]);
   const [studentsData, setStudentsData] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [credentials,  setCredentials] = useState({});
   const [classId, setClassId] = useState('');
   const [classLvl, setClassLvl] = useState('');
   const [listType, setListType] = useState('all');
@@ -146,14 +147,23 @@ function StudentList() {
           method: 'GET',
           headers: header,
         });
+
         const classData = await classResponse.json();
 
-        return { ...student, user: userData, class: classData };
+        const credentialsResponse = await fetch (`${apiURL}/api/credentials/loadu/${student.user_id}`, {
+          method: 'GET',
+          headers: header
+        });
+        const credentialsData = await credentialsResponse.json();
+
+        return { ...student, user: userData, class: classData, credentials: credentialsData };
       })
     );
     setStudentsData(dataWithRelations);
   };
 
+  
+  
   useEffect(() => {
     getStudents();
   }, [schoolId, listType, classId]);
@@ -166,6 +176,7 @@ function StudentList() {
     }
   }, [students, listType, classId]);
 
+  console.log("Student Data: ", studentsData)
   const classNames = {
     filteringbtn: 'font-xs font-w-400 flex-row justify-start m-5 br-10px',
   }

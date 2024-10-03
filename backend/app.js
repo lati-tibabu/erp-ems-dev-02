@@ -23,6 +23,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const classAssignRoutes = require("./routes/classAssignRoutes"); // Class Course Assign Routes
 const teacherAssignRoutes = require("./routes/teacherClassRoutes"); // Teacher Class Assign Routes
 const teacherCourseRoutes = require("./routes/teacherCourseRoutes");
+const userCredentialsRoutes = require("./routes/userCredentialsRoutes");
 
 // Database connection
 
@@ -146,6 +147,7 @@ app.use("/api/course", courseRoutes);
 app.use("/api/assign_course", classAssignRoutes);
 app.use("/api/teacher-class", teacherAssignRoutes);
 app.use("/api/teacher-course", teacherCourseRoutes);
+app.use("/api/credentials", userCredentialsRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World!");

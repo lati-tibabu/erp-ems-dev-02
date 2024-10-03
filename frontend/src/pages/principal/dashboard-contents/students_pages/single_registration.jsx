@@ -94,6 +94,11 @@ function SingleStudentRegistration() {
                     username: combinedData.username,
                     password: combinedData.password
                 });
+
+                const credential_response = await axios.post('http://localhost:3060/api/credentials/create', credentials);
+                if (credential_response.status === 201) {
+                    alert(`Credentials also created successfully!`);
+                }    
                 
                 navigate('/principal/students/registration/single/specific/' + response.data.user_id, { state: combinedData });
                 console.log('User created successfully', response);
