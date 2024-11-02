@@ -6,8 +6,7 @@ const Student = require("../models/student");
 const User = require("../models/user");
 
 const { Op } = require('sequelize');
-
-// import { Op } from('sequelize');
+const userCredentials = require("../models/usercredentials");
 
 const createStudent = async(studentInfo) => {
     return await Student.create(studentInfo);
@@ -20,47 +19,230 @@ const getAllStudents = async(page, limit) => {
     });
 };
 
+// const getAllStudentsBySchool = async(schoolID) => {
+//     return await Student.findAll({
+//         where: {
+//             school_id: schoolID
+//         }
+//     });
+// };
 const getAllStudentsBySchool = async(schoolID) => {
     return await Student.findAll({
         where: {
             school_id: schoolID
-        }
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            include: [{
+                    model: Address,
+                    as: 'Address',
+                    attributes: ['city', 'subcity', 'woreda', 'kebele']
+                },
+                {
+                    model: Role,
+                    as: 'Role',
+                    attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
+                }
+            ],
+            attributes: [
+                'username', 'first_name', 'middle_name', 'last_name',
+                'date_of_birth', 'gender', 'email', 'house_number',
+                'nationality', 'profile_photo'
+            ]
+        }, {
+            model: Class,
+            as: 'Class',
+            attributes: ['class_name', 'class_grade', 'section_name'],
+        }]
     });
 };
+
+// const getAllStudentsByGender = async(schoolID, gender) => {
+//     return await Student.findAll({
+//         where: {
+//             school_id: schoolID,
+//             student_gender: gender
+//         }
+//     });
+// };
 
 const getAllStudentsByGender = async(schoolID, gender) => {
     return await Student.findAll({
         where: {
             school_id: schoolID,
             student_gender: gender
-        }
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            include: [{
+                    model: Address,
+                    as: 'Address',
+                    attributes: ['city', 'subcity', 'woreda', 'kebele']
+                },
+                {
+                    model: Role,
+                    as: 'Role',
+                    attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
+                }
+            ],
+            attributes: [
+                'username', 'first_name', 'middle_name', 'last_name',
+                'date_of_birth', 'gender', 'email', 'house_number',
+                'nationality', 'profile_photo'
+            ]
+        }, {
+            model: Class,
+            as: 'Class',
+            attributes: ['class_name', 'class_grade', 'section_name'],
+        }]
     });
 };
 
+// const getAllStudentsByClass = async(schoolID, classID) => {
+//     return await Student.findAll({
+//         where: {
+//             school_id: schoolID,
+//             class_id: classID
+//         }
+//     });
+// };
 const getAllStudentsByClass = async(schoolID, classID) => {
     return await Student.findAll({
         where: {
             school_id: schoolID,
             class_id: classID
-        }
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            include: [{
+                    model: Address,
+                    as: 'Address',
+                    attributes: ['city', 'subcity', 'woreda', 'kebele']
+                },
+                {
+                    model: Role,
+                    as: 'Role',
+                    attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
+                }
+            ],
+            attributes: [
+                'username', 'first_name', 'middle_name', 'last_name',
+                'date_of_birth', 'gender', 'email', 'house_number',
+                'nationality', 'profile_photo'
+            ]
+        }, {
+            model: Class,
+            as: 'Class',
+            attributes: ['class_name', 'class_grade', 'section_name'],
+        }]
     });
 };
+
+
+// const getAllStudentsByGrade = async(schoolID, grade) => {
+//     return await Student.findAll({
+//         where: {
+//             school_id: schoolID,
+//             grade_level: grade
+//         }
+//     });
+// }
 
 const getAllStudentsByGrade = async(schoolID, grade) => {
     return await Student.findAll({
         where: {
             school_id: schoolID,
             grade_level: grade
-        }
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            include: [{
+                    model: Address,
+                    as: 'Address',
+                    attributes: ['city', 'subcity', 'woreda', 'kebele']
+                },
+                {
+                    model: Role,
+                    as: 'Role',
+                    attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
+                }
+            ],
+            attributes: [
+                'username', 'first_name', 'middle_name', 'last_name',
+                'date_of_birth', 'gender', 'email', 'house_number',
+                'nationality', 'profile_photo'
+            ]
+        }, {
+            model: Class,
+            as: 'Class',
+            attributes: ['class_name', 'class_grade', 'section_name'],
+        }]
     });
-}
+};
 
 const getStudent = async(studentID) => {
     return await Student.findByPk(studentID);
 };
 
 const getStudentByUserId = async(userID) => {
-    return await Student.findOne({ where: { user_id: userID } })
+    return await Student.findOne({
+        where: {
+            user_id: userID
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            include: [{
+                    model: Address,
+                    as: 'Address',
+                    attributes: ['city', 'subcity', 'woreda', 'kebele']
+                },
+                {
+                    model: Role,
+                    as: 'Role',
+                    attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
+                }
+            ],
+            attributes: [
+                'username', 'first_name', 'middle_name', 'last_name',
+                'date_of_birth', 'gender', 'email', 'house_number',
+                'nationality', 'profile_photo'
+            ]
+        }, {
+            model: Class,
+            as: 'Class',
+            attributes: ['class_name', 'class_grade', 'section_name'],
+        }]
+    })
 }
 
 const getStudentTotal = async() => {
@@ -101,24 +283,6 @@ const searchStudents = async(query, schoolId) => {
         where: {
             school_id: schoolId,
         }
-        // where: {
-        //     [Op.or]: [{
-        //             student_id: {
-        //                 [Op.like]: `%${query}%`
-        //             }
-        //         },
-        //         {
-        //             id_number: {
-        //                 [Op.like]: `%${query}%`
-        //             }
-        //         },
-        //         {
-        //             admission_number: {
-        //                 [Op.like]: `%${query}%`
-        //             }
-        //         },
-        //     ]
-        // }
     });
 };
 
@@ -148,13 +312,18 @@ const getStudentData = async(studentID) => {
             as: 'user',
             include: [{
                     model: Address,
-                    as: 'address',
+                    as: 'Address',
                     attributes: ['city', 'subcity', 'woreda', 'kebele']
                 },
                 {
                     model: Role,
-                    as: 'role',
+                    as: 'Role',
                     attributes: ['role_name', 'role_description']
+                },
+                {
+                    model: userCredentials,
+                    as: 'userCredential',
+                    attributes: ['username', 'password']
                 }
             ],
             attributes: [
@@ -164,7 +333,7 @@ const getStudentData = async(studentID) => {
             ]
         }, {
             model: Class,
-            as: 'class',
+            as: 'Class',
             attributes: ['class_name', 'class_grade', 'section_name'],
         }]
     })

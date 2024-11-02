@@ -44,6 +44,8 @@ class School extends Model {
             foreignKey: "school_id",
             otherKey: "course_id",
         });
+
+        // School.hasOne(models.schoolCodeTrack, { foreignKey: 'school_id' });
     }
 }
 School.init({
@@ -94,9 +96,14 @@ School.init({
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
+    // school_code: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    // },
     school_code: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        unique: true,
     },
     affiliation: {
         type: DataTypes.STRING,

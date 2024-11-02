@@ -1,0 +1,27 @@
+.input_field {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    gap: 5px;
+    width: 100%;
+    color: rgb(33, 82, 105);
+}
+
+input {
+    font-size: 0.9rem;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+input:focus {
+    border: 1px solid #a3d5ff;
+    background: #e6f7ff;
+    outline: none;
+}
+
+.checkbox-name {
+    font-size: 0.8em;
+    display: flex;
+    gap: 5px;
+}

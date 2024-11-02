@@ -1,15 +1,15 @@
     const sequelize = require("../config/database");
     const { DataTypes, ENUM, Model } = require("sequelize");
 
-    const Administrator = require("./administrator");
-    const Principal = require("./principal");
-    const Teacher = require("./teacher");
-    const Student = require("./student");
-    const Parent = require("./parent");
+    // const Administrator = require("./administrator");
+    // const Principal = require("./principal");
+    // const Teacher = require("./teacher");
+    // const Student = require("./student");
+    // const Parent = require("./parent");
 
-    const Address = require("./address");
-    const Contact = require("./contact");
-    const Role = require("./role");
+    // const Address = require("./address");
+    // const Contact = require("./contact");
+    // const Role = require("./role");
 
     class User extends Model {
         /**
@@ -18,6 +18,7 @@
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            // define association here
             User.hasOne(models.Administrator, { foreignKey: "user_id" });
             User.hasOne(models.Principal, { foreignKey: "user_id" });
             User.hasOne(models.Teacher, { foreignKey: "user_id" });
@@ -28,7 +29,6 @@
             User.belongsTo(models.Address, { foreignKey: "address_id" });
             User.hasMany(models.Contact, { foreignKey: "user_id" });
             User.belongsTo(models.Role, { foreignKey: "role_id" });
-            // define association here
         }
     }
     User.init({

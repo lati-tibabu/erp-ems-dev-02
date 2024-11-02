@@ -1,0 +1,294 @@
+.main_container {
+    /* background: rgba(0, 110, 129, 0.081); */
+    min-height: 100vh;
+    border: none;
+}
+
+.logo_styles {
+    width: 100px;
+    height: 100px;
+    border: 2px solid rgba(10, 200, 209, 0.31);
+}
+
+.logo_and_name {
+    align-items: center;
+    border: none;
+    gap: 20px;
+}
+
+.saas_name_wrapper {
+    gap: 0px;
+    border: none;
+}
+
+.saas_name_school {
+    background: rgb(0, 57, 110);
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.saas_name_school_text {
+    color: white;
+}
+
+.saas_name_stream {
+    border: none;
+}
+
+.header_container {
+    background: white;
+    border-radius: 20px;
+    gap: 20px;
+    align-items: center;
+    border: none;
+    padding: 20px;
+}
+
+.body_container {
+    flex: 5;
+    border: none;
+    flex-direction: row;
+    display: flex;
+    gap: 30px;
+}
+
+.side_body_container {
+    width: 20%;
+    padding: 20px;
+    background: #f5f5f5;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main_body_container {
+    width: 80%;
+    padding: 20px;
+    background: #ffffff;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.footer_container {
+    background: #004d99;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.navigation_bar_container {
+    padding: 10px;
+    gap: 20px;
+    border: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.navigation_bar_texts_style {
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.section_container {
+    margin-bottom: 30px;
+    max-width: 100vh;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature_card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.testimonial_card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+}
+
+.testimonial_quote {
+    font-style: italic;
+}
+
+.testimonial_author {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.row_wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    border: none;
+}
+
+.column_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: none;
+}
+
+.button_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    border: none;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    font-size: 1em;
+}
+
+.header_extras_button_wrapper {
+    gap: 20px;
+    justify-content: end;
+    border: none;
+}
+
+.main_content_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: none;
+}
+
+.navigation_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+    border: none;
+}
+
+.pricing_container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pricing_plan {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    margin-bottom: 20px;
+    max-width: 300px;
+    /* Adjust the max width for a better look */
+}
+
+.pricing_plan_header {
+    margin-bottom: 10px;
+}
+
+.pricing_plan_price {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.pricing_plan_features {
+    margin-top: 20px;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.pricing_plan_feature {
+    margin-bottom: 5px;
+}
+
+.pricing_section_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.pricing_section_header {
+    text-align: center;
+}
+
+.pricing_plan_wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pricing_image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.super_admin_button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    font-size: 1em;
+}
+
+.super_admin_button_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    border: none;
+}
+
+.footer_text {
+    color: white;
+}
+
+.register_button {
+    /* background-color: #007bff; */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    font-size: 1em;
+}

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root {
+    font-family: "Ubuntu", calibri, sans-serif
+}
+
+.dark_theme_color {
+    color: white;
+}
+
+.light_theme_color {
+    color: rgb(0, 40, 67);
+}
+
+.dark_theme_background {
+    background: rgb(0, 30, 58);
+    border: 1px solid white;
+}
+
+.light_theme_background {
+    background: rgb(0, 0, 255);
+}
+
+.navigation_bar_texts_style {
+    /* background-color: red; */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navigation_bar_texts_style:hover {
+    background-color: rgba(0, 110, 255, 0.209);
+}

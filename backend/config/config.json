@@ -6,11 +6,11 @@
         "host": "localhost",
         "dialect": "mysql"
     },
-    "test": {
-        "username": "lati",
-        "password": "password",
+    "hosted_development": {
+        "username": "lati3",
+        "password": "Lati@5866",
         "database": "erp_ems_dev_db",
-        "host": "localhost",
+        "host": "10.180.50.214",
         "dialect": "mysql"
     },
     "production": {
