@@ -249,43 +249,105 @@ const getStudentTotal = async() => {
     return await Student.count();
 }
 
-const searchStudents = async(query, schoolId) => {
-    return await Student.findAll({
-        include: [{
-            model: User, // Search in the User model
-            as: 'user',
-            attributes: ['first_name', 'middle_name', 'last_name', 'email'],
-            where: {
-                [Op.or]: [{
-                        first_name: {
-                            [Op.like]: `%${query}%`
-                        }
-                    },
-                    {
-                        middle_name: {
-                            [Op.like]: `%${query}%`
-                        }
-                    },
-                    {
-                        last_name: {
-                            [Op.like]: `%${query}%`
-                        }
-                    },
-                    {
-                        email: {
-                            [Op.like]: `%${query}%`
-                        }
-                    },
-                ]
-            },
-            required: true // Allow students without a matching user
-        }],
-        where: {
-            school_id: schoolId,
-        }
-    });
-};
+// const searchStudents = async(query, schoolId) => {
+//     return await Student.findAll({
+//         include: [{
+//             model: User, // Search in the User model
+//             as: 'user',
+//             attributes: ['first_name', 'middle_name', 'last_name', 'email'],
+//             where: {
+//                 [Op.or]: [{
+//                         first_name: {
+//                             [Op.like]: `%${query}%`
+//                         }
+//                     },
+//                     {
+//                         middle_name: {
+//                             [Op.like]: `%${query}%`
+//                         }
+//                     },
+//                     {
+//                         last_name: {
+//                             [Op.like]: `%${query}%`
+//                         }
+//                     },
+//                     {
+//                         email: {
+//                             [Op.like]: `%${query}%`
+//                         }
+//                     },
+//                 ]
+//             },
+//             required: true // Allow students without a matching user
+//         }],
+//         where: {
+//             school_id: schoolId,
+//         }
+//     });
+// };
 
+const searchStudents = async (query, schoolId) => {
+    return await Student.findAll({
+      where: {
+        school_id: schoolId,
+      },
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: [
+          'username', 'first_name', 'middle_name', 'last_name',
+          'date_of_birth', 'gender', 'email', 'house_number',
+          'nationality', 'profile_photo' // Include desired user attributes
+        ],
+        where: {
+          [Op.or]: [
+            {
+              first_name: {
+                [Op.like]: `%${query}%` // Correctly use template literals
+              }
+            },
+            {
+              middle_name: {
+                [Op.like]: `%${query}%`
+              }
+            },
+            {
+              last_name: {
+                [Op.like]: `%${query}%`
+              }
+            },
+            {
+              email: {
+                [Op.like]: `%${query}%`
+              }
+            },
+          ]
+        },
+        include: [
+          {
+            model: Address,
+            as: 'Address',
+            attributes: ['city', 'subcity', 'woreda', 'kebele']
+          },
+          {
+            model: Role,
+            as: 'Role',
+            attributes: ['role_name', 'role_description']
+          },
+          {
+            model: userCredentials, // Assuming this is your model name
+            as: 'userCredential',
+            attributes: ['username', 'password']
+          },
+        ]
+      },
+      {
+        model: Class,
+        as: 'Class',
+        attributes: ['class_name', 'class_grade', 'section_name'],
+      }
+    ]});
+  };
 
 
 const updateStudent = async(studentID, studentInfo) => {

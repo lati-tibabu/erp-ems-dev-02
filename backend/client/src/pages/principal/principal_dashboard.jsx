@@ -15,6 +15,7 @@ import '../../styles/admin_dashboard.css';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store';
 import { PrimaryButton } from '../../components/buttons';
+import Footer from '../../components/footer';
 
 library.add(fas);
 
@@ -361,7 +362,7 @@ function PrincipalDashboard() {
           </ColumnWrapper>
         </RowWrapper>
       </div>
-      <div>
+      {/* <div>
       <RowWrapper 
         style={{
           // background: '#004d99',
@@ -384,7 +385,8 @@ function PrincipalDashboard() {
             <Paragraph className='font-xs font-w-400' text='Privacy Policy | Terms of Service' style={{ color: 'white' }} />
           </Link>
       </RowWrapper>
-      </div>
+      </div> */}
+      <Footer />
     </div>
   );
 }

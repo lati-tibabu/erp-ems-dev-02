@@ -40,12 +40,12 @@ function Students() {
           </Link>
         </div>
 
-        <div id="student_search" className="flex-row">
+        {/* <div id="student_search" className="flex-row">
           <input id="bar" placeholder="Search student" type="text" className="flex-grow-1 br-none"  />
           <div id="search_button" className="flex-row justify-center align-center back-color-blue100 color-white p-10 " style={{cursor:'pointer'}}>
             <FontAwesomeIcon icon='fa-solid fa-search' />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* <StudentList /> */}

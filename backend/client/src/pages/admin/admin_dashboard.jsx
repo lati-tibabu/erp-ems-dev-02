@@ -16,6 +16,7 @@ import LogoAndName from '../../components/LogoAndName';
 import { useSelector,useDispatch } from 'react-redux';
 import { logout } from '../../store';
 import { color } from 'chart.js/helpers';
+import Footer from '../../components/footer';
 
 library.add(fas);
 
@@ -429,7 +430,8 @@ function AdminDashboard() {
 
         </RowWrapper>
       </div>
-      <div>
+      <Footer />
+      {/* <div>
         <RowWrapper 
           style={{
             // background: '#004d99',
@@ -452,7 +454,7 @@ function AdminDashboard() {
               <Paragraph className='font-xs font-w-400' text='Privacy Policy | Terms of Service' style={{ color: 'white' }} />
             </Link>
         </RowWrapper>
-      </div>
+      </div> */}
     </div>
   );
 }
