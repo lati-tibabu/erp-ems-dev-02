@@ -141,7 +141,7 @@ app.get('/app', (req, res) => {
     app.post("/syncCourse", async(req, res) => {
         try {
             await sequelize.models.Course.sync({ alter: true });
-            res.json({ message: "Course Model Synced" });
+             res.json({ message: "Course Model Synced" });
         } catch (error) {
             res.status(500).send("Error syncing Course model: " + error.message);
         }
@@ -177,7 +177,6 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-// Route for a protected endpoint
 app.get('/protected-route', authToken, (req, res) => {
     res.json({ message: `Welcome, user!` });
 });

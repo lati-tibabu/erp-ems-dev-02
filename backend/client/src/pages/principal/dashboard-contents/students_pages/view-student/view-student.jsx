@@ -5,36 +5,51 @@ import RowWrapper from "../../../../../components/row_wrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Heading3, Heading5, Label } from "../../../../../components/Typography";
 import { TertiaryButton } from "../../../../../components/buttons";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 function ViewStudent() {
 
     const location = useLocation();
     const student = location.state.student;
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+
+
     // console.log(student)
+
+    const handleViewStudent = (studentData) => {
+        // alert('view student')
+        navigate('/principal/students/list/detail', {state: {studentData}})
+    }
+
+    const handleCloseButton = () => {
+        navigate('/principal/students/list/')
+    }
     return(
-        <ColumnWrapper className='w-30p back-color-white shadow-lg p-20 br-40px bw-none'>
-                <RowWrapper className='justify-end bw-none'>
-                    <FontAwesomeIcon icon='fa-solid fa-xmark' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
-                </RowWrapper>
-                <ColumnWrapper style={{justifyContent: 'center', alignItems: 'center', gap: '20px', border: 'none',}}>
-                    <img 
-                    src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
+        <ColumnWrapper className='w-30p back-color-white shadow-lg p-20 br-10px bw-none'>
+            <div className="w-100p flex-row justify-end pr-10">
+                <FontAwesomeIcon 
+                    icon='fa-solid fa-xmark' 
+                    style={{cursor: 'pointer'}}
+                    onClick={handleCloseButton}
+                    className="p-5 w-20px h-20px back-color-red100 br-20px color-white"
+                    />
+            </div>
+            <ColumnWrapper style={{justifyContent: 'center', alignItems: 'center', gap: '20px', border: 'none',}}>
+                <img 
+                    src={student.user.profile_photo || 'default-image-url.png'} 
                     alt="principal_profile_image"
                     style={{width: '160px', height: '160px', borderRadius: '50%', objectFit: 'cover'}}/>
+                <Label style={{fontWeight: 'bold'}} text={`${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`}/>
+            </ColumnWrapper>
 
-                    {/* <Label style={{fontWeight: 'bold'}} text='Tokuma Mitiku'/> */}
-                    <Label style={{fontWeight: 'bold'}} text={`${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`}/>
-                </ColumnWrapper>
-
-                <ColumnWrapper style={{gap: '10px', border: 'none',}}>
-                    <RowWrapper style={{gap: '10px', border: 'none',}}>
-                        <ColumnWrapper style={{gap: '10px', border: 'none',}}>
-                            <Label text='Gender' style={{fontWeight: 'bold'}}/>
-                            {/* <Label text='Male' /> */}
-                            <Label text={student.user.gender} />
-                        </ColumnWrapper>
-                    </RowWrapper>
+            <ColumnWrapper style={{gap: '10px', border: 'none',}}>
+                <RowWrapper style={{gap: '10px', border: 'none',}}>
+                    <ColumnWrapper style={{gap: '10px', border: 'none',}}>
+                        <Label text='Gender' style={{fontWeight: 'bold'}}/>
+                        {/* <Label text='Male' /> */}
+                        <Label text={student.user.gender} />
+                    </ColumnWrapper>
+                </RowWrapper>
 
                 <RowWrapper style={{justifyContent:'space-between', alignItems: 'center', border: 'none'}}>
                     <ColumnWrapper style={{gap: '10px', border: 'none',}}>
@@ -55,7 +70,7 @@ function ViewStudent() {
                 </RowWrapper>
 
                 <Heading5 text='Login Credentials' />
-                <ColumnWrapper>
+                <ColumnWrapper className='bw-none'>
                     <RowWrapper className='bw-none gap-10 justify-between p-10'>
                         <Label text='Username' style={{fontWeight: 'bold'}}/> 
                         <Label text={`${student.user.userCredential?.username}`} className='font-sm font-w-400 ' />                
@@ -73,22 +88,13 @@ function ViewStudent() {
                         </div>
                     </RowWrapper>
                 </ColumnWrapper>
-
-                {/* <RowWrapper style={{justifyContent:'space-between', alignItems: 'center', border: 'none'}}>
-                    <ColumnWrapper style={{gap: '10px', border: 'none',}}>
-                        <Label text='Phone Number' style={{fontWeight: 'bold'}}/> */}
-                        {/* {Array.isArray(principalData?.contact) && 
-                            principalData?.contact.map((cont, index) => (
-                                <Label key={index} text={`${cont?.name}: ${cont?.phone}`}/> 
-                            ))} */}
-                        {/* <Label text='09282898228' />
-                    </ColumnWrapper>
-                    <FontAwesomeIcon icon='fa-solid fa-phone' color='rgba(0,130,239,0.6)' style={{cursor: 'pointer'}}/>
-                </RowWrapper> */}
-                </ColumnWrapper>
-
-                {/* <TertiaryButton style={{fontSize: '0.7rem'}} >View Profile</TertiaryButton> */}
+                <div> 
+                    <button className="back-color-blue100 font-xs" onClick={() => handleViewStudent(student)}>View Student</button>
+                </div>
             </ColumnWrapper>
+
+            {/* <TertiaryButton style={{fontSize: '0.7rem'}} >View Profile</TertiaryButton> */}
+        </ColumnWrapper>
     );
 }
 

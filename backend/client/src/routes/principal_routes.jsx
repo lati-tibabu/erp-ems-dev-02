@@ -22,6 +22,7 @@ import Calendar from "../pages/principal/dashboard-contents/calendar";
 import Attendance from "../pages/principal/dashboard-contents/attendance";
 import Profile from "../pages/principal/dashboard-contents/profile";
 import Help from "../pages/principal/dashboard-contents/help";
+import ViewStudentDetail from "../components/principal-components/view_student_detail";
 
 
 const principalRoutes = {
@@ -34,8 +35,10 @@ const principalRoutes = {
                 {path: 'list', element: <StudentList />,
                     children: [
                         {path: 'view', element: <ViewStudent />},
+                        {path: 'detail', element: <ViewStudentDetail />}
                     ]
                 },
+                {path: 'detail', element: <ViewStudentDetail />},
                 {path: 'registration', element: <StudentRegistration />,
                     children: [
                         {path: 'batch', element: <BatchRegistration />},
