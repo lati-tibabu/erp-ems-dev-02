@@ -23,6 +23,7 @@ function TeacherDashboard() {
     const coursesPage = '/teacher/courses';
     const classesPage = '/teacher/classes';
     const studentsPage = '/teacher/students';
+    const assesmentsPage = '/teacher/assesments';
     const calendarPage = '/teacher/calendar';
     const attendancePage = '/teacher/attendance';
     const profilePage = '/teacher/profile';
@@ -35,6 +36,7 @@ function TeacherDashboard() {
     const onCoursesPage = currentLocation.startsWith(coursesPage);
     const onClassesPage = currentLocation.startsWith(classesPage);
     const onStudentsPage = currentLocation.startsWith(studentsPage);
+    const onAssesmentsPage = currentLocation.startsWith(assesmentsPage);
     const onCalendarPage = currentLocation.startsWith(calendarPage);
     const onAttendancePage = currentLocation.startsWith(attendancePage);
     const onProfilePage = currentLocation.startsWith(profilePage);
@@ -327,6 +329,7 @@ function TeacherDashboard() {
                 { linkTo: coursesPage, icon: 'fa-book', label: 'Courses', styleClassName: onCoursesPage && 'onPage' },
                 { linkTo: classesPage, icon: 'fa-school', label: 'Classes', styleClassName: onClassesPage && 'onPage' },
                 { linkTo: studentsPage, icon: 'fa-user-graduate', label: 'Students', styleClassName: onStudentsPage && 'onPage' },
+                { linkTo: assesmentsPage, icon: 'fa-file-lines', label: 'Assesments', styleClassName: onAssesmentsPage && 'onPage' },
                 { linkTo: calendarPage, icon: 'fa-calendar-alt', label: 'Calendar', styleClassName: onCalendarPage && 'onPage' },
                 { linkTo: attendancePage, icon: 'fa-check', label: 'Attendance', styleClassName: onAttendancePage && 'onPage' },
                 { linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage' },
