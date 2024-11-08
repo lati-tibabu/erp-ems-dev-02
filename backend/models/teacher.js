@@ -28,6 +28,7 @@ class Teacher extends Model {
             foreignKey: "teacher_id",
             otherKey: "course_id",
         });
+        Teacher.hasMany(models.Assesment, { foreignKey:'teacher_id' });
     }
 }
 Teacher.init({

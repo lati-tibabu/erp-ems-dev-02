@@ -22,6 +22,11 @@ class Student extends Model {
             foreignKey: "student_id",
             otherKey: "parent_id",
         });
+        Student.belongsToMany(models.Assesment, {
+            through: models.AssesmentStudent,
+            foreignKey: "student_id",
+            otherKey: "assesment_id",
+        })
     }
 }
 Student.init({

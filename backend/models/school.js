@@ -45,6 +45,8 @@ class School extends Model {
             otherKey: "course_id",
         });
 
+        School.hasMany(models.Assesment, { foreignKey: 'school_id' });
+
         // School.hasOne(models.schoolCodeTrack, { foreignKey: 'school_id' });
     }
 }
@@ -101,7 +103,7 @@ School.init({
     //     allowNull: false,
     // },
     school_code: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
         unique: true,
     },

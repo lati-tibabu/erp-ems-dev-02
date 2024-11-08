@@ -26,6 +26,8 @@ const classAssignRoutes = require("./routes/classAssignRoutes"); // Class Course
 const teacherAssignRoutes = require("./routes/teacherClassRoutes"); // Teacher Class Assign Routes
 const teacherCourseRoutes = require("./routes/teacherCourseRoutes");
 const userCredentialsRoutes = require("./routes/userCredentialsRoutes");
+const assesmentStudentRoutes = require("./routes/assesmentStudentRoutes");
+const assesmentRoutes = require("./routes/assesmentRouter");
 
 // const User = require('./models/user');
 
@@ -146,6 +148,15 @@ app.get('/app', (req, res) => {
             res.status(500).send("Error syncing Course model: " + error.message);
         }
     });
+
+    app.post("/syncAssesment", async(req, res)=> {
+        try{
+            await sequelize.models.Assesment.sync({alter: true});
+            res.json({message: "Assesment Model Synced"});
+        }catch(error){
+            res.status(500).send("Error syncing Assesment Model: " + error.message);
+        }
+    });
 }
 
 // Route middleware
@@ -170,6 +181,8 @@ app.get('/app', (req, res) => {
     app.use("/api/teacher-class", teacherAssignRoutes);
     app.use("/api/teacher-course", teacherCourseRoutes);
     app.use("/api/credentials", userCredentialsRoutes);
+    app.use("/api/assesment", assesmentRoutes);
+    app.use("/api/assesment-student", assesmentStudentRoutes);
 
 }
 

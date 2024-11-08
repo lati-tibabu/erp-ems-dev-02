@@ -42,6 +42,7 @@ const Assesment = () => {
                         <th className={`${table_border}`} style={table_border_style.no_side_border} >Assesment Name</th>
                         <th className={`${table_border}`} style={table_border_style.no_side_border} >Type</th>
                         <th className={`${table_border}`} style={table_border_style.no_side_border} >Class</th>
+                        <th className={`${table_border}`} style={table_border_style.no_side_border} >Course</th>
                         <th className={`${table_border}`} style={table_border_style.no_side_border} >Max Mark</th>
                         <th className={`${table_border}`} style={table_border_style.no_side_border} >Status</th>
                     </tr>
@@ -52,6 +53,7 @@ const Assesment = () => {
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Mid Term Exam</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Exam</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Class1</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Math</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >30</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Completed</td>
                     </tr>
@@ -60,6 +62,7 @@ const Assesment = () => {
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Final Term Exam</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Exam</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Class1</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Science</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >70</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Pending</td>
                     </tr>
@@ -68,6 +71,7 @@ const Assesment = () => {
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Quiz 1</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Quiz</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Class2</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >English</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >10</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Completed</td>
                     </tr>
@@ -76,6 +80,7 @@ const Assesment = () => {
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Assignment 1</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Assignment</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Class2</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >History</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >20</td>
                         <td className={`${table_border}`} style={table_border_style.no_side_border} >Pending</td>
                     </tr>

@@ -19,8 +19,8 @@ class Class extends Model {
             foreignKey: "class_id",
             otherKey: "course_id",
         });
-
         Class.hasMany(models.Student, { foreignKey: "class_id" });
+        Class.hasMany(models.Assesment, { foreignKey: "class_id" })
     }
 }
 
