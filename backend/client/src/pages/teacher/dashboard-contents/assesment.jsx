@@ -1,26 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 import { Heading2, Heading3, Label } from '../../../components/Typography'
 import { PrimaryButton } from '../../../components/buttons'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { InputField } from '../../../components/input_field'
 
 import Select from 'react-select';
 import ColumnWrapper from '../../../components/column_wrapper'
 
 const Assesment = () => {
-    const navigate = useNavigate();
+    const teacherData = JSON.parse(localStorage.getItem('data'));
+    const apiURL = import.meta.env.VITE_API_URL;
 
-    const handleAssesmentView = () => {
-        navigate('/teacher/assesments/view');
-        // alert('Assesment View');
+    const {token} = localStorage.getItem('jwt');
+    const header = {'authorization': `Bearer ${token}`};
+    
+    const [assesments, setAssesments ] = useState([]);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    
+
+    const handleAssesmentView = (assesment) => {
+        navigate('/teacher/assesments/view', {state: {assesment}});
     }
 
     const handleAssesmentAdd = () => {
         navigate('/teacher/assesments/add')
     }
+
+
+    const fetchAssesments = async (teacherId) => {
+        try{
+            const response = await fetch(`${apiURL}/api/assesment/load_t/${teacherId}`, {
+                method: 'GET',
+                headers: header,
+            });
+            const data = await response.json();
+            setAssesments(data);
+        }catch(error){
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAssesments(teacherData.teacher.teacher_id);
+    }, []);
+    // fetchAssesments(teacherData.teacher.teacher_id);
+    
+    // console.log(assesments);
 
   return (
     <div>
@@ -33,9 +63,8 @@ const Assesment = () => {
             Add New Assesment            
         </PrimaryButton>
 
-        <div className='flex-row'>
-
-            <table style={{borderCollapse: 'collapse'}} className='table_styles p-10 back-color-white m-20'>
+        <div className='flex-row align-start justify-between p-10'>
+            <table style={{borderCollapse: 'collapse'}} className='table_styles p-10 back-color-white w-90p m-20'>
                 <thead>
                     <tr className='back-color-blue80 color-white'>
                         <th className={`${table_border}`} style={table_border_style.no_side_border}>No</th>
@@ -48,116 +77,21 @@ const Assesment = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style={{cursor: 'pointer'}} onClick={handleAssesmentView} className='table_hover'>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >1</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Mid Term Exam</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Exam</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Class1</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Math</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >30</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Completed</td>
+                    {assesments.map((assesment, i) =>(
+                    <tr style={{cursor: 'pointer'}} onClick={() => handleAssesmentView(assesment)} className='table_hover'>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{i+1}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_name}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_type}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{`Grade ${assesment.Class.class_grade} Section ${assesment.Class.class_name}`}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{`${assesment.Course.course_name} Grade ${assesment.Course.course_grade}`}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.max_mark}</td>
+                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.status}</td>
                     </tr>
-                    <tr style={{cursor: 'pointer'}} onClick={handleAssesmentView} className='table_hover'>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >2</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Final Term Exam</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Exam</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Class1</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Science</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >70</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Pending</td>
-                    </tr>
-                    <tr style={{cursor: 'pointer'}} onClick={handleAssesmentView} className='table_hover'>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >3</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Quiz 1</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Quiz</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Class2</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >English</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >10</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Completed</td>
-                    </tr>
-                    <tr style={{cursor: 'pointer'}} onClick={handleAssesmentView} className='table_hover'>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >4</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Assignment 1</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Assignment</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Class2</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >History</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >20</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >Pending</td>
-                    </tr>
+                    ))}
                 </tbody>
             </table>
             <div className='p-20 '>
                 <Outlet />
-
-                {/* <div 
-                    style={{position: 'absolute', top:'0', left: '0', backdropFilter:'blur(3px)', background: '#4d4d4da4'}} 
-                    className='w-100p h-100p p-10 flex-row justify-center align-center'
-                    >
-                    <div 
-                        className='back-color-white w-30p p-10 br-10px'
-                        style={{minHeight: '100px'}}
-                    >
-                        <div className="w-100p flex-row justify-end pr-10">
-                            <FontAwesomeIcon 
-                                icon='fa-solid fa-xmark' 
-                                style={{cursor: 'pointer'}}
-                                onClick={handleCloseButton}
-                                className="p-5 w-20px h-20px back-color-red100 br-20px color-white"
-                                />
-                        </div>
-                        <div className='w-100p flex-row justify-center'>
-                            <Heading3 text='Add New Assesment' />
-                        </div>
-                        <form action="">
-                            <InputField 
-                                labelName='Assesment Name'
-                                placeholder="Eg. Midterm Exam" 
-                                name="assesment_name" 
-                                type="text" 
-                                // value={userData.email} 
-                                // onChange={handleUserChange}
-                            />
-                            <ColumnWrapper className='bw-none'>
-                                <Label text='Assesment Type' />
-                                <Select 
-                                    placeholder='Select Assesment type'
-                                    options={
-                                        [
-                                            {value: 'Exam', label: 'Exam'},
-                                            {value: 'Quiz', label: 'Quiz'},
-                                            {value: 'Assignment', label: 'Assignment'},
-                                            {value: 'Project', label: 'Project'}
-                                        ]
-                                    }
-                                />
-                            </ColumnWrapper>
-
-                            <ColumnWrapper className='bw-none'>
-                                <Label text='Class' />
-                                <Select 
-                                    placeholder='Select Class'
-                                    options={[
-                                        {value: 'Class1', label: 'Class1'},
-                                        {value: 'Class2', label: 'Class2'},
-                                        {value: 'Class3', label: 'Class3'},
-                                        {value: 'Class4', label: 'Class4'}
-                                    ]}
-                                />
-                            </ColumnWrapper>
-
-                            <InputField 
-                                labelName='Maximum Mark'
-                                placeholder='Eg. 20'
-                                name='max_mark'
-                                type='number'
-                            />
-                            <PrimaryButton>
-                                Add
-                            </PrimaryButton>
-                        </form>
-                    </div>
-                </div> */}
-
             </div>
 
         </div>

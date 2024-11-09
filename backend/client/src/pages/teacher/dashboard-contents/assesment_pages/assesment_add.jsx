@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select';
 
@@ -7,14 +7,120 @@ import { PrimaryButton } from '../../../../components/buttons'
 import { InputField } from '../../../../components/input_field'
 import ColumnWrapper from '../../../../components/column_wrapper';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AssesmentAdd = () => {
-    
-    const navigate = useNavigate();
+    const teacherData = JSON.parse(localStorage.getItem('data'));
+    const apiURL = import.meta.env.VITE_API_URL;
 
+    const {token} = localStorage.getItem('jwt');
+    const header = {'authorization': `Bearer ${token}`};
+    const [teacherClass, setTeacherClass] = useState([]);
+    const [teacherCourse, setTeacherCourse] = useState([]);
+    const [classCourse, setClassCourse] = useState([]);
+    const [assesments, setAssesments ] = useState([]);
+
+    const [course, setCourse] = useState([]);
+
+
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState({});
+
+    useEffect(()=>{
+        setUserData({...userData, school_id:teacherData.school.school_id, teacher_id: teacherData.teacher.teacher_id})
+    }, []);
+
+    const fetchTeacherCourse = async (teacherId) => {
+        try{
+            const response = await fetch(`${apiURL}/api/teacher-course/load_course/${teacherId}/courses`, {
+                method: 'GET',
+                headers: header
+            });
+            const data = await response.json();
+            setTeacherCourse(data);
+        }catch(error){
+            console.error(error);
+        }
+    }
+    
+    useEffect(() => {
+        fetchTeacherCourse(teacherData.teacher.teacher_id);
+    }, []);
+
+    const fetchClassCourse = async (classId) => {
+        try {
+            const response = await fetch(`${apiURL}/api/assign_course/${classId}/courses`, {
+                method: 'GET',
+                headers: header
+            });
+            const data = await response.json();
+            setClassCourse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
+    useEffect(()=> {
+        fetchClassCourse(userData.class_id);
+    }, [userData.class_id]);
+    
+    const fetchClasses = async (teacherId) => {
+        try{
+            const response = await fetch(`${apiURL}/api/teacher-class/load_class/${teacherId}/classes`, {
+                method: 'GET',
+                headers: header
+            });
+            const data = await response.json();
+            setTeacherClass(data);
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchClasses(teacherData.teacher.teacher_id);
+    },[teacherCourse]);
+
+    useEffect(() => {
+        if (classCourse.length > 0) {
+            const matchingCourses = classCourse.filter(classCourseItem =>
+                teacherCourse.some(teacherCourseItem => teacherCourseItem.course_id === classCourseItem.course_id)
+            );
+            setCourse(matchingCourses);
+        }
+    }, [classCourse, teacherCourse]);
+    
+    console.log("Class Courses: ", classCourse);
+    console.log("Teacher Courses: ", teacherCourse);
+    console.log("Course of class - teacher: ", course);
+    
+    // API endpoint to add assesment to the database
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(userData);
+        
+        try {
+            const result = await axios.post(`${apiURL}/api/assesment/create`, userData, {
+                headers: header
+            });
+            // const response = await result.json();
+            console.log(result);
+
+            if (result.status === 201) {
+                alert('Assesment added successfully')
+            }
+            navigate('/teacher/assesments/')
+        } catch (error) {
+            console.error(error);
+        }
+        
+        // navigate('/teacher/assesments/')
+    }
+    
     const handleCloseButton = () => {
         navigate('/teacher/assesments/')
     }
+
     return (
         <div 
             style={{position: 'absolute', top:'0', left: '0', backdropFilter:'blur(3px)', background: '#4d4d4da4'}} 
@@ -35,19 +141,20 @@ const AssesmentAdd = () => {
                 <div className='w-100p flex-row justify-center'>
                     <Heading3 text='Add New Assesment' />
                 </div>
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <InputField 
                         labelName='Assesment Name'
                         placeholder="Eg. Midterm Exam" 
                         name="assesment_name" 
                         type="text" 
-                        // value={userData.email} 
-                        // onChange={handleUserChange}
+                        value={userData.assesment_name} 
+                        onChange={e => setUserData({...userData, assesment_name: e.target.value})}
                     />
                     <ColumnWrapper className='bw-none'>
                         <Label text='Assesment Type' />
                         <Select 
                             placeholder='Select Assesment type'
+                            // value={userData.assesment_type}
                             options={
                                 [
                                     {value: 'Exam', label: 'Exam'},
@@ -55,7 +162,9 @@ const AssesmentAdd = () => {
                                     {value: 'Assignment', label: 'Assignment'},
                                     {value: 'Project', label: 'Project'}
                                 ]
+
                             }
+                            onChange={e => setUserData({...userData, assesment_type: e.value})}
                         />
                     </ColumnWrapper>
 
@@ -63,12 +172,19 @@ const AssesmentAdd = () => {
                         <Label text='Class' />
                         <Select 
                             placeholder='Select Class'
-                            options={[
-                                {value: 'Class1', label: 'Class1'},
-                                {value: 'Class2', label: 'Class2'},
-                                {value: 'Class3', label: 'Class3'},
-                                {value: 'Class4', label: 'Class4'}
-                            ]}
+                            // value={userData.class}
+                            options={teacherClass.map(item => ({value: item.class_id, label: `Grade ${item.class_grade} Section ${item.class_name}`}))}
+                            onChange= {e => setUserData({...userData, class_id: e.value})}
+                        />
+                    </ColumnWrapper>
+
+                    <ColumnWrapper className='bw-none'>
+                        <Label text='Course' />
+                        <Select 
+                            placeholder='Select Course'
+                            // value={userData.class}
+                            options={course.map(item => ({value: item.course_id, label: `${item.course_name} Grade ${item.course_grade}`}))}
+                            onChange= {e => setUserData({...userData, course_id: e.value})}
                         />
                     </ColumnWrapper>
 
@@ -77,7 +193,24 @@ const AssesmentAdd = () => {
                         placeholder='Eg. 20'
                         name='max_mark'
                         type='number'
+                        value={userData.max_mark}
+                        onChange={e => setUserData({...userData, max_mark: e.target.value})}
                     />
+                     <ColumnWrapper className='bw-none'>
+                        <Label text='Status' />
+                        <Select 
+                            placeholder='Select Status'
+                            // value={userData.class}
+                            options={[
+                                {value: 'ongoing', label: 'Ongoing'},
+                                {value: 'completed', label: 'Completed'},
+                                {value: 'active', label: 'Active'},
+                                {value: 'inactive', label: 'Inactive'}
+                            ]}
+                            onChange= {e => setUserData({...userData, status: e.value})}
+                        />
+                    </ColumnWrapper>
+
                     <PrimaryButton>
                         Add
                     </PrimaryButton>
