@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
-    font-family: "Open Sans", sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
     --blue100: rgba(0, 0, 255, 1);
     --blue90: rgba(0, 0, 128, 1);
     --blue80: rgba(65, 105, 225, 1);
