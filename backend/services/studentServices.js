@@ -156,6 +156,16 @@ const getAllStudentsByClass = async(schoolID, classID) => {
     });
 };
 
+const getAllStudentsIdByClass = async(schoolID, classID) => {
+    return await Student.findAll({
+        where: {
+            school_id: schoolID,
+            class_id: classID
+        },
+        attributes: ['student_id']
+    });
+}
+
 
 // const getAllStudentsByGrade = async(schoolID, grade) => {
 //     return await Student.findAll({
@@ -408,6 +418,7 @@ module.exports = {
     getAllStudentsBySchool,
     getAllStudentsByGender,
     getAllStudentsByClass,
+    getAllStudentsIdByClass,
     getAllStudentsByGrade,
     getStudent,
     searchStudents,

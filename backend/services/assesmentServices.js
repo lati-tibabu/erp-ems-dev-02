@@ -1,4 +1,6 @@
 const Assesment = require("../models/assesment");
+const Class = require("../models/class");
+const Course = require("../models/course");
 
 const createAssesment = async (assesmentInfo) => {
     return await Assesment.create(assesmentInfo);
@@ -13,7 +15,25 @@ const getAssesment = async (assesmentID) => {
 };
 
 const getAssesmentsByTeacherID = async (teacherID) => {
-    return await Assesment.findAll( { where: { teacher_id: teacherID } } );
+    return await Assesment.findAll( 
+        { 
+            where: { 
+                teacher_id: teacherID 
+            },
+            include: [
+                {
+                    model: Class,
+                    as: 'Class',
+                    attributes: ['class_grade', 'class_name']
+                },
+                {
+                    model: Course,
+                    as: 'Course',
+                    attributes: ['course_name', 'course_grade']
+                }
+            ]
+        }
+    );
 };
 
 const getAssesmentsByStudentID = async (studentID) => {

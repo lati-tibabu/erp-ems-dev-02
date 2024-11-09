@@ -1,5 +1,6 @@
 const Teacher = require("../models/teacher");
 const Course = require("../models/course");
+const Class = require("../models/class");
 
 const assignTeacherToCourse = async(teacherId, courseId) => {
     const teacherObj = await Teacher.findByPk(teacherId);
@@ -38,6 +39,18 @@ const getAllCoursesForTeacher = async(teacherId) => {
     return teacherObj.Courses;
 };
 
+const getAllCourseForTeacherByClass = async(teacherId, classId) => {
+    const teacherObj = await Teacher.findByPk(teacherId, {
+        include: Course.class_id(classId)
+    });
+
+    if (!teacherObj) {
+        throw new Error("Teacher not found");
+    }
+
+    return teacherObj.Courses;
+}
+
 const removeCourseFromTeacher = async(teacherId, courseId) => {
     const teacherObj = await Teacher.findByPk(teacherId);
     const courseObj = await Course.findByPk(courseId);
@@ -54,5 +67,6 @@ module.exports = {
     assignTeacherToCourse,
     getAllCoursesForTeacher,
     getAllTeachersForCourse,
-    removeCourseFromTeacher
+    removeCourseFromTeacher,
+    getAllCourseForTeacherByClass
 }

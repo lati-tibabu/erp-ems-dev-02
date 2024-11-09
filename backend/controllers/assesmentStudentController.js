@@ -4,8 +4,14 @@ const assesmentStudentServices = require('../services/assesmentStudentServices')
 const assignAssesmentToStudent = async(req, res) => {
     try{
         const { assesment_id, student_id } = req.body;
-        const result = await assesmentStudentServices.assignAssesmentToStudent(assesment_id, student_id);
-        res.status(201).json(result);
+
+        if(Array.isArray(student_id)){
+            const result = await assesmentStudentServices.assignAssesmentToStudents(assesment_id, student_id);
+            res.status(201).json(result);
+        }else{
+            const result = await assesmentStudentServices.assignAssesmentToStudent(assesment_id, student_id);
+            res.status(201).json(result);
+        }
     }catch(error){
         res.status(500).json({message: "Error Assigningig Assesment to Student: "+error});
     }

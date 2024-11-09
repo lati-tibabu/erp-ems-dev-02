@@ -65,6 +65,18 @@ const getAllStudentsByClass = async(req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
+
+const getAllStudentsIdByClass = async(req, res) => {
+    try{
+        const studentsID = await studentServices.getAllStudentsIdByClass(
+            req.params.school_id,
+            req.params.class_id
+        );
+        res.json(studentsID);
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
 }
 
 const getAllStudentsByGrade = async(req, res) => {
@@ -167,6 +179,7 @@ module.exports = {
     getAllStudentsBySchool,
     getAllStudentsByGender,
     getAllStudentsByClass,
+    getAllStudentsIdByClass,
     getAllStudentsByGrade,
     getStudent,
     getStudentByUserId,

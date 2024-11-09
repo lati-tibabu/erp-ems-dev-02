@@ -30,6 +30,16 @@ const getAllCoursesForTeacher = async(req, res) => {
     }
 };
 
+const getAllCourseForTeacherByClass = async(req, res) => {
+    try {
+        const {teacher_id, class_id} = req.params;
+        const courses = await teacherCourseServicel.getAllCourseForTeacherByClass(teacher_id, class_id);
+        res.json(courses);
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
 const removeCourseFromTeacher = async(req, res) => {
     try {
         const { teacher_id, course_id } = req.body;
@@ -44,5 +54,6 @@ module.exports = {
     assignTeacherToCourse,
     getAllTeachersForCourse,
     getAllCoursesForTeacher,
-    removeCourseFromTeacher
+    removeCourseFromTeacher,
+    getAllCourseForTeacherByClass
 }

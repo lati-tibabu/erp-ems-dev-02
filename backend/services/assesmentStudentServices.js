@@ -4,6 +4,7 @@ const Student = require("../models/student");
 const AssesmentStudent = require("../models/assesment_student");
 
 const assignAssesmentToStudent = async(assesmentId, studentId) => {
+
     const assesmentObj = await Assesment.findByPk(assesmentId);
     const studentObj = await Student.findByPk(studentId);
 
@@ -15,6 +16,32 @@ const assignAssesmentToStudent = async(assesmentId, studentId) => {
     return {
         message: "Assesment succesfully assigned to student"
     };
+};
+
+const assignAssesmentToStudents = async (assesmentId, studentsId) => {
+  const assesmentObj = await Assesment.findByPk(assesmentId);
+  if (!assesmentObj) {
+    throw new Error("Assesment not found");
+  }
+
+  // Use map to create an array of promises, each resolving to a message
+  const assignmentResults = await Promise.all(
+    studentsId.map(async (studentId) => {
+      try {
+        const studentObj = await Student.findByPk(studentId.student_id);
+        if (!studentObj) {
+          throw new Error(`Student with ID ${studentId.student_id} not found`);
+        }
+        await studentObj.addAssesment(assesmentObj);
+        return `Assesment successfully assigned to student with ID ${studentId.student_id}`;
+      } catch (error) {
+        return `Error assigning assessment to student with ID ${studentId.student_id}: ${error.message}`;
+      }
+    })
+  );
+
+  // Return the array of messages
+  return assignmentResults;
 };
 
 const getAllAssesmentForStudent = async(studentId) => {
@@ -50,6 +77,7 @@ const addMarkForStudent = async(assesmentId, studentId, markInfo) => {
 
 module.exports = {
     assignAssesmentToStudent,
+    assignAssesmentToStudents,
     getAllAssesmentForStudent,
     removeAssesmentFromStudent,
     addMarkForStudent
