@@ -9,6 +9,7 @@ router.get("/load_data/:student_id", studentController.getStudentData);
 router.get("/load_s/:school_id", studentController.getAllStudentsBySchool);
 router.get("/load_g/:school_id/:gender", studentController.getAllStudentsByGender);
 router.get("/load_c/:school_id/:class_id", studentController.getAllStudentsByClass);
+router.get("/loadid_c/:school_id/:class_id", studentController.getAllStudentsIdByClass);
 router.get("/load_grade/:school_id/:grade_level", studentController.getAllStudentsByGrade);
 router.get("/load/:student_id", studentController.getStudent);
 router.get("/loadu/:user_id", studentController.getStudentByUserId);
