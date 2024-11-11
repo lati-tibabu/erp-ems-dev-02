@@ -1,5 +1,5 @@
 const sequelize = require("../config/database");
-const {DataTypes, Model} = require("sequelize");
+const {DataTypes, ENUM, Model} = require("sequelize");
 
 class AssesmentStudent extends Model {
   /**
@@ -26,9 +26,9 @@ AssesmentStudent.init({
     defaultValue: 0
   },
   status: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM('not_filled', 'filled'),
     allowNull: false,
-    defaultValue: 'on_going'
+    defaultValue: 'not_filled'
   }
 }, {
   sequelize,

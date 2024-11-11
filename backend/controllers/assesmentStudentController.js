@@ -27,6 +27,16 @@ const getAllAssesmentForStudent = async(req, res) => {
     }
 };
 
+const getAllAssesmentForStudentByTeacher = async(req, res) => {
+    try{
+        const {student_id, teacher_id} = req.params;
+        const assesments = await assesmentStudentServices.getAllAssesmentForStudentByTeacher(student_id, teacher_id);
+        res.json(assesments);
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+}
+
 const removeAssesmentFromStudent = async(req, res) => {
     try {
         const { assesment_id, student_id } = req.body;
@@ -80,6 +90,7 @@ const addMarkForStudent = async(req,res)=>{
 module.exports = {
     assignAssesmentToStudent,
     getAllAssesmentForStudent,
+    getAllAssesmentForStudentByTeacher,
     removeAssesmentFromStudent,
     addMarkForStudent
 }

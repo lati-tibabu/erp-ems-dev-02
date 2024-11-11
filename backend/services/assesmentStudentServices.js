@@ -46,7 +46,8 @@ const assignAssesmentToStudents = async (assesmentId, studentsId) => {
 
 const getAllAssesmentForStudent = async(studentId) => {
     const studentObj = await Student.findByPk(studentId, {
-        include: Assesment
+        include: Assesment 
+        // iclude the assesment with specific teacher id
     });
 
     if (!studentObj) {
@@ -54,6 +55,26 @@ const getAllAssesmentForStudent = async(studentId) => {
     }
     return studentObj.Assesments;
 };
+
+const getAllAssesmentForStudentByTeacher = async(studentId, teacherId) => {
+  const studentObj = await Student.findByPk(studentId, {
+      include: [
+        {
+          model: Assesment,
+          where: {
+            teacher_id: teacherId
+          }
+        }
+      ]
+      // iclude the assesment with specific teacher id
+  });
+
+  if (!studentObj) {
+      throw new Error("Student not found");
+  }
+  return studentObj.Assesments;
+};
+
 
 const removeAssesmentFromStudent = async(assesmentId, studentId) => {
     const assesmentObj = await Assesment.findByPk(assesmentId);
@@ -79,6 +100,7 @@ module.exports = {
     assignAssesmentToStudent,
     assignAssesmentToStudents,
     getAllAssesmentForStudent,
+    getAllAssesmentForStudentByTeacher,
     removeAssesmentFromStudent,
     addMarkForStudent
 };

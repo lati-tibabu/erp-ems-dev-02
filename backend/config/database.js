@@ -7,14 +7,26 @@ const env = "development";
 
 const dbConfig = config[env];
 
+// const sequelize = new Sequelize(
+//     dbConfig.database,
+//     dbConfig.username,
+//     dbConfig.password, {
+//         host: dbConfig.host,
+//         dialect: dbConfig.dialect,
+//     },
+// );
+
 const sequelize = new Sequelize(
     dbConfig.database,
     dbConfig.username,
-    dbConfig.password, {
-        host: dbConfig.host,
-        dialect: dbConfig.dialect,
-    },
-);
+    dbConfig.password,
+    {
+      host: dbConfig.host,
+      dialect: dbConfig.dialect,
+      port: dbConfig?.port,
+    }
+  );
+  
 
 // const sequelize = new Sequelize(
 //   process.env.DB_DATABASE,

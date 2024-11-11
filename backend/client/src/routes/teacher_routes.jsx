@@ -13,6 +13,7 @@ import Profile from "../pages/teacher/dashboard-contents/profile";
 import Help from "../pages/teacher/dashboard-contents/help";
 import AssesmentView from "../pages/teacher/dashboard-contents/assesment_pages/assesment_view";
 import AssesmentAdd from "../pages/teacher/dashboard-contents/assesment_pages/assesment_add";
+import ViewStudent from "../pages/teacher/dashboard-contents/students_pages/view-student";
 
 const teacherRoutes = {
     path: '/teacher',
@@ -21,7 +22,11 @@ const teacherRoutes = {
         {path: 'home', element: <Home/>},
         {path: 'courses', element: <Courses/>},
         {path: 'classes', element: <Classes/>},
-        {path: 'students', element: <Students/>},
+        {path: 'students', element: <Students/>, 
+            children: [
+                {path: 'view', element: <ViewStudent/>},
+            ]
+        },
         {path: 'assesments', element: <Assesments/>,
             children: [
                 {path: 'view', element: <AssesmentView/>},
