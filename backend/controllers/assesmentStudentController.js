@@ -26,7 +26,15 @@ const getAllAssesmentForStudent = async(req, res) => {
         res.status(500).json({message: error.message});
     }
 };
-
+const getAllAssesmentForStudentByCourse = async(req, res) => {
+    try {
+        const {student_id, course_id} = req.params;
+        const assesments = await assesmentStudentServices.getAllAssesmentForStudentByCourse(student_id, course_id);
+        res.json(assesments);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
 const getAllAssesmentForStudentByTeacher = async(req, res) => {
     try{
         const {student_id, teacher_id} = req.params;
@@ -90,6 +98,7 @@ const addMarkForStudent = async(req,res)=>{
 module.exports = {
     assignAssesmentToStudent,
     getAllAssesmentForStudent,
+    getAllAssesmentForStudentByCourse,
     getAllAssesmentForStudentByTeacher,
     removeAssesmentFromStudent,
     addMarkForStudent
