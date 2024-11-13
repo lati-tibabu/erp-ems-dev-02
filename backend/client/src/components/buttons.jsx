@@ -91,7 +91,7 @@ export const DisabledButton = (props) => {
 
 export const DangerButton = (props) => {
     return(
-        <button className="danger"
+        <button className={"danger "+props.className}
             type={props.type}
             disabled={props.disabled}
             name={props.name}

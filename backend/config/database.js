@@ -3,7 +3,7 @@ const config = require("../config/config.json");
 require("dotenv").config();
 
 // const env = "development";
-const env = "development";
+const env = "development2";
 
 const dbConfig = config[env];
 
