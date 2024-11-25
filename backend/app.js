@@ -70,7 +70,7 @@ app.get('/app', (req, res) => {
 
     app.post("/syncDB", async(req, res) => {
         try {
-            await sequelize.sync({ force: true });
+            await sequelize.sync({ alter: true });
             res.json({ message: "Database Synced" });
         } catch (error) {
             res.status(500).send("Error syncing database: " + error.message);
