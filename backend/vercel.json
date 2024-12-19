@@ -7,9 +7,6 @@
     ],
     "env": {
       "NODE_ENV": "production"
-    },
-    "scripts": {
-      "start": "npm run serverStart"
     }
   }
   
