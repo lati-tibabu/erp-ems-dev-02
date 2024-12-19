@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   adminRoutes,
   principalRoutes,
   teacherRoutes,
-  studentRoutes,
+  studentRoutes, //for student routes
 ]);
 
 export default router;
