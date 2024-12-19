@@ -11,7 +11,7 @@ const router = createBrowserRouter([
   authRoutes,
   adminRoutes,
   principalRoutes,
-  teacherRoutes,
+  teacherRoutes, //for teacher routes
   studentRoutes, //for student routes
 ]);
 
