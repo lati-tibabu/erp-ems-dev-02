@@ -12,7 +12,7 @@ const assignAssesmentToStudent = async(assesmentId, studentId) => {
         throw new Error ("Assesment or Student not found");
     }
 
-    await studentObj.addAssesment(assesmentObj);
+    await studentObj.addAssesment(assesmentObj);//where do the addAssesment comes from
     return {
         message: "Assesment succesfully assigned to student"
     };
