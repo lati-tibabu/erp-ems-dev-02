@@ -2,8 +2,7 @@ const { Sequelize } = require("sequelize");
 const config = require("../config/config.json");
 require("dotenv").config();
 
-const env = "development2";  // Use 'development2' for your desired environment
-
+const env = "development2";  // Use 'development2' for remote connection
 const dbConfig = config[env];
 
 const sequelize = new Sequelize(
