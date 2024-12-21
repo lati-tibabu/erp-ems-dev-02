@@ -1,24 +1,21 @@
 const { Sequelize } = require("sequelize");
-const config = require("../config/config.json");
 require("dotenv").config();
 
-const env = "development2";  // Use 'development2' for remote connection
-const dbConfig = config[env];
-
 const sequelize = new Sequelize(
-  dbConfig.database,
-  dbConfig.username,
-  dbConfig.password, {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
-    port: dbConfig.port,
-    ssl: dbConfig.ssl, // Ensure SSL is true as per your config
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+    port: process.env.DB_PORT,
+    ssl: process.env.DB_SSL === "true", // Convert string to boolean
     dialectOptions: {
-      ssl: dbConfig.ssl ? {
-        require: true, // This ensures SSL is used
-        rejectUnauthorized: false, // Use this if you want to ignore certificate validation (for development)
+      ssl: process.env.DB_SSL === "true" ? {
+        require: true,
+        rejectUnauthorized: false, // Ignore certificate validation for development
       } : undefined,
-    }
+    },
   }
 );
 

@@ -1,32 +1,32 @@
 {
-    "development": {
-        "username": "lati",
-        "password": "password",
-        "database": "erp_ems_dev_db",
-        "host": "localhost",
-        "dialect": "mysql"
-    },
-    "hosted_development": {
-        "username": "lati3",
-        "password": "Lati@5866",
-        "database": "erp_ems_dev_db",
-        "host": "10.180.50.214",
-        "dialect": "mysql"
-    },
-    "production": {
-        "username": "root",
-        "password": null,
-        "database": "database_production",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
-    },
-    "development2": {
-        "username": "avnadmin",
-        "password": "AVNS_gal-L1qg8HXAQ2Fru6a",
-        "database": "taskmate_0001",
-        "host": "mysql-3acb8c16-latitibabu2018-c643.c.aivencloud.com",
-        "port": 20345,
-        "dialect": "mysql",
-        "ssl": true
-    }
+  "development": {
+    "username": "YOUR_LOCAL_USERNAME",
+    "password": "YOUR_LOCAL_PASSWORD",
+    "database": "YOUR_LOCAL_DATABASE",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "hosted_development": {
+    "username": "YOUR_HOSTED_USERNAME",
+    "password": "YOUR_HOSTED_PASSWORD",
+    "database": "YOUR_HOSTED_DATABASE",
+    "host": "YOUR_HOSTED_HOST",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "YOUR_PRODUCTION_USERNAME",
+    "password": "YOUR_PRODUCTION_PASSWORD",
+    "database": "YOUR_PRODUCTION_DATABASE",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "development2": {
+    "username": "YOUR_REMOTE_USERNAME",
+    "password": "YOUR_REMOTE_PASSWORD",
+    "database": "YOUR_REMOTE_DATABASE",
+    "host": "YOUR_REMOTE_HOST",
+    "port": "YOUR_REMOTE_PORT",
+    "dialect": "mysql",
+    "ssl": true
+  }
 }
