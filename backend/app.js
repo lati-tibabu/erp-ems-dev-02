@@ -187,7 +187,7 @@ app.get('/app', (req, res) => {
 }
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("SchoolStream!");
 });
 
 app.get('/protected-route', authToken, (req, res) => {
