@@ -7,15 +7,18 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: "postgres",
     port: process.env.DB_PORT,
-    ssl: process.env.DB_SSL === "true", // Convert string to boolean
-    dialectOptions: {
-      ssl: process.env.DB_SSL === "true" ? {
-        require: true,
-        rejectUnauthorized: false, // Ignore certificate validation for development
-      } : undefined,
-    },
+    // ssl: process.env.DB_SSL === "true", // Convert string to boolean
+    // dialectOptions: {
+    //   ssl:
+    //     process.env.DB_SSL === "true"
+    //       ? {
+    //           require: true,
+    //           rejectUnauthorized: false, // Ignore certificate validation for development
+    //         }
+    //       : undefined,
+    // },
   }
 );
 

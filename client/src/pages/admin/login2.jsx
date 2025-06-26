@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../../components/buttons";
 import { CenterColumn } from "../../components/center";
@@ -55,10 +54,6 @@ function Login() {
       if (response.status === 200) {
         localStorage.setItem("jwt", token);
         localStorage.setItem("jwt_expiration", Date.now() + 1000 * 60 * 60);
-
-        // console.log(token);
-        // console.log(response.data);
-        // console.log(response.data.user.role);
 
         const userRole = response.data.user.role;
 
@@ -117,8 +112,10 @@ function Login() {
   return roleCorrect ? (
     <div>
       <RowWrapper style={styles.outside_wrapper}>
-        {/* <ColumnWrapper style={styles.column_with_shadow} className=""> */}
-        <ColumnWrapper className="p-10 br-11p bc-blue10 back-color-gray10-10 shadow-md">
+        <ColumnWrapper
+          style={styles.column_with_shadow}
+          className="column_with_shadow"
+        >
           <CenterColumn
             style={{
               width: "70%",
@@ -259,7 +256,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     border: "none",
-    // background: "rgba(0,190,212,0.02)",
+    background: "rgba(0,190,212,0.02)",
   },
 
   heading1_style: {
