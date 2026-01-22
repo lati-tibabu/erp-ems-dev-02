@@ -10,6 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
+import Skeleton from "../../../components/skeleton";
 
 library.add(fas);
 
@@ -21,6 +22,7 @@ function Classes() {
 
     const [userDataInfo, setUserDataInfo] = useState(() => JSON.parse(localStorage.getItem('data')));
     const [classes, setClasses] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [teachers, setTeachers] = useState([]);
     const [teachersData, setTeachersData] = useState([]);
     const [classReload, setClassReload] = useState(false);
@@ -45,12 +47,15 @@ function Classes() {
     };
 
     const getClasses = async (school_id) => {
+        setLoading(true);
         try {
             const classes = await fetch(`${apiURL}/api/class/load_s/${school_id}`);
             const data = await classes.json();
             setClasses(data);
         } catch (err) {
             console.error('Error fetching class: ', err);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -303,7 +308,13 @@ function Classes() {
                         <Heading6 text={`Classes in ${userDataInfo.school.name}`} />
                         <ColumnWrapper className='bw-3px h-250px gap-10 p-20 br-20px' style={{flexWrap: 'wrap', overflowX: 'scroll'}}>
                             {
-                                classes.length > 0 ?
+                                loading ? (
+                                    Array.from({ length: 6 }).map((_, index) => (
+                                        <div key={index} className="flex-row gap-10 p-10 br-5px back-color-gray100-10" style={{ width: '200px' }}>
+                                            <Skeleton width="100%" height="40px" />
+                                        </div>
+                                    ))
+                                ) : classes.length > 0 ?
                                     classes.map((c, index) => (
                                         <SecondaryButton
                                             className='flex-row bw-none gap-10'

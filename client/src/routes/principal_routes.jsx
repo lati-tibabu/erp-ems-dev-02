@@ -54,12 +54,6 @@ const principalRoutes = {
         },
         {path: 'teachers', element: <Teachers/>},
         {path: 'classes', element: <Classes/>},
-        {path: 'departments', element: <Departments/>},
-        {path: 'clubs', element: <Clubs/>},
-        {path: 'calendar', element: <Calendar/>},
-        {path: 'attendance', element: <Attendance/>},
-        {path: 'profile', element: <Profile/>},
-        {path: 'help', element: <Help/>},
     ]
 }
 

@@ -4,6 +4,7 @@ import { SecondaryButton } from "../../../components/buttons";
 import { Outlet, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import Skeleton from "../../../components/skeleton";
 
 function Students() {
   const apiURL = import.meta.env.VITE_API_URL;
@@ -24,6 +25,7 @@ function Students() {
   const [studentsData, setStudentsData] = useState([]);
   const [selectedClassId, setSelectedClassId] = useState('');
   const [selectedClassName, setSelectedClassName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getClasses = async (teacherId) => {
     try {
@@ -43,6 +45,7 @@ function Students() {
   }, [teacherId]);
 
   const getStudent = async (classId, schoolId) => {
+    setLoading(true);
     try {
       const response = await fetch(`${apiURL}/api/student/load_c/${schoolId}/${classId}`, {
         method: "GET",
@@ -52,21 +55,28 @@ function Students() {
       setStudents(data);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
   const getStudentsData = async (students) => {
-    const dataWithRelations = await Promise.all(
-      students.map(async (student) => {
-        const userResponse = await fetch(`${apiURL}/api/user/load/${student.user_id}`, {
-          method: 'GET',
-          headers: header,
-        });
-        const userData = await userResponse.json();
-        return { ...student, user: userData };
-      })
-    );
-    setStudentsData(dataWithRelations);
+    try {
+      const dataWithRelations = await Promise.all(
+        students.map(async (student) => {
+          const userResponse = await fetch(`${apiURL}/api/user/load/${student.user_id}`, {
+            method: 'GET',
+            headers: header,
+          });
+          const userData = await userResponse.json();
+          return { ...student, user: userData };
+        })
+      );
+      setStudentsData(dataWithRelations);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -138,7 +148,45 @@ function Students() {
         </div>
         {selectedClassId ? (
           <div>
-            {students.length > 0 ? (
+            {loading ? (
+              <div className="list-container flex-row gap-20 align-start">
+                <table
+                  style={{
+                    borderCollapse: "collapse",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                  }}
+                  className="w-80p"
+                >
+                  <thead>
+                    <tr
+                      style={{
+                        backgroundColor: "#007bff",
+                        color: "white",
+                        borderBottom: "1px solid #ddd",
+                      }}
+                    >
+                      <th style={{ padding: "10px", textAlign: "left", width: "5%" }}>Roll No</th>
+                      <th style={{ padding: "10px", textAlign: "left", width: "15%" }}>ID Number</th>
+                      <th style={{ padding: "10px", textAlign: "left", width: "45%" }}>Student Name</th>
+                      <th style={{ padding: "10px", textAlign: "left", width: "45%" }}>Gender</th>
+                      <th style={{ padding: "10px", textAlign: "left", width: "45%" }}>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <tr key={index} style={{ borderBottom: "1px solid #ddd" }}>
+                        <td style={{ padding: "10px", textAlign: "left" }}><Skeleton width="20px" /></td>
+                        <td style={{ padding: "10px", textAlign: "left" }}><Skeleton width="80px" /></td>
+                        <td style={{ padding: "10px", textAlign: "left" }}><Skeleton width="150px" /></td>
+                        <td style={{ padding: "10px", textAlign: "left" }}><Skeleton width="60px" /></td>
+                        <td style={{ padding: "10px", textAlign: "left" }}><Skeleton width="60px" /></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : students.length > 0 ? (
               <div>
                 <div className="list-container flex-row gap-20 align-start">
                   <table

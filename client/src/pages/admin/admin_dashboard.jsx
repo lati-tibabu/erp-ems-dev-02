@@ -342,9 +342,6 @@ function AdminDashboard() {
                     <FontAwesomeIcon
                         icon="fa-solid fa-search"
                         color="#fff"
-                        onClick={() => {
-                          alert('hi');
-                        }}
                         style={styles.searchIcon}
                       />
                   </RowWrapper>
@@ -400,10 +397,6 @@ function AdminDashboard() {
                   {linkTo: schoolPage, icon: 'fa-school', label: 'School', styleClassName: onSchoolPage && 'onPage'},
                   {linkTo: usersPage, icon: 'fa-users', label: 'Users', styleClassName: onUsersPage && 'onPage'},
                   {linkTo: coursePage, icon: 'fa-book', label: 'Course', styleClassName: onCoursePage && 'onPage'},
-                  {linkTo: reportPage, icon: 'fa-file-alt', label: 'Reports', styleClassName: onReportPage && 'onPage'},
-                  {linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage'},
-                  {linkTo: settingsPage, icon: 'fa-cog', label: 'Settings', styleClassName: onSettingsPage && 'onPage'},
-                  {linkTo: helpPage, icon: 'fa-question', label: 'Help', styleClassName: onHelpPage && 'onPage'},
                 ].map((navInfo) => (
                   <Link to={navInfo.linkTo} style={{textDecoration: 'none'}}>
                     <RowWrapper style={styles.home_nav_button_style}>

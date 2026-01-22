@@ -18,8 +18,10 @@ function ActiveSchoolListing() {
   const [schools, setSchools] = useState({schools:[],totalPages:0,currentPage:1})
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [loading, setLoading] = useState(false);
   
   const getSchools = async (page, limit) => {
+    setLoading(true);
     try {
       
       const token = localStorage.getItem('jwt');
@@ -35,6 +37,8 @@ function ActiveSchoolListing() {
       setSchools(data);
     } catch (error) {
       console.error('Error fetching schools:', error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -69,10 +73,11 @@ const navigate = useNavigate();
       </div>
 
     <SchoolListing
-    title="All School Listing"
+    title="Active School Listing"
     schools={schools.schools}
     handleEdit={handleEdit}
     handleView={handleView}
+    loading={loading}
     // limit={limit}
     />
 

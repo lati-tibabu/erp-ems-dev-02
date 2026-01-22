@@ -65,10 +65,6 @@ const adminRoutes = {
   element: <AdminDashboard />,
   children: [
     { path: "home", element: <ProtectedRoute component={Home} /> },
-    { path: "help", element: <ProtectedRoute component={Help} /> },
-    { path: "logout", element: <ProtectedRoute component={Logout} /> },
-    { path: "profile", element: <ProtectedRoute component={Profile} /> },
-    { path: "report", element: <ProtectedRoute component={Report} /> },
     { path: "course", element: <ProtectedRoute component={Course} /> },
     {
       path: "school",
@@ -141,7 +137,6 @@ const adminRoutes = {
                 { path: "view_profile", element: <ViewPrincipalProfile /> },
               ],
             },
-            { path: "supervisor", element: <Supervisor /> },
             {
               path: "teacher",
               element: <Teacher />,
@@ -172,8 +167,6 @@ const adminRoutes = {
                 { path: "view_profile", element: <ViewTeacherProfile /> },
               ],
             },
-            { path: "student", element: <Student /> },
-            { path: "parent", element: <Parent /> },
           ],
         },
       ],

@@ -276,9 +276,6 @@ function PrincipalDashboard() {
                     <FontAwesomeIcon
                         icon="fa-solid fa-search"
                         color="#fff"
-                        onClick={() => {
-                          alert('hi');
-                        }}
                         style={styles.searchIcon}
                       />
                   </RowWrapper>
@@ -332,12 +329,6 @@ function PrincipalDashboard() {
                   { linkTo: studentsPage, icon: 'fa-user-graduate', label: 'Students', styleClassName: onStudentsPage && 'onPage' },
                   { linkTo: teachersPage, icon: 'fa-chalkboard-teacher', label: 'Teachers', styleClassName: onTeachersPage && 'onPage' },
                   { linkTo: classesPage, icon: 'fa-school', label: 'Classes', styleClassName: onClassPage && 'onPage' },
-                  { linkTo: departmentsPage, icon: 'fa-building', label: 'Departments', styleClassName: onDepartmentsPage && 'onPage' },
-                  { linkTo: clubsPage, icon: 'fa-users', label: 'Clubs', styleClassName: onClubsPage && 'onPage' },
-                  { linkTo: calendarPage, icon: 'fa-calendar-alt', label: 'Calendar', styleClassName: onCalendarPage && 'onPage' },
-                  { linkTo: attendancePage, icon: 'fa-check', label: 'Attendance', styleClassName: onAttendancePage && 'onPage' },
-                  { linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage' },
-                  { linkTo: helpPage, icon: 'fa-question', label: 'Help', styleClassName: onHelpPage && 'onPage' },
                   ].map((navInfo) => (
                                   <Link to={navInfo.linkTo} style={{ textDecoration: 'none' }}>
                                   <RowWrapper style={styles.home_nav_button_style}>

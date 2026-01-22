@@ -273,15 +273,7 @@ function TeacherDashboard() {
                   <FontAwesomeIcon
                       icon="fa-solid fa-search"
                       color="#fff"
-                      onClick={() => {
-                        alert('hi');
-                      }}
-                      style={styles.searchIcon}
-                    />
-                </RowWrapper>
-          </RowWrapper>
 
-          <RowWrapper style={styles.light_dark_toggle}>
 
               <RowWrapper style={styles.dark_light_toggle_button_style} onClick={themeToggleHandler}>
                 {theme === 'light' ? <FontAwesomeIcon icon="fa-solid fa-sun" style={styles.moon_sun_button_styles} /> : <FontAwesomeIcon icon="fa-solid fa-moon" style={styles.moon_sun_button_styles} />}
@@ -330,10 +322,6 @@ function TeacherDashboard() {
                 { linkTo: classesPage, icon: 'fa-school', label: 'Classes', styleClassName: onClassesPage && 'onPage' },
                 { linkTo: studentsPage, icon: 'fa-user-graduate', label: 'Students', styleClassName: onStudentsPage && 'onPage' },
                 { linkTo: assesmentsPage, icon: 'fa-file-lines', label: 'Assesments', styleClassName: onAssesmentsPage && 'onPage' },
-                { linkTo: calendarPage, icon: 'fa-calendar-alt', label: 'Calendar', styleClassName: onCalendarPage && 'onPage' },
-                { linkTo: attendancePage, icon: 'fa-check', label: 'Attendance', styleClassName: onAttendancePage && 'onPage' },
-                { linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage' },
-                { linkTo: helpPage, icon: 'fa-question', label: 'Help', styleClassName: onHelpPage && 'onPage' },
                 ].map((navInfo) => (
                                 <Link to={navInfo.linkTo} style={{ textDecoration: 'none' }}>
                                 <RowWrapper style={styles.home_nav_button_style}>

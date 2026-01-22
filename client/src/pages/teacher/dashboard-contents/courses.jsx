@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Heading3, Heading5 } from "../../../components/Typography";
+import Skeleton from "../../../components/skeleton";
 
 function Courses() {
   const token = localStorage.getItem("jwt");
@@ -11,8 +12,10 @@ function Courses() {
   const apiURL = import.meta.env.VITE_API_URL;
 
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   const getCourses = async (teacherId) => {
+    setLoading(true);
     try {
       const response = await fetch(`${apiURL}/api/teacher-course/load_course/${teacherId}/courses`, {
         method: "GET",
@@ -22,6 +25,8 @@ function Courses() {
       setCourses(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -36,7 +41,26 @@ function Courses() {
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '20px', backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', borderRadius: '10px', marginBottom: '10px' }}>
           <Heading3 text='Courses' style={{ marginBottom: '10px' }} />
         <div>
-        { courses.length > 0 ?
+        { loading ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd', borderRadius: '8px' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#007bff', color: 'white', borderBottom: '1px solid #ddd' }}>
+                <th style={{ padding: '10px', textAlign: 'left', width: '5%' }}></th>
+                <th style={{ padding: '10px', textAlign: 'left', width: '45%' }}>Course Name</th>
+                <th style={{ padding: '10px', textAlign: 'left', width: '45%' }}>Course Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index} style={{ borderBottom: '1px solid #ddd' }}>
+                  <td style={{ padding: '10px' }}><Skeleton width="20px" /></td>
+                  <td style={{ padding: '10px' }}><Skeleton width="150px" /></td>
+                  <td style={{ padding: '10px' }}><Skeleton width="100px" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : courses.length > 0 ?
           <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ddd', borderRadius: '8px' }}>
             <thead>
               <tr style={{ backgroundColor: '#007bff', color: 'white', borderBottom: '1px solid #ddd' }}>

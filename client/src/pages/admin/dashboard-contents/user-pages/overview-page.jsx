@@ -7,86 +7,59 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 // import { SecondaryButton } from '../../../../components/buttons';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import Skeleton from '../../../../components/skeleton';
 // import { Col } from 'sequelize/lib/utils';
 
 library.add(fas);
 
 function OverviewPages() {
 
+  const apiURL = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem('jwt');
+  const header = { 'Authorization': `Bearer ${token}` };
+
   const location = useLocation();
   const onPrincipalPage = (location.pathname.startsWith('/admin/users/overview/principal'))
-  const onSupervisorPage = (location.pathname.startsWith('/admin/users/overview/supervisor'))
   const onTeacherPage = (location.pathname.startsWith('/admin/users/overview/teacher'))
-  const onStudentPage = (location.pathname.startsWith('/admin/users/overview/student'))
-  const onParentPage = (location.pathname.startsWith('/admin/users/overview/parent'))
 
-  const [hoveredButton, setHoveredButton] = useState(null);
+  const [counts, setCounts] = useState({ principal: 0, teacher: 0, student: 0, parent: 0 });
+  const [loading, setLoading] = useState(true);
 
-  const handleMouseEnter = (button) => {
-    setHoveredButton(button);
+  const fetchCounts = async () => {
+    setLoading(true);
+    try {
+      const [principalRes, teacherRes, studentRes, parentRes] = await Promise.all([
+        fetch(`${apiURL}/api/principal/total`, { headers: header }),
+        fetch(`${apiURL}/api/teacher/total`, { headers: header }),
+        fetch(`${apiURL}/api/student/total`, { headers: header }),
+        fetch(`${apiURL}/api/parent/total`, { headers: header }),
+      ]);
+      const [principalData, teacherData, studentData, parentData] = await Promise.all([
+        principalRes.json(),
+        teacherRes.json(),
+        studentRes.json(),
+        parentRes.json(),
+      ]);
+      setCounts({
+        principal: principalData.count || 0,
+        teacher: teacherData.count || 0,
+        student: studentData.count || 0,
+        parent: parentData.count || 0,
+      });
+    } catch (error) {
+      console.error('Error fetching user counts:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleMouseLeave = () => {
-    setHoveredButton(null);
-  };
-
-  const styles = {
-    main_container: {
-      height: '100vh',
-      border: 'none',
-      gap: '20px',
-      padding: '20px',
-      // background: 'white',
-      // borderRadius: '5px',
-      // boxShadow: '3px 3px 5px 0px #0088ff23',
-    },
-    users_overview_container: {
-      gap: '10px',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      padding: '10px',
-      borderRadius: '5px',
-      border: 'none',
-    },
-    user_management_container: {
-      gap: '10px',
-      padding: '10px',
-      borderRadius: '15px',
-      background: 'white',
-      // border: 'none',
-    },
-    users_type_list_container:{
-      justifyContent: 'center',
-      alignItems: 'center',
-      boxShadow: '3px 3px 5px 0px #0088ff23',
-      flex: '1',
-      gap: '20px',
-      border: 'none',
-    },
-    users_navigation_bar_container: {
-      // justifyContent: 'space-between',
-      alignItems: 'center',
-      flex: '1',
-      gap: '20px',
-      // border: 'none',
-      // justi
-    },
-    users_management_section_container: {
-      // background: 'red',
-      width: '100%',
-      // height: '100%',
-      border: 'none',
-      borderRadius: '15px',
-      padding: '20px',
-      // boxShadow: '3px 3px 5px 0px #0088ff23',
-    },
-  };
+  useEffect(() => {
+    fetchCounts();
+  }, []);
 
   const overviewCards = [
-    { border: '#DAA520', background: /*localStorage.getItem('username') === 'lati'?'rgba(102,102,102,1)':*/'#DAA52023', number: '300', text: 'Principals' },
-    { border: '#4682B4', background: /*localStorage.getItem('username') === 'lati'?'rgba(102,102,102,1)':*/'#4682B423', number: '500', text: 'Teachers' },
-    { border: '#32CD32', background: /*localStorage.getItem('username') === 'lati'?'rgba(102,102,102,1)':*/'#32CD3223', number: '1000', text: 'Students' },
-    { border: '#FF6347', background: /*localStorage.getItem('username') === 'lati'?'rgba(102,102,102,1)':*/'#FF634723', number: '150', text: 'Parent Users' },
+    { border: '#DAA520', background: '#DAA52023', number: counts.principal, text: 'Principals' },
+    { border: '#4682B4', background: '#4682B423', number: counts.teacher, text: 'Teachers' },
   ];
 
   // useEffect(() => {
@@ -125,8 +98,12 @@ function OverviewPages() {
                   gap: '20px',
                   border: `2px solid ${cardInfo.border}`,
                 }}>
-                <Heading3 text={cardInfo.number} style={{ /*color: 'white',*/ fontWeight: 'bold' }} />
-                <Label text={cardInfo.text} style={{ /*color: 'white',*/ fontWeight: 'bold' }} />
+                {loading ? (
+                  <Skeleton width="60%" height="30px" borderRadius="10px" />
+                ) : (
+                  <Heading3 text={cardInfo.number} style={{ fontWeight: 'bold' }} />
+                )}
+                <Label text={cardInfo.text} style={{ fontWeight: 'bold' }} />
               </ColumnWrapper>
             ))}
 
@@ -152,24 +129,9 @@ function OverviewPages() {
                       Principal
                     </button>
                   </Link>
-                  <Link to='/admin/users/overview/supervisor'> 
-                    <button className={'schoolButtonStyle active-schools '+ (onSupervisorPage && 'selected-button')}>
-                      Supervisor
-                    </button>
-                  </Link>
                   <Link to='/admin/users/overview/teacher'> 
                     <button className={'schoolButtonStyle pending-schools '+ (onTeacherPage && 'selected-button')}>
                       Teacher
-                    </button>
-                  </Link>
-                  <Link to='/admin/users/overview/student'> 
-                    <button className={'schoolButtonStyle deleted-schools '+ (onStudentPage && 'selected-button')}>
-                      Student
-                    </button>
-                  </Link>
-                  <Link to='/admin/users/overview/parent'> 
-                    <button className={'schoolButtonStyle archived-schools '+ (onParentPage && 'selected-button')}>
-                      Parent
                     </button>
                   </Link>
                 </RowWrapper>

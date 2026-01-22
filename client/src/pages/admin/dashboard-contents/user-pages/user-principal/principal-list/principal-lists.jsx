@@ -28,6 +28,7 @@ function PrincipalList() {
   const [principals, setPrincipals] = useState({principals:[],totalPages:0,currentPage:1,count:0, headers:[]})
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [loading_data, setLoadingData] = useState(true);
 
   // const [principals, setPrincipals] = useState([])
   const [user, setUser] = useState([])
@@ -36,6 +37,7 @@ function PrincipalList() {
   const [principalData, setPrincipalData] = useState([])
 
   const getPrincipals = async (page, limit) => {
+    setLoadingData(true);
     try {
       const response = await fetch(`${apiURL}/api/principal/load?page=${page}&limit=${limit}`, {
         method: 'GET',
@@ -77,6 +79,7 @@ function PrincipalList() {
         })
     );
     setPrincipalData(dataWithRelations);
+    setLoadingData(false);
   };
 
   
@@ -113,14 +116,8 @@ function PrincipalList() {
 
   return (
     <>
-    <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none',}}>
-      {
-        principals.count === 0?
-        <CenterColumn>
-          <img src={loading} alt="" style={{width: '100px'}} />
-        </CenterColumn>
-        :
-        <div className='flex-column'>
+    <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none', width: '100%'}}>
+        <div className='flex-column w-100p'>
           <div className='flex-row align-center gap-10 bw-1px bs-solid bc-blueGreen100-60 back-color-blueGreen80-30 p-10 w-20p min-w-250px br-4px'>
           <Label text='Principals per page' />
 
@@ -133,9 +130,10 @@ function PrincipalList() {
             title='Principals'
             principals={principalData}
             handleEdit={handleEdit}
-            // handleView={handleView}
+            loading={loading_data}
             width='100%'
           />
+          {!loading_data && (
           <div className='flex-column'>
             <p>Page {principals.currentPage} of {principals.totalPages}</p>
             <div className='flex- row gap-10'>
@@ -149,8 +147,8 @@ function PrincipalList() {
             }
             </div>
           </div>
+          )}
         </div>
-        }
 
         <Outlet />
 

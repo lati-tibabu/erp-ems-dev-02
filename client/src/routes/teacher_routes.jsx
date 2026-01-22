@@ -34,10 +34,6 @@ const teacherRoutes = {
                 
             ]
         },
-        {path: 'calendar', element: <Calendar/>},
-        {path: 'attendance', element: <Attendance/>},
-        {path: 'profile', element: <Profile/>},
-        {path: 'help', element: <Help/>},
     ]
 }
 

@@ -5,10 +5,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import Skeleton from '../skeleton';
 library.add(fas)
 
 // function PrincipalListing({title, principals, handleEdit, handleView, width}) {
-  function PrincipalListing({title, principals, handleEdit, width}) {
+  function PrincipalListing({title, principals, handleEdit, width, loading}) {
 
   const [selectedRow, setSelectedRow] =  useState(false);
 
@@ -46,39 +47,40 @@ library.add(fas)
             </tr>
           </thead>
           <tbody>
-            {principals.map((principal, index) => (
-              // <Link to='/principal/${principal.principal_id'>
-                <tr key={index} onClick={() => handleView(principal)} className='table-row'>
-                  <td>{index+1}</td>
-                  <td>
-                    <img 
-                    src={principal.user.profile_photo ? principal.user.profile_photo : 
-                    "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} 
-                    // width={40} 
-                    alt="principals_avatar" 
-                    style={{borderRadius: '50%', width: '40px', height: '40px'}}
-                    />
-                    </td>
-                  {/* <td> <Link style={{textDecoration: 'none', color: 'rgb(0,0,0)'}} to={`/admin/users/overview/principal/list/view/${principal.principal_id}`}> {principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </Link> </td> */}
-                  <td>{principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </td>
-                  <td>{principal.school.name}</td>
-                  <td>{principal.user.gender}</td>
-                  <td>{principal.principal_type}</td>
-                  {/* <td>{principal.contact.map((contact, index) => (<p key={index}>{contact.name+": "+contact.phone}</p>))}</td> */}
-                  {/* <td className='actions'>
-                    <button onClick={() => handleEdit(principal.principal_id)}>
-                      <FontAwesomeIcon icon='fa-solid fa-pencil' />
-                      Edit
-                    </button>
-
-                    <button onClick={() => handleView(principal.principal_id)}>
-                      <FontAwesomeIcon icon='fa-solid fa-eye' />
-                      View
-                    </button>
-                  </td> */}
+            {loading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index}>
+                  <td><Skeleton width="20px" /></td>
+                  <td><Skeleton width="40px" height="40px" borderRadius="50%" /></td>
+                  <td><Skeleton width="150px" /></td>
+                  <td><Skeleton width="120px" /></td>
+                  <td><Skeleton width="60px" /></td>
+                  <td><Skeleton width="80px" /></td>
                 </tr>
-              // </Link>
-            ))}
+              ))
+            ) : (
+              principals && principals.map((principal, index) => (
+                // <Link to='/principal/${principal.principal_id'>
+                  <tr key={index} onClick={() => handleView(principal)} className='table-row'>
+                    <td>{index+1}</td>
+                    <td>
+                      <img 
+                      src={principal.user.profile_photo ? principal.user.profile_photo : 
+                      "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"} 
+                      // width={40} 
+                      alt="principals_avatar" 
+                      style={{borderRadius: '50%', width: '40px', height: '40px'}}
+                      />
+                      </td>
+                    {/* <td> <Link style={{textDecoration: 'none', color: 'rgb(0,0,0)'}} to={`/admin/users/overview/principal/list/view/${principal.principal_id}`}> {principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </Link> </td> */}
+                    <td>{principal.user.first_name+" "+principal.user.middle_name+" "+principal.user.last_name} </td>
+                    <td>{principal.school.name}</td>
+                    <td>{principal.user.gender}</td>
+                    <td>{principal.principal_type}</td>
+                  </tr>
+                // </Link>
+              ))
+            )}
           </tbody>
         </table>
       </div>

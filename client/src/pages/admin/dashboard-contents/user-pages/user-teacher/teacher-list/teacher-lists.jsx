@@ -11,6 +11,7 @@ import loading from '/loading.gif'
 import { CenterColumn } from '../../../../../../components/center';
 import { Label } from '../../../../../../components/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Skeleton from '../../../../../../components/skeleton';
 
   library.add(fas);
 
@@ -23,6 +24,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
     const [teachers, setTeachers] = useState({teachers:[],totalPages: 0, currentPage: 1, count: 0, headers: []});
     const [teacherData, setTeacherData] = useState([]);
+    const [loading_data, setLoadingData] = useState(true);
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -30,6 +32,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     const [noTeacher, setNoTeacher] = useState('');
 
     const getTeachers = async (page, limit) => {
+      setLoadingData(true);
       try {
         const response = await fetch(`${apiURL}/api/teacher/load?page=${page}&limit=${limit}`, {
           method: 'GET',
@@ -73,6 +76,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
           })
       );
       setTeacherData(dataWithRelations);
+      setLoadingData(false);
     };
 
     // console.log(teacherData);
@@ -102,20 +106,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
     return (
       <>
-      <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none',}}>
-        { noTeacher?
-            <CenterColumn>
-              <p>No teacher found</p>
-            </CenterColumn>
-            :
-          (teachers.count === 0
-          ? <CenterColumn>
-              <img src={loading} alt="" style={{width: '100px'}} />
-            </CenterColumn>
-          :
-          <div className='flex-column'>
+      <RowWrapper style={{justifyContent: 'space-between', gap: '20px', border: 'none', width: '100%'}}>
+          <div className='flex-column w-100p'>
             <div className='flex-row align-center gap-10 bw-1px bs-solid bc-blueGreen100-60 back-color-blueGreen80-30 p-10 w-20p min-w-250px br-4px'>
-              <Label text='Principals per page' />
+              <Label text='Teachers per page' />
 
               <FontAwesomeIcon icon="fa-solid fa-minus" onClick={() => !(limit===1) && setLimit(limit-1) }  className={styleClasses.plusMinus}/>
               <input type="text" name="" value={limit} onChange={(e) => setLimit(parseInt(e.target.value))} className='w-20px br-2px'/>
@@ -126,9 +120,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
                 title='Teachers'
                 teachers={teacherData}
                 handleEdit={handleEdit}
-                // handleView={handleView}
+                loading={loading_data}
                 width='100%'
               />
+              {!loading_data && teacherData.length > 0 && (
               <div className='flex-column'>
             <p>Page {teachers.currentPage} of {teachers.totalPages}</p>
 
@@ -143,9 +138,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
             }
             </div>
           </div>
+          )}
           </div>          
-          )
-          }
 
           <Outlet />
 

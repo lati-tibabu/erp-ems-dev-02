@@ -14,6 +14,7 @@ function AllSchoolListing() {
   const [schools, setSchools] = useState({schools:[],totalPages:0,currentPage:1, headers:[]})
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [loading, setLoading] = useState(false);
 
 
   // const getSchools = async () => {
@@ -27,8 +28,9 @@ function AllSchoolListing() {
   // };
 
   const getSchools = async (page, limit) => {
+    setLoading(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('jwt');
       const headers = {'authorization': `Bearer ${token}`};
       const response = await fetch(`${apiURL}/api/school/load/paginationC?page=${page}&limit=${limit}`, {
         method: 'GET',
@@ -38,6 +40,8 @@ function AllSchoolListing() {
       setSchools(data);
     } catch (error) {
       console.error('Error fetching schools:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,6 +86,7 @@ const navigate = useNavigate();
     schools={schools.schools}
     handleEdit={handleEdit}
     handleView={handleView}
+    loading={loading}
     // limit={limit}
     />
 

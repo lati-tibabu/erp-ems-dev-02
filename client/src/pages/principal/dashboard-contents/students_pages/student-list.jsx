@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import api from "../../../../api";
 import { Heading3, Heading1, Heading6, Paragraph, Heading5, Label } from "../../../../components/Typography";
@@ -11,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Outlet, useNavigate } from "react-router-dom";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import Skeleton from "../../../../components/skeleton";
 
 library.add(fas);
 
@@ -33,6 +33,7 @@ function StudentList() {
   const [listFilterName, setListFilterName] = useState('All Students');
   const [filterDisplay, setFilterDisplay] = useState(false);
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getClasses = async () => {
     try {
@@ -73,7 +74,8 @@ function StudentList() {
 
   // Function to fetch students based on the current list type
   const getStudents = async () => {
-    setStudents([]); // Reset students before fetching new data
+    setLoading(true);
+    // setStudents([]); // Reset students before fetching new data
 
     try {
       let response;
@@ -109,13 +111,18 @@ function StudentList() {
           });
           break;
         default:
+          setLoading(false);
           return;
       }
 
-      const data = await response.json();
-      setStudents(data); // Update students state with fetched data
+      if (response.ok) {
+        const data = await response.json();
+        setStudents(data); // Update students state with fetched data
+      }
     } catch (error) {
       console.error('Error fetching students:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,13 +144,13 @@ function StudentList() {
 
   // Export to CSV
   const exportToCSV = () => {
-    const worksheet = XLSX.utils.json_to_sheet(studentsData.map((student, index) => ({
+    const worksheet = XLSX.utils.json_to_sheet(students.map((student, index) => ({
       RollNo: index + 1,
       IDNumber: student.id_number,
       StudentName: `${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`,
       Gender: student.user.gender,
-      Grade: student.class.class_grade,
-      Section: student.class.class_name,
+      Grade: student.Class?.class_grade,
+      Section: student.Class?.class_name,
     })));
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
@@ -154,13 +161,13 @@ function StudentList() {
 
   // Export to Excel
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(studentsData.map((student, index) => ({
+    const worksheet = XLSX.utils.json_to_sheet(students.map((student, index) => ({
       RollNo: index + 1,
       IDNumber: student.id_number,
       StudentName: `${student.user.first_name} ${student.user.middle_name} ${student.user.last_name}`,
       Gender: student.user.gender,
-      Grade: student.class.class_grade,
-      Section: student.class.class_name,
+      Grade: student.Class?.class_grade,
+      Section: student.Class?.class_name,
     })));
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Students');
@@ -320,8 +327,35 @@ function StudentList() {
         : */}
 
         <div className="flex-row align-start gap-20 p-20 br-50px justify-between ">
-        {/* {studentsData.length > 0 ? ( */}
-        {students.length > 0 ? (
+        {loading ? (
+          <table
+            border="1"
+            cellPadding="10"
+            cellSpacing="0"
+            className="br-10px back-color-white font-w-100 font-sm w-100p bw-none"
+            style={{color: '#034303'}}>
+            <thead>
+                <tr>
+                    <th className="bw-none">Student ID</th>
+                    <th className="bw-none">Name</th>
+                    <th className="bw-none">Gender</th>
+                    <th className="bw-none">Grade</th>
+                    <th className="bw-none">Section</th>
+                </tr>
+            </thead>
+            <tbody>
+                {Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index} className="bw-0 font-w-400">
+                    <td className="bc-gray100-30"><Skeleton width="80px" /></td>
+                    <td className="bc-gray100-30"><Skeleton width="150px" /></td>
+                    <td className="bc-gray100-30"><Skeleton width="60px" /></td>
+                    <td className="bc-gray100-30"><Skeleton width="60px" /></td>
+                    <td className="bc-gray100-30"><Skeleton width="60px" /></td>
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        ) : students.length > 0 ? (
             <table
             border="1"
             cellPadding="10"

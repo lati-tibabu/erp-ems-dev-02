@@ -3,6 +3,7 @@ import { Heading4, Heading6, Label } from "../../../components/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { SecondaryButton } from "../../../components/buttons";
+import Skeleton from "../../../components/skeleton";
 
 function Teachers() {
   const apiURL = import.meta.env.VITE_API_URL;
@@ -13,6 +14,7 @@ function Teachers() {
   const schoolId = schoolData.school.school_id;
 
   const [teachers, setTeachers] = useState([]);
+  const [loading_data, setLoadingData] = useState(true);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [classes, setClasses] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -27,6 +29,7 @@ function Teachers() {
   const [teachersData, setTeachersData] = useState([]);
 
   const getTeachers = async () => {
+    setLoadingData(true);
     setTeachers([]);
     setTeachersData([]);
 
@@ -86,6 +89,7 @@ function Teachers() {
       })
     );
     setTeachersData(dataWithRelations);
+    setLoadingData(false);
   };
 
   useEffect(() => {
@@ -311,7 +315,33 @@ function Teachers() {
             </div>
 
               {
-                teachersData.length > 0 ? 
+                loading_data ? (
+                  <>
+                  <Heading4 text="Loading Teachers..." />
+                  <table
+                      border="1"
+                      cellPadding="10"
+                      cellSpacing="0"
+                      style={{ borderCollapse: "collapse", width: "100%", background: 'white' }}
+                      className="shadow-xl br-15px p-10 font-xs"
+                    >
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <tr key={index}>
+                          <td><Skeleton width="150px" /></td>
+                          <td><Skeleton width="150px" /></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  </>
+                ) : teachersData.length > 0 ? 
                 <>
                   <Heading4 text={`${categoryName} Teachers`} />
                   <table

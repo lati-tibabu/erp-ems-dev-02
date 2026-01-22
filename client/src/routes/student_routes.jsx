@@ -15,8 +15,6 @@ const studentRoutes = {
         {path: 'home', element: <Home />},
         {path: 'my-class',element:<MyClass />},
         {path: 'my-result',element:<MyResult />},
-        {path: 'profile',element:<Profile />},
-        {path: 'help',element:<Help />},
     ]
 }
 

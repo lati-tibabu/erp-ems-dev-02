@@ -8,6 +8,7 @@ import { SecondaryButton } from '../../../components/buttons';
 import RowWrapper from '../../../components/row_wrapper';
 import { useNavigate } from 'react-router-dom';
 import '../../../styles/admin-dashboard/admin-dashboard-home.css';
+import Skeleton from '../../../components/skeleton';
 
 library.add(fas);
 
@@ -21,6 +22,7 @@ function Home() {
   const [studentCount, setStudentCount] = useState({});
   const [teacherCount, setTeacherCount] = useState({});
   const [parentCount, setParentCount] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -148,10 +150,17 @@ function Home() {
   };
 
   useEffect(() => {
-    getSchoolCount();
-    getStudentCount();
-    getTeacherCount();
-    getParentCount();
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([
+        getSchoolCount(),
+        getStudentCount(),
+        getTeacherCount(),
+        getParentCount(),
+      ]);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -168,7 +177,11 @@ function Home() {
           { background: '#DAA520', number: parentCount.count?parentCount.count:'0', text: 'Parents' },
         ].map((cardinfo, index) => (
           <ColumnWrapper key={index} style={{ background: cardinfo.background }} className='data_overview_card_style'>
-            <Heading3 text={cardinfo.number || 'N/A'} style={{ color: 'white', fontWeight: 'bold' }} />
+            {loading ? (
+              <Skeleton width="60%" height="30px" borderRadius="10px" style={{ marginBottom: '5px' }} />
+            ) : (
+              <Heading3 text={cardinfo.number || '0'} style={{ color: 'white', fontWeight: 'bold' }} />
+            )}
             <Label text={cardinfo.text} style={{ color: 'white', fontWeight: 'bold' }} />
           </ColumnWrapper>
         ))}
@@ -196,8 +209,7 @@ function Home() {
 
         <ColumnWrapper>
           <Heading6 text="Recent Activities" />
-          <Label text="Recent Activities" />
-          <Label text="Recent Activities" />
+          <Label text="No recent activities to show." />
         </ColumnWrapper>
       </RowWrapper>
     </div>

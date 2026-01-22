@@ -5,6 +5,7 @@ import { Heading3, Heading4, Heading5, Label, Paragraph } from "../../../compone
 import { InputField } from "../../../components/input_field";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import Skeleton from "../../../components/skeleton";
 
 function Course() {
     const {token} = localStorage.getItem('jwt');
@@ -13,17 +14,21 @@ function Course() {
     const apiURL = import.meta.env.VITE_API_URL;
 
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [courseName, setCourseName] = useState({course_name: '', course_grade: 0});
     const [showBulkAddForm, setShowBulkAddForm] = useState(false);
 
 
     const getCourses = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(`${apiURL}/api/course/load`, {headers: header});
             const data = response.data;
             setCourses(data);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
     
@@ -122,9 +127,16 @@ function Course() {
                 <ul className="flex-column align-center p-20">
                     {/* <li><Paragraph text={courseName} /></li> */}
                     {
-                        courses.length > 0
+                        loading ? (
+                            Array.from({ length: 5 }).map((_, index) => (
+                                <li key={index} className="flex-row w-100p justify-between bw-1px bs-solid bc-purple100-10 p-10 mb-10 br-20px">
+                                    <Skeleton width="60%" height="20px" />
+                                    <Skeleton width="40px" height="20px" />
+                                </li>
+                            ))
+                        ) : courses.length > 0
                         ? (courses.map((course) => (
-                            <li className="flex-row w-100p justify-between bw-1px bs-solid bc-purple100-10 p-10 mb-10 br-20px">
+                            <li key={course.course_id} className="flex-row w-100p justify-between bw-1px bs-solid bc-purple100-10 p-10 mb-10 br-20px">
                                 <Paragraph text={`${course.course_name} - Grade ${course.course_grade}`} className='font-w-400'/> 
                                 <div>
                                     <FontAwesomeIcon 

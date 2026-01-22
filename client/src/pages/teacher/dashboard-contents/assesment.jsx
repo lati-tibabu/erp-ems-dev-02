@@ -9,6 +9,7 @@ import { InputField } from '../../../components/input_field'
 
 import Select from 'react-select';
 import ColumnWrapper from '../../../components/column_wrapper'
+import Skeleton from '../../../components/skeleton';
 
 const Assesment = () => {
     const teacherData = JSON.parse(localStorage.getItem('data'));
@@ -18,6 +19,7 @@ const Assesment = () => {
     const header = {'authorization': `Bearer ${token}`};
     
     const [assesments, setAssesments ] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,6 +35,7 @@ const Assesment = () => {
 
 
     const fetchAssesments = async (teacherId) => {
+        setLoading(true);
         try{
             const response = await fetch(`${apiURL}/api/assesment/load_t/${teacherId}`, {
                 method: 'GET',
@@ -42,6 +45,8 @@ const Assesment = () => {
             setAssesments(data);
         }catch(error){
             console.error(error);
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -77,17 +82,37 @@ const Assesment = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {assesments.map((assesment, i) =>(
-                    <tr style={{cursor: 'pointer'}} onClick={() => handleAssesmentView(assesment)} className='table_hover'>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{i+1}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_name}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_type}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{`Grade ${assesment.Class.class_grade} Section ${assesment.Class.class_name}`}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{`${assesment.Course.course_name} Grade ${assesment.Course.course_grade}`}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.max_mark}</td>
-                        <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.status}</td>
-                    </tr>
-                    ))}
+                    {loading ? (
+                        Array.from({ length: 5 }).map((_, i) => (
+                            <tr key={i}>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="20px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="150px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="100px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="120px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="120px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="50px" /></td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border}><Skeleton width="80px" /></td>
+                            </tr>
+                        ))
+                    ) : assesments.length > 0 ? (
+                        assesments.map((assesment, i) => (
+                            <tr key={assesment.assesment_id} style={{cursor: 'pointer'}} onClick={() => handleAssesmentView(assesment)} className='table_hover'>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{i+1}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_name}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.assesment_type}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{`Grade ${assesment.Class.class_grade} Section ${assesment.Class.class_name}`}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{`${assesment.Course.course_name} Grade ${assesment.Course.course_grade}`}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.max_mark}</td>
+                                <td className={`${table_border}`} style={table_border_style.no_side_border} >{assesment.status}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="7" className={`${table_border}`} style={{ textAlign: 'center', padding: '20px' }}>
+                                <Label text="No assessments found" className="color-red100" />
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             <div className='p-20 '>

@@ -317,8 +317,6 @@ function StudentDashboard() {
                             { linkTo: homePage, icon: 'fa-house', label: 'Home', styleClassName: onHomePage && 'onPage' },
                             { linkTo: myClassPage, icon: 'fa-school', label: 'My Class', styleClassName: onMyClassPage && 'onPage' },
                             { linkTo: myResultPage, icon: 'fa-chart-line', label: 'My Result', styleClassName: onMyResultPage && 'onPage' },
-                            { linkTo: profilePage, icon: 'fa-user', label: 'Profile', styleClassName: onProfilePage && 'onPage' },
-                            { linkTo: helpPage, icon: 'fa-question', label: 'Help', styleClassName: onHelpPage && 'onPage' },
                         ].map((navInfo) => (
                             <Link to={navInfo.linkTo} style={{ textDecoration: 'none' }} key={navInfo.label}>
                                 <RowWrapper style={styles.home_nav_button_style}>

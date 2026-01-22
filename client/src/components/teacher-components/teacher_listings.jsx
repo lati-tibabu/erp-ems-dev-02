@@ -4,10 +4,11 @@ import { Heading5 } from '../Typography';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import Skeleton from '../skeleton';
 
 library.add(fas)
 
-function TeacherListing({title, teachers, handleEdit, width}) {
+function TeacherListing({title, teachers, handleEdit, width, loading}) {
 
 const [selectedRow, setSelectedRow] =  useState(false);
 
@@ -37,8 +38,19 @@ const teacherHeadings = ['','','Name','School','Gender', 'Type'];
             </tr>
           </thead>
           <tbody>
-            {
-              (Array.isArray(teachers) && teachers.length>0) &&
+            {loading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index}>
+                  <td><Skeleton width="20px" /></td>
+                  <td><Skeleton width="40px" height="40px" borderRadius="50%" /></td>
+                  <td><Skeleton width="150px" /></td>
+                  <td><Skeleton width="120px" /></td>
+                  <td><Skeleton width="60px" /></td>
+                  <td><Skeleton width="80px" /></td>
+                </tr>
+              ))
+            ) : (
+              Array.isArray(teachers) && teachers.length>0 &&
               teachers.map((teacher, index) => (
                   <tr key={index} onClick={() => handleView(teacher)} className='table-row'>
                     <td>{index+1}</td>
@@ -56,7 +68,7 @@ const teacherHeadings = ['','','Name','School','Gender', 'Type'];
                     <td>{teacher.teacher_type}</td>
                   </tr>
               ))
-            }
+            )}
           </tbody>
         </table>
       </div>
