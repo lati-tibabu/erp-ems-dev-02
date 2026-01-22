@@ -47,6 +47,7 @@ const seedData = async (req, res) => {
         established_year: 2005,
         type: "Private",
         status: "active",
+        school_level: "High School",
       },
       {
         name: "Unity School",
@@ -55,6 +56,7 @@ const seedData = async (req, res) => {
         established_year: 1998,
         type: "Public",
         status: "active",
+        school_level: "Primary School",
       },
       {
         name: "Future Leaders High",
@@ -63,6 +65,7 @@ const seedData = async (req, res) => {
         established_year: 2012,
         type: "International",
         status: "active",
+        school_level: "High School",
       },
       {
         name: "St. George School",
@@ -71,6 +74,7 @@ const seedData = async (req, res) => {
         established_year: 1950,
         type: "Religious",
         status: "active",
+        school_level: "K-12",
       },
     ];
 
@@ -78,7 +82,17 @@ const seedData = async (req, res) => {
     const schoolIds = createdSchools.map((s) => s.school_id);
     console.log("Schools seeded.");
 
-    // 4. Create Users
+    // 4. Create Classes
+    const classesData = [
+      { class_name: "Grade 9", section_name: "A", school_id: schoolIds[0], class_grade: 9 },
+      { class_name: "Grade 10", section_name: "B", school_id: schoolIds[0], class_grade: 10 },
+      { class_name: "Grade 1", section_name: "A", school_id: schoolIds[1], class_grade: 1 },
+    ];
+    const createdClasses = await db.Class.bulkCreate(classesData);
+    const classIds = createdClasses.map((c) => c.class_id);
+    console.log("Classes seeded.");
+
+    // 5. Create Users
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash("password123", salt);
 
@@ -173,6 +187,7 @@ const seedData = async (req, res) => {
         await db.Student.create({
           user_id: user.user_id,
           school_id: schoolIds[1],
+          class_id: classIds[2], // Link to Grade 1 Section A at Unity School
           student_gender: user.gender,
         });
       } else if (user.role_id === roleMap["Parent"]) {
