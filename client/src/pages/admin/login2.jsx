@@ -61,7 +61,7 @@ function Login() {
           const response2 = await fetch(`${apiURL}/api/role/load/${userRole}`);
           const data = await response2.json();
           // console.log(data);
-          if (data.role_name === "Admin") {
+          if (data.role_name === "Admin" || data.role_name === "Administrator") {
             setRoleCorrect(true);
             dispatch(
               login({
