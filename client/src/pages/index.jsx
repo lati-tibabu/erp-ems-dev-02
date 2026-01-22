@@ -408,6 +408,11 @@ function Home() {
               <Paragraph text='Admin Dashboard' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
             </Link>
 
+            <Link to='/auth/create_user' style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
+              <FontAwesomeIcon icon='fa-solid fa-user-plus' color='white'/>
+              <Paragraph text='Add New Admin' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
+            </Link>
+
             <Link style={{textDecoration:'none'}} className='flex-row align-center gap-10'>
               <FontAwesomeIcon icon='fa-solid fa-headset' color='white'/>
               <Paragraph text='Support' className = {`${quickLinkThemeColor} font-w-400`} style={{textDecoration:'none'}} />
