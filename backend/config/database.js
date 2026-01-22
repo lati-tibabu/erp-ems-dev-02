@@ -10,16 +10,16 @@ const sequelize = new Sequelize(
     dialect: "postgres",
     dialectModule: require('pg'),
     port: process.env.DB_PORT,
-    // ssl: process.env.DB_SSL === "true", // Convert string to boolean
-    // dialectOptions: {
-    //   ssl:
-    //     process.env.DB_SSL === "true"
-    //       ? {
-    //           require: true,
-    //           rejectUnauthorized: false, // Ignore certificate validation for development
-    //         }
-    //       : undefined,
-    // },
+    ssl: process.env.DB_SSL === "true", // Convert string to boolean
+    dialectOptions: {
+      ssl:
+        process.env.DB_SSL === "true"
+          ? {
+              require: true,
+              rejectUnauthorized: false, // Ignore certificate validation for development
+            }
+          : undefined,
+    },
   }
 );
 
