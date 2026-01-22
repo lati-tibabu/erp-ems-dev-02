@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
-import { login } from '../../../store';
 import Calendar from 'react-calendar';
-import { Heading3, Heading4 ,Paragraph,Label } from "../../../components/Typography";
-import { SecondaryButton } from "../../../components/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import '../../../styles/calendar_style.css';
-import { useDispatch } from 'react-redux';
-import React, { useEffect, useState } from 'react';
-
-import { login } from '../../../store';
-import Calendar from 'react-calendar';
-import { Heading3, Heading4 ,Paragraph,Label } from "../../../components/Typography";
+import { Heading3, Heading4, Paragraph, Label } from "../../../components/Typography";
 import { SecondaryButton } from "../../../components/buttons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Skeleton from "../../../components/skeleton";
-
 import '../../../styles/calendar_style.css';
-import { useDispatch } from 'react-redux';
 
 function Home() {
 
@@ -60,7 +46,7 @@ function Home() {
     }
   }, [schoolId]);
 
-  return ( 
+  return (
     <div>
       <div id="0Row" className="flex-row gap-20 p-10 back-color-green10-10 mb-10 br-15px shadow-sm bw-1px bs-solid bc-green50-50 justify-center align-center">
         <img src={userData?.school?.school_logo} alt={(userData?.school?.name)} className='w-40px h-40px p-10' />
@@ -89,7 +75,6 @@ function Home() {
             <div id="calendar">
               <Calendar />
             </div>
-          </div>
           </div>
         </div>
         <div id="overview2" className="p-10 back-color-white br-5px w-100p h-100p shadow-xl">Overview Pages</div>

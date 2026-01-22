@@ -273,6 +273,9 @@ function TeacherDashboard() {
                   <FontAwesomeIcon
                       icon="fa-solid fa-search"
                       color="#fff"
+                      style={styles.searchIcon}
+                  />
+              </RowWrapper>
 
 
               <RowWrapper style={styles.dark_light_toggle_button_style} onClick={themeToggleHandler}>
