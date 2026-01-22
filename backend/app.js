@@ -28,6 +28,7 @@ const teacherCourseRoutes = require("./routes/teacherCourseRoutes");
 const userCredentialsRoutes = require("./routes/userCredentialsRoutes");
 const assesmentStudentRoutes = require("./routes/assesmentStudentRoutes");
 const assesmentRoutes = require("./routes/assesmentRouter");
+const seedRoutes = require("./routes/seedRoutes");
 
 // const User = require('./models/user');
 
@@ -182,6 +183,7 @@ app.use(cors());
   app.use("/api/credentials", userCredentialsRoutes);
   app.use("/api/assesment", assesmentRoutes);
   app.use("/api/assesment-student", assesmentStudentRoutes);
+  app.use("/api/seed", seedRoutes);
 }
 
 app.get("/", (req, res) => {
