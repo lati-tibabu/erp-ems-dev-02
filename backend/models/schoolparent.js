@@ -1,4 +1,4 @@
-const sequelize = require("../config/database")();
+const sequelize = require("../config/database");
 const { DataTypes, UUID, Model } = require("sequelize");
 
 const School = require("./school");
