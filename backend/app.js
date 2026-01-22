@@ -35,7 +35,8 @@ const assesmentRoutes = require("./routes/assesmentRouter");
 
 // Database connection
 
-const sequelize = require("./config/database");
+const createSequelize = require("./config/database");
+const sequelize = createSequelize();
 const db = require("./models");
 
 const User = db.User;

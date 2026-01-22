@@ -6,7 +6,8 @@ const process = require('process');
 const basename = path.basename(__filename);
 const db = {};
 
-const sequelize = require('../config/database');
+const createSequelize = require('../config/database');
+const sequelize = createSequelize();
 
 fs.readdirSync(__dirname)
     .filter((file) => {
